@@ -1,0 +1,69 @@
+body {
+	min-width: 320px;
+}
+
+.app {
+	/* text-align: center; */
+}
+
+.app-header {
+	background-color: #282c34;
+	min-height: 40px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
+}
+
+.app-link {
+	color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.bordered {
+	border: 1px solid black;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+.width-full {
+	width: 100%;
+}
+
+.absolute {
+	position: absolute;
+}
+
+.color-black {
+	color: black;
+}
+
+.hover-only {
+	visibility: collapse;
+}
+
+.expander:hover .hover-only,
+.expander:active .hover-only {
+	visibility: visible !important;
+}
+
+/* .centered {
+	width: 100%;
+	min-width: 320px;
+	position: absolute; 
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+} */

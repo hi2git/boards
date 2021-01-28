@@ -1,0 +1,9 @@
+.boards tr {
+	background-color: white;
+	/* border: 1px solid black; */
+}
+
+.boards td > div {
+	height: 30px;
+	/* border-radius: 0.25rem; */
+}
