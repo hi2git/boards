@@ -1,66 +1,28 @@
 import React from "react";
-import { inject, observer } from "mobx-react";
+import { observer } from "mobx-react";
 
-import nameof from "../../utils/nameof";
 import settings from "../../reducers/settings";
-import { IUserSettings } from "../../interfaces/components";
-import { Form, ValidatedInput } from "../common/forms";
-import { FormInstance } from "antd/lib/form";
-import { AlertDanger, Button } from "../common";
+import { AlertDanger, LoadablePanel } from "../common";
 
-const OLD_PASSWORD = nameof<IUserSettings>("oldPassword");
-const NEW_PASSWORD = nameof<IUserSettings>("newPassword");
-const CONFIRM_PASSWORD = nameof<typeof settings>("confirmPassword");
-const keys = [OLD_PASSWORD, NEW_PASSWORD, CONFIRM_PASSWORD];
+import Form from "./contentForm";
 
 interface IProps {}
 
-const Content: React.FC<IProps> = ({}) => {
-	const ref = React.useRef<FormInstance>(null);
+const Content: React.FC<IProps> = () => {
+	const { isLoading, error, reload } = settings;
 
-	const validatePasswordConfirm = (rule: any, value: string, callback: (msg?: string) => void) => {
-		const msg = settings.isPasswordChanged && settings.isPasswordError ? rule.message : undefined;
-		callback(msg);
-	};
+	React.useEffect(() => {
+		reload();
+	}, []);
 
 	return (
 		<div className="settings">
-			<AlertDanger value={settings.error} />
-			<Form ref={ref} item={settings} keys={keys} labelCol={{ span: 7 }}>
-				<ValidatedInput
-					title="Старый пароль"
-					keyName={OLD_PASSWORD}
-					type="password"
-					isRequired
-					onChange={(_, v) => settings.setOldPassword(v)}
-				/>
-				<ValidatedInput
-					title="Новый пароль"
-					keyName={NEW_PASSWORD}
-					type="password"
-					isRequired
-					onChange={(_, v) => settings.setNewPassword(v)}
-				/>
-				<ValidatedInput
-					title="Подтвердите пароль"
-					keyName={CONFIRM_PASSWORD}
-					type="password"
-					isRequired
-					rules={[{ validator: validatePasswordConfirm, message: "Пароли не совпадают" }]}
-					onChange={(_, v) => settings.setConfirmPassword(v)}
-				/>
-				<Button
-					type="primary"
-					className="float-right"
-					title="OK"
-					disabled={!settings.isAllowSend}
-					onClick={settings.send}
-				>
-					OK
-				</Button>
-			</Form>
+			<LoadablePanel isLoading={isLoading}>
+				<AlertDanger value={error} />
+				<Form />
+			</LoadablePanel>
 		</div>
 	);
 };
 
-export default inject("settings")(observer(Content));
+export default observer(Content);

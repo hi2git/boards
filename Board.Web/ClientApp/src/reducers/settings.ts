@@ -2,52 +2,63 @@ import { action, computed, observable, makeAutoObservable } from "mobx";
 import { IUserSettings } from "../interfaces/components";
 import service from "../services/settings";
 
+interface IItem {
+	oldPassword?: string;
+	newPassword?: string;
+	confirmPassword?: string;
+}
+
 class Settings {
 	constructor() {
 		makeAutoObservable(this);
 	}
 
-	@observable oldPassword: string | undefined = undefined;
-	@observable newPassword: string | undefined = undefined;
-	@observable confirmPassword: string | undefined = undefined;
-
+	@observable item: IItem = {};
+	@observable isLoading: boolean = false;
 	@observable error: string | undefined = undefined;
 
 	@computed get isAllowSend() {
-		return !!this.oldPassword && this.isPasswordChanged && !this.isPasswordError;
+		return !this.isLoading && !!this.item.oldPassword && this.isPasswordChanged && !this.isPasswordError;
 	}
 
 	@computed get isPasswordChanged() {
-		return !!this.newPassword;
+		return !!this.item.newPassword;
 	}
 
 	@computed get isPasswordError() {
-		return this.newPassword !== this.confirmPassword;
+		return this.item.newPassword !== this.item.confirmPassword;
 	}
 
-	@computed get item(): IUserSettings {
-		const { oldPassword, newPassword, isPasswordChanged } = this;
-		return { oldPassword, newPassword, isPasswordChanged };
+	@computed private get dto(): IUserSettings {
+		const { oldPassword, newPassword } = this.item;
+		return { oldPassword, newPassword, isPasswordChanged: this.isPasswordChanged };
 	}
 
-	@action setOldPassword = (value?: string) => (this.oldPassword = value);
-	@action setNewPassword = (value?: string) => (this.newPassword = value);
-	@action setConfirmPassword = (value?: string) => (this.confirmPassword = value);
-
-	@action send = async () => {
-		try {
-			await service.put(this.item);
-			this.error = undefined;
-		} catch (e) {
-			this.error = e;
-		}
+	@action reload = () => {
+		this.item = {};
 		this.clear();
 	};
 
-	@action clear = () => {
-		this.setOldPassword();
-		this.setNewPassword();
-		this.setConfirmPassword();
+	@action set = (key: string, value?: string) => {
+		this.item[key as keyof IItem] = value;
+		this.error = undefined;
+	};
+
+	@action send = async () => {
+		this.isLoading = true;
+		let error = undefined;
+		try {
+			await service.put(this.dto);
+		} catch (e) {
+			error = e;
+		}
+		this.clear(error);
+	};
+
+	@action clear = (error?: string) => {
+		// this.item = {};
+		this.isLoading = false;
+		this.error = error;
 	};
 }
 
