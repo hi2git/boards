@@ -8,7 +8,11 @@ namespace Board.Domain.Models {
 
 		protected User() { }
 
-		public User(Guid id, string name) : base(id, name) { }
+		public User(Guid id, string name, string passwordHash, Role role) : base(id, name) {
+			this.Password = !string.IsNullOrEmpty(passwordHash) ? passwordHash : throw new ArgumentNullException(nameof(passwordHash));
+			this.RoleId = role?.Id ?? throw new ArgumentNullException(nameof(role));
+			this.Role = role;
+		}
 
 		#region Props
 

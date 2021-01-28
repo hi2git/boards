@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
+import * as urls from "../constants/urls";
+
 const api = axios.create();
 
 api.interceptors.request.use(request => requestInterceptor(request));
@@ -25,22 +27,10 @@ const successHandler = (response: AxiosResponse<any>) => {
 
 const errorHandler = (error: any) =>
 	new Promise((_, reject) => {
-		// TODO: Обрабатывайте тут свои ошибки
-
 		if (error.response.status === 401 || error.response.status === 403) {
-			// console.log("Deleting auth...");
-			// authActions.logout();
-			// sessionStorage.removeItem("auth");
-			window.location.href = "/login";
+			window.location.href = urls.LOGIN; // TODO: SPA redirect
 		}
 
-		// Invalid model
-		// if (error.response.status === 400) {
-		// 	console.log(error.response.data.message);
-		// 	// const messages = Object.values(error.response.data.errors).flatMap(n => n);
-		// 	// return reject(messages);
-		// 	return reject("Bad request");
-		// }
 		if (error.response.status === 401 || error.response.status === 403) {
 			if ([401, 403].indexOf(error.response.status) !== -1) {
 				//authActions.logout();

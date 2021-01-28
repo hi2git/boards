@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { FormInstance } from "antd/lib/form";
+import { Link } from "react-router-dom";
+
 import { Form, ValidatedInput, isValidateError } from "../common/forms";
 import nameof from "../../utils/nameof";
+import * as urls from "../../constants/urls";
 import { IUserLogin } from "../../interfaces/components";
-import { FormInstance } from "antd/lib/form";
-import { Button } from "antd";
+import { Button } from "../common";
 
 const LOGIN = nameof<IUserLogin>("login");
 const PASSWORD = nameof<IUserLogin>("password");
@@ -34,8 +37,13 @@ const ContentForm: React.FC<IProps> = ({ onOk }) => {
 				onChange={(_, n) => setPassword(n)}
 				isRequired
 			/>
-			<Button type="primary" className="float-right" title="Отправить" onClick={submit}>
-				Отправить
+			<Button type="primary" className="float-right ml-2" title="Войти" onClick={submit}>
+				Войти
+			</Button>
+			<Button type="link" className="float-right" title="Регистрация">
+				<Link className="float-right" to={urls.SIGNUP}>
+					Регистрация
+				</Link>
 			</Button>
 		</Form>
 	);

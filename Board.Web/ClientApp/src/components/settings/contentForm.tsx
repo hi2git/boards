@@ -3,13 +3,13 @@ import { observer } from "mobx-react";
 import { FormInstance } from "antd/lib/form";
 
 import nameof from "../../utils/nameof";
-import settings from "../../reducers/settings";
+import store from "../../reducers/settings";
 import { Form, ValidatedInput } from "../common/forms";
 import { Button } from "../common";
 
-const OLD_PASSWORD = nameof<typeof settings.item>("oldPassword");
-const NEW_PASSWORD = nameof<typeof settings.item>("newPassword");
-const CONFIRM_PASSWORD = nameof<typeof settings.item>("confirmPassword");
+const OLD_PASSWORD = nameof<typeof store.item>("oldPassword");
+const NEW_PASSWORD = nameof<typeof store.item>("newPassword");
+const CONFIRM_PASSWORD = nameof<typeof store.item>("confirmPassword");
 const keys = [OLD_PASSWORD, NEW_PASSWORD, CONFIRM_PASSWORD];
 
 interface IProps {}
@@ -17,12 +17,13 @@ interface IProps {}
 const ContentForm: React.FC<IProps> = () => {
 	const ref = React.useRef<FormInstance>(null);
 
-	const { item, isPasswordChanged, isPasswordError, isAllowSend, set, send } = settings;
+	const { item, isPasswordChanged, isPasswordError, isAllowSend, set, send } = store;
 
-	const validatePasswordConfirm = (rule: any, value: string, callback: (msg?: string) => void) => {
+	const validatePasswordConfirm = (rule: any, _: string, callback: (msg?: string) => void) => {
 		const msg = isPasswordChanged && isPasswordError ? rule.message : undefined;
 		callback(msg);
-	};
+    };
+    
 	return (
 		<Form ref={ref} item={item} keys={keys} labelCol={{ span: 7 }}>
 			<ValidatedInput title="Старый пароль" keyName={OLD_PASSWORD} type="password" isRequired onChange={set} />

@@ -1,6 +1,6 @@
 import { action, computed, observable, makeAutoObservable } from "mobx";
 import { IUserSettings } from "../interfaces/components";
-import service from "../services/settings";
+import service from "../services/user";
 
 interface IItem {
 	oldPassword?: string;
@@ -55,7 +55,7 @@ class Settings {
 		this.clear(error);
 	};
 
-	@action clear = (error?: string) => {
+	@action private clear = (error?: string) => {
 		// this.item = {};
 		this.isLoading = false;
 		this.error = error;

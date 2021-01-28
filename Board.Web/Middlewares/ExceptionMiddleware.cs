@@ -41,7 +41,7 @@ namespace Board.Web.Middlewares {
 			context.Response.ContentType = "application/json";
 
 			context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-			var message = "Внутренняя ошибка сервера";
+			var message = $"Внутренняя ошибка сервера: {exception.Message}";
 
 			switch (exception) {
 				case ArgumentException ae:

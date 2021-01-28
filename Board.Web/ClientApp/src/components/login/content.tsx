@@ -22,14 +22,10 @@ interface IProps extends IStateToProps, IDispatchProps {}
 const Content: React.FC<IProps> = ({ isLoading, error, post }) => {
 	console.log(error);
 	return (
-		<div className="row" style={{ marginTop: "30%" }}>
-			<div className="offset-2 col-8">
-				<LoadablePanel isLoading={isLoading}>
-					<AlertDanger value={error} />
-					<ContentForm onOk={post} />
-				</LoadablePanel>
-			</div>
-		</div>
+		<LoadablePanel isLoading={isLoading}>
+			<AlertDanger value={error} />
+			<ContentForm onOk={post} />
+		</LoadablePanel>
 	);
 };
 

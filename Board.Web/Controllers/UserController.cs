@@ -3,27 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Board.Domain.DTO;
+using Board.Domain.Enums;
+using Board.Domain.Models;
 using Board.Domain.Repos;
 using Board.Domain.Services;
+using Board.Infrastructure.Jwt.Interfaces;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Board.Web.Controllers {
-	public class SettingsController : AbstractApiController {
+	public class UserController : AbstractApiController {
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IUserRepo _userRepo;
+		private readonly IRepo<Role> _roleRepo;
 		private readonly IUserManager _userMgr;
 		private readonly IPasswordService _pwdService;
+		private readonly IAuthService _authService;
 
-		public SettingsController(IUnitOfWork unitOfWork, IUserRepo userRepo, IUserManager userMgr, IPasswordService pwdService) {
+		public UserController(IUnitOfWork unitOfWork, IUserRepo userRepo, IRepo<Role> roleRepo, IUserManager userMgr, IPasswordService pwdService, IAuthService authService) {
 			_unitOfWork = unitOfWork;
 			_userRepo = userRepo;
+			_roleRepo = roleRepo;
 			_userMgr = userMgr;
 			_pwdService = pwdService;
+			_authService = authService;
 		}
 
-		//[HttpGet]
-		//public async Task<bool> Get([FromQuery] )
+		[HttpPost, AllowAnonymous]
+		public async Task Create([FromBody] LoginDTO dto) { // Check Captcha
+			var passwordHash = _pwdService.Hash(dto.Password);
+			var role = await _roleRepo.Query.FirstOrDefaultAsync(n => n.Id == RoleEnum.User);
+
+			var user = new User(Guid.NewGuid(), dto.Login, passwordHash, role);
+			await _userRepo.Create(user);
+			await _unitOfWork.Commit();
+
+			await _authService.Login(user);
+		}
+
 
 		[HttpPut]
 		public async Task Update([FromBody] UserSettingsDTO dto) {

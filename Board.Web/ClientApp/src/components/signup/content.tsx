@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import store from "../../reducers/settings";
+import store from "../../reducers/signup";
 import { AlertDanger, LoadablePanel } from "../common";
 
 import Form from "./contentForm";
@@ -16,7 +16,7 @@ const Content: React.FC<IProps> = () => {
 	}, [reload]);
 
 	return (
-		<div className="settings">
+		<div className="signup">
 			<LoadablePanel isLoading={isLoading}>
 				<AlertDanger value={error} />
 				<Form />

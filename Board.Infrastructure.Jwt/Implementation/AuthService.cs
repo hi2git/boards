@@ -22,13 +22,17 @@ namespace Board.Infrastructure.Jwt.Implementation {
 		}
 
 		public async Task Login(LoginDTO dto) {
-			var entity = await _userRepo.Get(dto.Login);
+			var entity = await _userRepo.Get(dto.Login) ?? throw new ArgumentException("Некорректное имя пользователя или пароль");
 
 			if (!_userService.IsEqual(dto.Password, entity.Password))
 				throw new ArgumentException($"Некорректное имя пользователя или пароль");
 
-			var user = this.Map(entity);
-			var token = await _tokenService.Generate(user);
+			await this.Login(entity);
+		}
+
+		public async Task Login(User user) {
+			var loginDto = this.Map(user);
+			var token = await _tokenService.Generate(loginDto);
 			_cookieService.Add(token);
 		}
 
