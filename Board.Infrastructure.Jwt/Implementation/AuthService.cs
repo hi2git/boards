@@ -25,7 +25,7 @@ namespace Board.Infrastructure.Jwt.Implementation {
 			var entity = await _userRepo.Get(dto.Login);
 
 			if (!_userService.IsEqual(dto.Password, entity.Password))
-				throw new ApplicationException($"Некорректное имя пользователя или пароль");
+				throw new ArgumentException($"Некорректное имя пользователя или пароль");
 
 			var user = this.Map(entity);
 			var token = await _tokenService.Generate(user);

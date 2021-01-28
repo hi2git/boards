@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 
 import { ILoginReducer } from "../interfaces/reducers";
-import * as types from "../types/views";
+import * as types from "../types/login";
 
 const initialState: ILoginReducer = {
 	// items: [],

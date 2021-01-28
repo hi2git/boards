@@ -11,6 +11,8 @@ class Settings {
 	@observable newPassword: string | undefined = undefined;
 	@observable confirmPassword: string | undefined = undefined;
 
+	@observable error: string | undefined = undefined;
+
 	@computed get isAllowSend() {
 		return !!this.oldPassword && this.isPasswordChanged && !this.isPasswordError;
 	}
@@ -33,7 +35,12 @@ class Settings {
 	@action setConfirmPassword = (value?: string) => (this.confirmPassword = value);
 
 	@action send = async () => {
-		await service.put(this.item);
+		try {
+			await service.put(this.item);
+			this.error = undefined;
+		} catch (e) {
+			this.error = e;
+		}
 		this.clear();
 	};
 

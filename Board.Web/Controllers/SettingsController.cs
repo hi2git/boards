@@ -33,7 +33,7 @@ namespace Board.Web.Controllers {
 			var user = await _userRepo.Get(_userMgr.CurrentUserId);
 			var isOldRight = _pwdService.IsEqual(dto.OldPassword, user.Password);
 			if (!isOldRight)
-				throw new InvalidOperationException("Старый пароль введен неверно");
+				throw new ArgumentException("Старый пароль введен неверно");
 
 			user.Password = _pwdService.Hash(dto.NewPassword);
 			await _userRepo.Update(user);
@@ -43,7 +43,6 @@ namespace Board.Web.Controllers {
 	}
 
 	public class UserSettingsDTO {
-
 
 		public string OldPassword { get; set; }
 		public string NewPassword { get; set; }

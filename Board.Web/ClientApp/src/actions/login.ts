@@ -14,7 +14,7 @@ export const post = (item: IUserLogin) => async (dispatch: Dispatch<Action>) => 
 		await dispatch({ type: types.RECEIVE });
 		await dispatch(push("/"));
 	} catch (e) {
-		await dispatch({ type: types.ERROR, payload: e.message });
+		await dispatch({ type: types.ERROR, payload: e });
 	}
 };
 
@@ -25,6 +25,6 @@ export const logout = () => async (dispatch: Dispatch<Action>) => {
 		await dispatch({ type: types.RECEIVE });
 		await dispatch(push("/login"));
 	} catch (e) {
-		await dispatch({ type: types.ERROR, payload: e.message });
+		await dispatch({ type: types.ERROR, payload: e });
 	}
 };

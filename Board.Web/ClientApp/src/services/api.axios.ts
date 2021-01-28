@@ -23,8 +23,8 @@ const successHandler = (response: AxiosResponse<any>) => {
 	});
 };
 
-const errorHandler = (error: any) => {
-	return new Promise((_, reject) => {
+const errorHandler = (error: any) =>
+	new Promise((_, reject) => {
 		// TODO: Обрабатывайте тут свои ошибки
 
 		if (error.response.status === 401 || error.response.status === 403) {
@@ -35,20 +35,20 @@ const errorHandler = (error: any) => {
 		}
 
 		// Invalid model
-		if (error.response.status === 400) {
-			// const messages = Object.values(error.response.data.errors).flatMap(n => n);
-			// return reject(messages);
-			return reject("Bad request");
-		}
-		// if (error.response.status === 401 || error.response.status === 403) {
-		// 	if ([401, 403].indexOf(error.response.status) !== -1) {
-		// 		//authActions.logout();
-		// 	}
-		// 	reject();
+		// if (error.response.status === 400) {
+		// 	console.log(error.response.data.message);
+		// 	// const messages = Object.values(error.response.data.errors).flatMap(n => n);
+		// 	// return reject(messages);
+		// 	return reject("Bad request");
 		// }
+		if (error.response.status === 401 || error.response.status === 403) {
+			if ([401, 403].indexOf(error.response.status) !== -1) {
+				//authActions.logout();
+			}
+			reject();
+		}
 
 		return reject(error.response.data.message);
 	});
-};
 
 export default api;

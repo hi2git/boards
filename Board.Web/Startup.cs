@@ -2,6 +2,7 @@ using Board.Application;
 using Board.Infrastructure.Files;
 using Board.Infrastructure.Jwt;
 using Board.Infrastructure.Repository;
+using Board.Web.Middlewares;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,6 +46,7 @@ namespace Board.Web {
 			app.UseStaticFiles();
 			app.UseSpaStaticFiles();
 
+			app.UseExceptionMiddleware();
 
 			app.UseCookiePolicy(new CookiePolicyOptions {
 				MinimumSameSitePolicy = SameSiteMode.Strict,

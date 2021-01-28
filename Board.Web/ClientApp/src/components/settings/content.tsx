@@ -6,7 +6,7 @@ import settings from "../../reducers/settings";
 import { IUserSettings } from "../../interfaces/components";
 import { Form, ValidatedInput } from "../common/forms";
 import { FormInstance } from "antd/lib/form";
-import { Button } from "../common";
+import { AlertDanger, Button } from "../common";
 
 const OLD_PASSWORD = nameof<IUserSettings>("oldPassword");
 const NEW_PASSWORD = nameof<IUserSettings>("newPassword");
@@ -25,6 +25,7 @@ const Content: React.FC<IProps> = ({}) => {
 
 	return (
 		<div className="settings">
+			<AlertDanger value={settings.error} />
 			<Form ref={ref} item={settings} keys={keys} labelCol={{ span: 7 }}>
 				<ValidatedInput
 					title="Старый пароль"
@@ -48,7 +49,6 @@ const Content: React.FC<IProps> = ({}) => {
 					rules={[{ validator: validatePasswordConfirm, message: "Пароли не совпадают" }]}
 					onChange={(_, v) => settings.setConfirmPassword(v)}
 				/>
-
 				<Button
 					type="primary"
 					className="float-right"

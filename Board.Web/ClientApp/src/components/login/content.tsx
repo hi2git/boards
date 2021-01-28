@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { LoadablePanel } from "../common";
+import { AlertDanger, LoadablePanel } from "../common";
 import { IUserLogin } from "../../interfaces/components";
 import { IMapActionFunc, IMapStateFunc } from "../../interfaces/redux";
 import * as actions from "../../actions/login";
@@ -20,10 +20,12 @@ interface IDispatchProps {
 interface IProps extends IStateToProps, IDispatchProps {}
 
 const Content: React.FC<IProps> = ({ isLoading, error, post }) => {
+	console.log(error);
 	return (
 		<div className="row" style={{ marginTop: "30%" }}>
 			<div className="offset-2 col-8">
-				<LoadablePanel isLoading={isLoading} error={error}>
+				<LoadablePanel isLoading={isLoading}>
+					<AlertDanger value={error} />
 					<ContentForm onOk={post} />
 				</LoadablePanel>
 			</div>
