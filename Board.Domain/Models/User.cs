@@ -14,7 +14,7 @@ namespace Board.Domain.Models {
 
 		public RoleEnum RoleId { get; protected set; }
 
-		public string Password { get; protected set; }
+		public string Password { get; set; }
 
 		#endregion
 

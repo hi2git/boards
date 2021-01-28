@@ -1,9 +1,9 @@
 ﻿using System;
 
 namespace Board.Domain.Services {
-	public interface IUserService {
+	public interface IPasswordService {
 
-		bool IsPasswordEqual(string password, string hashed);
+		bool IsEqual(string password, string hashed);
 
 		string Hash(string password);
 

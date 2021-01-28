@@ -1,9 +1,11 @@
 import React from "react";
 
+import Content from "../settings/content";
+
 interface IProps {}
 
 const Page: React.FC<IProps> = ({}) => {
-	return <>111</>;
+	return <Content />;
 };
 
 export default Page;

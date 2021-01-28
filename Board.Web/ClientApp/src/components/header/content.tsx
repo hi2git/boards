@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import * as urls from "../../constants/urls";
+import getUrl from "../../utils/location";
 import { Menu } from "../common";
 
 import Home from "./contentHome";
@@ -10,11 +11,11 @@ import Settings from "./contentSettings";
 
 interface IProps {}
 
-const Content: React.FC<IProps> = ({}) => {
+const Content: React.FC<IProps> = () => {
 	const [selected, setSelected] = useState<string>();
 
 	useEffect(() => {
-		setSelected(window.location.pathname);
+		setSelected(getUrl());
 	}, []);
 
 	return (

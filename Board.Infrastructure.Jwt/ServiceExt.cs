@@ -58,7 +58,7 @@ namespace Board.Infrastructure.Jwt {
 		private static IServiceCollection AddScoped(this IServiceCollection services) {
 			services.AddTransient<ICookieService, CookieService>();
 			services.AddTransient<IAuthService, AuthService>();
-			services.AddTransient<IUserService, UserService>();
+			services.AddTransient<IPasswordService, PasswordService>();
 			services.AddTransient<IUserManager, UserManager>();
 
 			return services;

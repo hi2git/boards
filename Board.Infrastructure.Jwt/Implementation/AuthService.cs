@@ -11,10 +11,10 @@ namespace Board.Infrastructure.Jwt.Implementation {
 	internal class AuthService : IAuthService {
 		private readonly ICookieService _cookieService;
 		private readonly IUserRepo _userRepo;
-		private readonly IUserService _userService;
+		private readonly IPasswordService _userService;
 		private readonly ITokenService _tokenService;
 
-		public AuthService(ICookieService cookieService, IUserRepo userRepo, IUserService userService, ITokenService tokenService) {
+		public AuthService(ICookieService cookieService, IUserRepo userRepo, IPasswordService userService, ITokenService tokenService) {
 			_cookieService = cookieService;
 			_userRepo = userRepo;
 			_userService = userService;
@@ -24,7 +24,7 @@ namespace Board.Infrastructure.Jwt.Implementation {
 		public async Task Login(LoginDTO dto) {
 			var entity = await _userRepo.Get(dto.Login);
 
-			if (!_userService.IsPasswordEqual(dto.Password, entity.Password))
+			if (!_userService.IsEqual(dto.Password, entity.Password))
 				throw new ApplicationException($"Некорректное имя пользователя или пароль");
 
 			var user = this.Map(entity);
