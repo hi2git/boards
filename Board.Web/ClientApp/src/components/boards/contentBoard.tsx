@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { IBoardItem } from "../../interfaces/components";
 import { IMapStateFunc, IMergeFunc } from "../../interfaces/redux";
-import { LoadablePanel, FileSelect } from "../common";
+import { LoadablePanel, LoadablePanelFull, FileSelect } from "../common";
 
 import * as actions from "../../actions/boards";
 
@@ -90,14 +90,14 @@ export class Board extends Component<IProps, IState> {
 				</div>
 				<div className="row mt-1">
 					<div className="col-12">
-						<LoadablePanel isLoading={isLoading} error={error}>
+						<LoadablePanelFull isLoading={isLoading} error={error}>
 							<ContentTable
 								items={items}
 								onChange={this.change}
 								onSorted={this.sort}
 								onDelete={this.delete}
 							/>
-						</LoadablePanel>
+						</LoadablePanelFull>
 					</div>
 				</div>
 			</>

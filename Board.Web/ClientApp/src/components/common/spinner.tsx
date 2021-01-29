@@ -1,21 +1,28 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 
-interface IProps {
+interface IStyleable {
+	style?: CSSProperties;
+}
+
+interface IProps extends IStyleable {
 	size?: "small" | "normal";
 }
 
-const Spinner: React.FC<IProps> = ({ size = "normal" }) => (size === "normal" ? <NormalSpinner /> : <SmallSpinner />);
+const Spinner: React.FC<IProps> = ({ size = "normal", style }) =>
+	size === "normal" ? <NormalSpinner style={style} /> : <SmallSpinner style={style} />;
 
-export const NormalSpinner: React.FC = () => (
+export const NormalSpinner: React.FC<IStyleable> = ({ style }) => (
 	<div className="row my-2">
 		<div className="col-12">
 			<div className="d-flex justify-content-center">
-				<SmallSpinner />
+				<SmallSpinner style={style} />
 			</div>
 		</div>
 	</div>
 );
 
-export const SmallSpinner: React.FC = () => <span className="spinner-border text-secondary" />;
+export const SmallSpinner: React.FC<IStyleable> = ({ style }) => (
+	<span className="spinner-border text-secondary" style={style} />
+);
 
 export default Spinner;

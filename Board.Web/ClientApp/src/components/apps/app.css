@@ -67,3 +67,7 @@ body {
 	left: 50%;
 	transform: translate(-50%, -50%);
 } */
+
+.spinner-full {
+	background: rgba(255, 255, 255, 0.5);
+}
