@@ -1,9 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import { FormInstance } from "antd/lib/form";
 
 import store from "../../reducers/signup";
 import nameof from "../../utils/nameof";
+import * as urls from "../../constants/urls";
 import Button from "../common/button";
 import { Form, ValidatedInput } from "../common/forms";
 
@@ -31,6 +33,11 @@ const Content: React.FC<IProps> = () => {
 				onClick={send}
 			>
 				Зарегистрироваться
+			</Button>
+			<Button type="link" className="float-right" title="Назад">
+				<Link className="float-right" to={urls.LOGIN}>
+					Назад
+				</Link>
 			</Button>
 		</Form>
 	);
