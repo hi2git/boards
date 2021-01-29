@@ -41,14 +41,7 @@ const View: React.FC<IProps> = props => {
 	const palette = !isPaletteVisible || !data ? null : <Palette src={data} />;
 
 	return (
-		<div
-			className="d-flex expander"
-			// onMouseDown={e => e.stopPropagation()}
-			// onTouchStart={e => {
-			// 	// e.stopPropagation();
-			// 	setBtnsVisible(!isBtnsVisible);
-			// }}
-		>
+		<div className="d-flex expander">
 			<Tooltip title={item.description ?? ""}>
 				<img
 					className={className}

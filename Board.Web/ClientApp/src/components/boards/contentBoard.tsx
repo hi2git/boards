@@ -3,11 +3,12 @@ import { connect } from "react-redux";
 
 import { IBoardItem } from "../../interfaces/components";
 import { IMapStateFunc, IMergeFunc } from "../../interfaces/redux";
-import { LoadablePanel, LoadablePanelFull, FileSelect } from "../common";
+import { LoadablePanelFull, FileSelect } from "../common";
 
 import * as actions from "../../actions/boards";
 
 import Toggler from "./contentBoardToggler";
+import Scale from "./contentBoardScale";
 import ContentTable from "./contentBoardTable";
 import ViewBtns from "./contentBoardViews";
 
@@ -85,7 +86,9 @@ export class Board extends Component<IProps, IState> {
 					<div className="col-12">
 						<FileSelect title="Добавить пост" item={item} onChange={this.add} isAdd />
 						<Toggler />
+
 						<ViewBtns />
+						<Scale />
 					</div>
 				</div>
 				<div className="row mt-1">

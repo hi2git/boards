@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { observer } from "mobx-react";
+
 import { Layout, WidthProvider, Responsive } from "react-grid-layout";
 import { IBoardItem } from "../../interfaces/components";
+import store from "../../reducers/boardScale";
 
 import Item from "./contentBoardTableItem";
 
@@ -66,22 +69,25 @@ const ContentTable: React.FC<IProps> = ({ items, onChange, onSorted, onDelete })
 	));
 
 	return (
-		<div className="row">
-			<div className="col-12">
-				<GridLayout
-					className="layout border-right border-left"
-					layouts={{ lg: layout, md: layout, sm: layout, xs: layout, xxs: layout }}
-					cols={{ lg: DEFAULT_COLS, md: DEFAULT_COLS, sm: DEFAULT_COLS, xs: DEFAULT_COLS, xxs: DEFAULT_COLS }}
-					rowHeight={height}
-					margin={[5, 5]}
-					onDragStop={replace}
-					onWidthChange={n => setHeight(n / 3)}
-				>
-					{divs}
-				</GridLayout>
-			</div>
-		</div>
+		<GridLayout
+			style={{ transform: `scale(${store.scale})`, transformOrigin: "top" }}
+			className="border-right border-left"
+			layouts={{ lg: layout, md: layout, sm: layout, xs: layout, xxs: layout }}
+			cols={{
+				lg: DEFAULT_COLS,
+				md: DEFAULT_COLS,
+				sm: DEFAULT_COLS,
+				xs: DEFAULT_COLS,
+				xxs: DEFAULT_COLS,
+			}}
+			rowHeight={height}
+			margin={[5, 5]}
+			onDragStop={replace}
+			onWidthChange={n => setHeight(n / 3)}
+		>
+			{divs}
+		</GridLayout>
 	);
 };
 
-export default ContentTable;
+export default observer(ContentTable);
