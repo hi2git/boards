@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { observer } from "mobx-react";
 import { Property } from "csstype";
 
 import { IBoardItem } from "../../interfaces/components";
 import { IMapStateFunc } from "../../interfaces/redux";
 import { Button, FileSelect, TextCollapse, Tooltip } from "../common";
+import store from "../../reducers/boardControl";
 
 import Palette from "./contentBoardTableItemImgViewPalette";
 
@@ -34,18 +36,18 @@ const View: React.FC<IProps> = props => {
 	const [isPaletteVisible, setPaletteVisible] = useState(false);
 	const togglePalette = () => setPaletteVisible(!isPaletteVisible);
 
-	const [isBtnsVisible, setBtnsVisible] = useState(false);
+	// const [isBtnsVisible, setBtnsVisible] = useState(false);
 
 	const palette = !isPaletteVisible || !data ? null : <Palette src={data} />;
 
 	return (
 		<div
 			className="d-flex expander"
-			onMouseDown={e => e.stopPropagation()}
-			onTouchStart={e => {
-				e.stopPropagation();
-				setBtnsVisible(!isBtnsVisible);
-			}}
+			// onMouseDown={e => e.stopPropagation()}
+			// onTouchStart={e => {
+			// 	// e.stopPropagation();
+			// 	setBtnsVisible(!isBtnsVisible);
+			// }}
 		>
 			<Tooltip title={item.description ?? ""}>
 				<img
@@ -57,7 +59,10 @@ const View: React.FC<IProps> = props => {
 			</Tooltip>
 			<div className="absolute" style={{ width: "100%" }}>
 				{palette}
-				<div className="hover-only float-right" style={{ visibility: isBtnsVisible ? "visible" : "collapse" }}>
+				<div
+					className="hover-only float-right"
+					style={{ visibility: store.isVisible ? "visible" : "collapse" }}
+				>
 					<Button title="Палитра" onClick={togglePalette}>
 						<i className="fas fa-palette" />
 					</Button>
@@ -83,4 +88,4 @@ const mapState: IMapStateFunc<IStateToProps, IOwnProps> = ({ view }, ownProps) =
 	view: view.item,
 });
 
-export default connect(mapState)(View);
+export default connect(mapState)(observer(View));

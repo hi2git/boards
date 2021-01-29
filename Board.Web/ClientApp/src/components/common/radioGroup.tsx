@@ -16,7 +16,7 @@ interface IProps extends RadioGroupProps {
 
 const RadioGroup: React.FC<IProps> = ({ opts, ...props }) => {
 	const options = opts?.map(n => ({ label: <Tooltip title={n.title}>{n.label}</Tooltip>, value: n.id }));
-	return <Radio.Group options={options} {...props} optionType="button" buttonStyle="solid" />;
+	return <Radio.Group options={options} {...props} optionType="button" />; //  buttonStyle="solid"
 };
 
 export default RadioGroup;

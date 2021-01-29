@@ -2,6 +2,7 @@ export { default as LoadablePanel } from "./loadablePanel";
 export { default as FileSelect } from "./fileSelect";
 export { default as Select } from "./select";
 export { default as Button } from "./button";
+export { default as CheckButton } from "./chkButton";
 export { default as Spinner } from "./spinner";
 export { default as AlertPanel } from "./alertPanel";
 export { default as AlertDanger } from "./alertDanger";

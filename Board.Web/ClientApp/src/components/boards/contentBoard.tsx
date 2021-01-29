@@ -7,6 +7,7 @@ import { LoadablePanel, FileSelect } from "../common";
 
 import * as actions from "../../actions/boards";
 
+import Toggler from "./contentBoardToggler";
 import ContentTable from "./contentBoardTable";
 import ViewBtns from "./contentBoardViews";
 
@@ -82,6 +83,7 @@ export class Board extends Component<IProps, IState> {
 				<div className="row mt-2">
 					<div className="col-12">
 						<FileSelect title="Добавить пост" item={item} onChange={this.add} isAdd />
+						<Toggler />
 						<ViewBtns />
 					</div>
 				</div>
