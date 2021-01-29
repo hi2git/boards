@@ -9,8 +9,6 @@ interface IProps {
 }
 
 const LoadablePanel: React.FC<IProps> = ({ isLoading, error, size, children }) => {
-	//console.log("error", error, error as Array<string>);
-	// const errors = error instanceof Array && (error as Array<string>)?.filter(n => n);
 	const isError = error instanceof Array ? (error as Array<string>)?.filter(n => n)?.length > 0 : error != null;
 	return isLoading ? (
 		<Spinner size={size} />

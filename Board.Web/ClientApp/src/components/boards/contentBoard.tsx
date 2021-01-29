@@ -62,9 +62,10 @@ export class Board extends Component<IProps, IState> {
 		this.reload();
 	};
 
-	sort = (items: Array<IBoardItem>) => {
-		this.props.sort(items);
-		this.setState({ items });
+	sort = async (items: Array<IBoardItem>) => {
+		await this.props.sort(items);
+		// this.setState({ items });
+		this.reload();
 	};
 
 	delete = async (id: string) => {

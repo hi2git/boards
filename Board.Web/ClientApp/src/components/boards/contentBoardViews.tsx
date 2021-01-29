@@ -41,7 +41,7 @@ const Views: React.FC<IProps> = ({ items, isLoading, set, fetchAll }) => {
 			label: <i className={`fas fa-${n.icon}`} />,
 		})) ?? [];
 
-	return <RadioGroup className="float-right" opts={opts} onChange={e => set(e.target.value)} />;
+	return <RadioGroup defaultValue="cover" className="float-right" opts={opts} onChange={e => set(e.target.value)} />;
 };
 
 const mapStateToProps: IMapStateFunc<IStateToProps, IOwnProps> = ({ views }, ownProps) => {
