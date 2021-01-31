@@ -2,6 +2,7 @@ import { action, computed, makeAutoObservable, observable } from "mobx";
 
 import { IUserLogin } from "../interfaces/components";
 import service from "../services/user";
+import router from "./router";
 import * as urls from "../constants/urls";
 
 class SignUp {
@@ -36,7 +37,7 @@ class SignUp {
 		let error = undefined;
 		try {
 			await service.post(this.item);
-			window.location.pathname = urls.HOME; // TODO : SPA redirect
+			router.push(urls.HOME);
 		} catch (e) {
 			error = e;
 		}

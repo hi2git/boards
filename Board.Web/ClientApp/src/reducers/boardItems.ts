@@ -1,40 +1,69 @@
-import { AnyAction } from "redux";
+import { action, makeAutoObservable, observable } from "mobx";
+import { IBoardItem } from "../interfaces/components";
 
-import { IBoardItemsReducer } from "../interfaces/reducers";
-import * as types from "../types/boardItems";
+import service from "../services/boardItems";
 
-const initialState: IBoardItemsReducer = {
-	items: [],
-	isLoading: true,
-	error: undefined,
-};
-
-const reducer = (state = initialState, action: AnyAction) => {
-	switch (action.type) {
-		case types.REQUEST_BOARD_ITEMS:
-			return {
-				...state,
-				// items: [],
-				isLoading: true,
-				error: undefined,
-			};
-		case types.RECEIVE_BOARD_ITEMS:
-			return {
-				...state,
-				items: action.payload ?? state.items,
-				isLoading: false,
-				error: undefined,
-			};
-		case types.ERROR_BOARD_ITEMS:
-			return {
-				...state,
-				// items: [],
-				isLoading: false,
-				error: action.payload,
-			};
-		default:
-			return state;
+class BoardItems {
+	constructor() {
+		makeAutoObservable(this);
 	}
-};
 
-export default reducer;
+	@observable items: Array<IBoardItem> = [];
+	@observable isLoading: boolean = false;
+	@observable error: string | undefined = undefined;
+
+	@action set = (item: IBoardItem) => (this.items = this.items.map(n => (n.id === item.id ? item : n)));
+
+	@action fetchAll = async () => {
+		this.request();
+		try {
+			this.receive(await service.getAll());
+		} catch (e) {
+			this.setError(e);
+		}
+	};
+	@action sort = async (items: Array<IBoardItem>) => {
+		await service.sort(items);
+		await this.fetchAll();
+	};
+	@action post = async (item: IBoardItem) => {
+		await service.post(item);
+		await this.fetchAll();
+	};
+	@action put = async (item: IBoardItem) => {
+		const isContentChanged = this.items.find(n => n.id === item.id)?.content !== item.content;
+		this.set(item);
+		const action = isContentChanged ? this.putContent : this.putDescription;
+		await action(item);
+	};
+	@action del = async (id: string) => {
+		await service.del(id);
+		await this.fetchAll();
+	};
+
+	@action private putDescription = async (item: IBoardItem) => {
+		await service.put(item);
+	};
+	@action private putContent = async (item: IBoardItem) => {
+		await service.putContent(item);
+	};
+
+	@action private request = () => {
+		this.isLoading = true;
+		this.items = [];
+		this.error = undefined;
+	};
+	@action private receive = (items: Array<IBoardItem>) => {
+		this.isLoading = false;
+		console.log("receive", items);
+		this.items = [...items];
+		this.error = undefined;
+	};
+	@action private setError = (value: string) => {
+		this.isLoading = false;
+		this.items = [];
+		this.error = value;
+	};
+}
+
+export default new BoardItems();

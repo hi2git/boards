@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
 import { observer } from "mobx-react";
-import { Property } from "csstype";
 
 import { IBoardItem } from "../../interfaces/components";
-import { IMapStateFunc } from "../../interfaces/redux";
 import { Button, FileSelect, TextCollapse, Tooltip } from "../common";
 import store from "../../reducers/boardControl";
 
 import Palette from "./contentBoardTableItemImgViewPalette";
 
-interface IOwnProps {
+import view from "../../reducers/view";
+
+interface IProps {
 	item: IBoardItem;
 	onChange: (item: IBoardItem) => void;
 
@@ -22,21 +21,13 @@ interface IOwnProps {
 	onDelete?: () => void;
 }
 
-interface IStateToProps extends IOwnProps {
-	view: Property.ObjectFit;
-}
-
-interface IProps extends IStateToProps {}
-
 const View: React.FC<IProps> = props => {
-	const { item, view, className = "", height, data, onChange, onDelete } = props;
+	const { item, className = "", height, data, onChange, onDelete } = props;
 
 	const doneIcon = item.isDone ? "-check" : "";
 
 	const [isPaletteVisible, setPaletteVisible] = useState(false);
 	const togglePalette = () => setPaletteVisible(!isPaletteVisible);
-
-	// const [isBtnsVisible, setBtnsVisible] = useState(false);
 
 	const palette = !isPaletteVisible || !data ? null : <Palette src={data} />;
 
@@ -47,7 +38,7 @@ const View: React.FC<IProps> = props => {
 					className={className}
 					src={data}
 					alt="Загрузка..."
-					style={{ height, width: "100%", objectFit: view }}
+					style={{ height, width: "100%", objectFit: view.selected }}
 				/>
 			</Tooltip>
 			<div className="absolute" style={{ width: "100%" }}>
@@ -76,9 +67,4 @@ const View: React.FC<IProps> = props => {
 	);
 };
 
-const mapState: IMapStateFunc<IStateToProps, IOwnProps> = ({ view }, ownProps) => ({
-	...ownProps,
-	view: view.item,
-});
-
-export default connect(mapState)(observer(View));
+export default observer(View);

@@ -1,22 +1,24 @@
 import React from "react";
-import { Provider } from "react-redux";
 import ReactDOM from "react-dom";
-import { ConnectedRouter } from "connected-react-router";
+import { syncHistoryWithStore } from "mobx-react-router";
+import { Router } from "react-router";
+import { createBrowserHistory } from "history";
 
 import App from "./components/apps/app";
 
-import { store, history } from "./store/store";
+import router from "./reducers/router";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "antd/dist/antd.css";
 import "./index.css";
 
+const browserHistory = createBrowserHistory();
+const history = syncHistoryWithStore(browserHistory, router);
+
 ReactDOM.render(
-	<Provider store={store}>
-		<ConnectedRouter history={history}>
-			<App />
-		</ConnectedRouter>
-	</Provider>,
+	<Router history={history}>
+		<App />
+	</Router>,
 	document.getElementById("root")
 );

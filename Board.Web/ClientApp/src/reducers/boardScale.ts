@@ -5,9 +5,9 @@ class BoardScale {
 		makeAutoObservable(this);
 	}
 
-	@observable scale: number = 1;
+	@observable value: number = 1;
 
-	@action setScale = (value: number) => (this.scale = value);
+	@action setScale = (value: number) => (this.value = value);
 }
 
 export default new BoardScale();

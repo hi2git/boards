@@ -1,40 +1,49 @@
-import { AnyAction } from "redux";
+import { action, makeAutoObservable, observable } from "mobx";
 
-import { ILoginReducer } from "../interfaces/reducers";
-import * as types from "../types/login";
+import service from "../services/login";
+import { IUserLogin } from "../interfaces/components";
+import router from "./router";
+import * as urls from "../constants/urls";
 
-const initialState: ILoginReducer = {
-	// items: [],
-	isLoading: false, // !!!! DEFAULT = FALSE
-	error: undefined,
-};
-
-const reducer = (state = initialState, action: AnyAction) => {
-	switch (action.type) {
-		case types.REQUEST:
-			return {
-				...state,
-				// items: [],
-				isLoading: true,
-				error: undefined,
-			};
-		case types.RECEIVE:
-			return {
-				...state,
-				// items: action.payload,
-				isLoading: false,
-				error: undefined,
-			};
-		case types.ERROR:
-			return {
-				...state,
-				// items: [],
-				isLoading: false,
-				error: action.payload,
-			};
-		default:
-			return state;
+class Login {
+	constructor() {
+		makeAutoObservable(this);
 	}
-};
 
-export default reducer;
+	@observable isLoading: boolean = false;
+	@observable error: string | undefined = undefined;
+
+	@action login = async (item: IUserLogin) => {
+		this.request();
+		try {
+			await service.post(item);
+			this.receive();
+			router.push(urls.HOME);
+		} catch (e) {
+			this.receive(e);
+		}
+	};
+
+	@action logout = async () => {
+		this.request();
+		try {
+			await service.delete();
+			this.receive();
+			router.push(urls.LOGIN);
+		} catch (e) {
+			this.receive(e);
+		}
+	};
+
+	@action private request = () => {
+		this.isLoading = true;
+		this.error = undefined;
+	};
+
+	@action private receive = (error?: string) => {
+		this.isLoading = false;
+		this.error = error;
+	};
+}
+
+export default new Login();

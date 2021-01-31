@@ -1,7 +1,7 @@
 import { IUserLogin } from "../interfaces/components";
 import axios from "./api.axios";
 
-export default class Service {
+export class Service {
 	post = async (item: IUserLogin) => {
 		await axios.post(this.url, item);
 	};
@@ -14,3 +14,5 @@ export default class Service {
 		return "/api/account";
 	}
 }
+
+export default new Service();

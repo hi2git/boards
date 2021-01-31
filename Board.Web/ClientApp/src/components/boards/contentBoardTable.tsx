@@ -3,7 +3,8 @@ import { observer } from "mobx-react";
 
 import { Layout, WidthProvider, Responsive } from "react-grid-layout";
 import { IBoardItem } from "../../interfaces/components";
-import store from "../../reducers/boardScale";
+import scale from "../../reducers/boardScale";
+import store from "../../reducers/boardItems";
 
 import Item from "./contentBoardTableItem";
 
@@ -13,16 +14,12 @@ const MAX_COLS = 3;
 const DEFAULT_COLS = 3;
 const WIDTH_COL = DEFAULT_COLS / MAX_COLS;
 
-interface IProps {
-	items: Array<IBoardItem>;
-	onChange: (item: IBoardItem) => void;
-	onSorted: (items: Array<IBoardItem>) => void;
-	onDelete: (id: string) => void;
-}
+interface IProps {}
 
-const ContentTable: React.FC<IProps> = ({ items, onChange, onSorted, onDelete }) => {
+const ContentTable: React.FC<IProps> = () => {
+	const { items, put, sort, del } = store;
 	const getLayout: (items: Array<IBoardItem>) => Layout[] = items => {
-		const results: Array<Layout> = items
+		const results: Array<Layout> = [...items]
 			.sort((a, b) => a.orderNumber - b.orderNumber)
 			.map((n, i) => ({
 				i: n.id,
@@ -32,7 +29,6 @@ const ContentTable: React.FC<IProps> = ({ items, onChange, onSorted, onDelete })
 				h: 1,
 				minW: WIDTH_COL,
 				maxW: WIDTH_COL,
-				// static: n.id === "add",
 			}));
 
 		return results;
@@ -46,7 +42,7 @@ const ContentTable: React.FC<IProps> = ({ items, onChange, onSorted, onDelete })
 			const item = items.find(m => n.i === m.id) as IBoardItem;
 			return { ...item, orderNumber };
 		});
-		return onSorted(outItems);
+		return sort(outItems);
 	};
 
 	const replace = (_: Layout[], old: Layout, nw: Layout) => {
@@ -64,13 +60,13 @@ const ContentTable: React.FC<IProps> = ({ items, onChange, onSorted, onDelete })
 
 	const divs = items.map(n => (
 		<div key={n.id}>
-			<Item item={n} height={height} onChange={onChange} onDelete={onDelete} />
+			<Item item={n} height={height} onChange={put} onDelete={del} />
 		</div>
 	));
 
 	return (
 		<GridLayout
-			style={{ transform: `scale(${store.scale})`, transformOrigin: "top" }}
+			style={{ transform: `scale(${scale.value})`, transformOrigin: "top" }}
 			className="border-right border-left"
 			layouts={{ lg: layout, md: layout, sm: layout, xs: layout, xxs: layout }}
 			cols={{

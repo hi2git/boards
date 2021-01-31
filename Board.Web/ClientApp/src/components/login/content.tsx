@@ -1,43 +1,22 @@
 import React from "react";
-import { connect } from "react-redux";
+import { observer } from "mobx-react";
 
 import { AlertDanger, LoadablePanel } from "../common";
-import { IUserLogin } from "../../interfaces/components";
-import { IMapActionFunc, IMapStateFunc } from "../../interfaces/redux";
-import * as actions from "../../actions/login";
+
+import store from "../../reducers/login";
 
 import ContentForm from "./contentForm";
 
-interface IStateToProps {
-	isLoading: boolean;
-	error?: string;
-}
+interface IProps {}
 
-interface IDispatchProps {
-	post: (item: IUserLogin) => Promise<void>;
-}
-
-interface IProps extends IStateToProps, IDispatchProps {}
-
-const Content: React.FC<IProps> = ({ isLoading, error, post }) => {
-	console.log(error);
+const Content: React.FC<IProps> = (/*{ isLoading, error, post }*/) => {
+	const { isLoading, error, login } = store;
 	return (
 		<LoadablePanel isLoading={isLoading}>
 			<AlertDanger value={error} />
-			<ContentForm onOk={post} />
+			<ContentForm onOk={login} />
 		</LoadablePanel>
 	);
 };
 
-const mapStateToProps: IMapStateFunc<IStateToProps> = ({ login }) => {
-	const { isLoading, error } = login;
-	return { isLoading, error };
-};
-
-const mapActions: IMapActionFunc<IDispatchProps> = dispatch => {
-	return {
-		post: item => actions.post(item)(dispatch),
-	};
-};
-
-export default connect(mapStateToProps, mapActions)(Content);
+export default observer(Content);

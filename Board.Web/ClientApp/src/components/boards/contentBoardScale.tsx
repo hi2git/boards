@@ -6,9 +6,6 @@ import store from "../../reducers/boardScale";
 
 interface IProps {}
 
-const Toggler: React.FC<IProps> = () => {
-	const { scale, setScale } = store;
-	return <Slider value={scale} onChange={setScale} />;
-};
+const Toggler: React.FC<IProps> = () => <Slider value={store.value} onChange={store.setScale} />;
 
 export default observer(Toggler);
