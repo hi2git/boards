@@ -55,7 +55,6 @@ class BoardItems {
 	};
 	@action private receive = (items: Array<IBoardItem>) => {
 		this.isLoading = false;
-		console.log("receive", items);
 		this.items = [...items];
 		this.error = undefined;
 	};

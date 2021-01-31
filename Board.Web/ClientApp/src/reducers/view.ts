@@ -1,14 +1,27 @@
 import { action, makeAutoObservable, observable } from "mobx";
 import { Property } from "csstype";
 
+import router from "./router";
+
+const DEFAULT_VALUE = "cover";
+const PARAM = "view";
+
 class View {
 	constructor() {
 		makeAutoObservable(this);
 	}
 
-	@observable selected: Property.ObjectFit = "cover";
+	@observable value: Property.ObjectFit = DEFAULT_VALUE;
 
-	@action setSelected = async (value: Property.ObjectFit) => (this.selected = value);
+	@action setValue = async (value: Property.ObjectFit) => {
+		this.value = value;
+		router.setSearch(PARAM, value);
+	};
+
+	@action mount = () => {
+		const value = router.getSearch(PARAM) as Property.ObjectFit;
+		this.value = value ?? DEFAULT_VALUE;
+	};
 }
 
 export default new View();

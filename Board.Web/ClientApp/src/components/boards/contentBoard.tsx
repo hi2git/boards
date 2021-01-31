@@ -5,7 +5,7 @@ import { LoadablePanelFull, FileSelect } from "../common";
 
 import store from "../../reducers/boardItems";
 
-import Toggler from "./contentBoardToggler";
+import Toggler from "./contentBoardControl";
 import Scale from "./contentBoardScale";
 import ContentTable from "./contentBoardTable";
 import ViewBtns from "./contentBoardViews";

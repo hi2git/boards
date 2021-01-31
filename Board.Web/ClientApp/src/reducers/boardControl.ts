@@ -1,16 +1,25 @@
-import { action, autorun, makeAutoObservable, observable } from "mobx";
+import { action, makeAutoObservable, observable } from "mobx";
+import router from "./router";
+
+const DEFAULT_VALUE = false;
+const PARAM = "control";
 
 class BoardControl {
 	constructor() {
 		makeAutoObservable(this);
-		autorun(() => console.log(this.isVisible));
 	}
 
-	@observable isVisible: boolean = false;
+	@observable value: boolean = DEFAULT_VALUE;
 
-	@action setVisible = (value: boolean) => (this.isVisible = value);
+	@action toggle = () => {
+		this.value = !this.value;
+		router.setSearch(PARAM, this.value);
+	};
 
-	@action toggleVisible = () => (this.isVisible = !this.isVisible);
+	@action mount = () => {
+		const value = router.getSearch(PARAM) as boolean;
+		this.value = value ?? DEFAULT_VALUE;
+	};
 }
 
 export default new BoardControl();

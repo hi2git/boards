@@ -3,10 +3,13 @@ import { observer } from "mobx-react";
 
 import { RadioGroup } from "../common";
 
-import store from "../../reducers/view";
+import view from "../../reducers/view";
 interface IProps {}
 
 const Views: React.FC<IProps> = () => {
+	const { value, setValue, mount } = view;
+	React.useEffect(mount, []);
+
 	const btns = [
 		{ id: "cover", name: "Центрировать", icon: "arrows-alt" },
 		{ id: "fill", name: "По ширине", icon: "arrows-alt-h" },
@@ -20,14 +23,7 @@ const Views: React.FC<IProps> = () => {
 			label: <i className={`fas fa-${n.icon}`} />,
 		})) ?? [];
 
-	return (
-		<RadioGroup
-			defaultValue={store.selected}
-			className="float-right"
-			opts={opts}
-			onChange={e => store.setSelected(e.target.value)}
-		/>
-	);
+	return <RadioGroup value={value} className="float-right" opts={opts} onChange={e => setValue(e.target.value)} />;
 };
 
 export default observer(Views);

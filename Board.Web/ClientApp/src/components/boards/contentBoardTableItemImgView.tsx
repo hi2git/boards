@@ -38,14 +38,14 @@ const View: React.FC<IProps> = props => {
 					className={className}
 					src={data}
 					alt="Загрузка..."
-					style={{ height, width: "100%", objectFit: view.selected }}
+					style={{ height, width: "100%", objectFit: view.value }}
 				/>
 			</Tooltip>
 			<div className="absolute" style={{ width: "100%" }}>
 				{palette}
 				<div
 					className="hover-only float-right"
-					style={{ visibility: store.isVisible ? "visible" : "collapse" }}
+					style={{ visibility: store.value ? "visible" : "collapse" }}
 				>
 					<Button title="Палитра" onClick={togglePalette}>
 						<i className="fas fa-palette" />
