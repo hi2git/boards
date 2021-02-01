@@ -5,7 +5,8 @@ import { LoadablePanelFull, FileSelect } from "../common";
 
 import store from "../../reducers/boardItems";
 
-import Toggler from "./contentBoardControl";
+import Control from "./contentBoardControl";
+import Palette from "./contentBoardPalette";
 import Scale from "./contentBoardScale";
 import ContentTable from "./contentBoardTable";
 import ViewBtns from "./contentBoardViews";
@@ -26,7 +27,8 @@ const Board: React.FC<IProps> = () => {
 			<div className="row mt-2">
 				<div className="col-12">
 					<FileSelect title="Добавить пост" item={item} onChange={store.post} isAdd />
-					<Toggler />
+					<Control />
+					<Palette />
 
 					<ViewBtns />
 					<Scale />

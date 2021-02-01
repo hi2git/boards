@@ -8,7 +8,7 @@ interface IProps {}
 
 const Views: React.FC<IProps> = () => {
 	const { value, setValue, mount } = view;
-	React.useEffect(mount, []);
+	React.useEffect(mount, [mount]);
 
 	const btns = [
 		{ id: "cover", name: "Центрировать", icon: "arrows-alt" },

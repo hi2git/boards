@@ -8,7 +8,7 @@ interface IProps {}
 
 const Toggler: React.FC<IProps> = () => {
 	const { value, setValue, mount } = scale;
-	React.useEffect(mount, []);
+	React.useEffect(mount, [mount]);
 
 	return <Slider value={value} onChange={setValue} />;
 };

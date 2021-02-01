@@ -8,6 +8,7 @@ import store from "../../reducers/boardControl";
 import Palette from "./contentBoardTableItemImgViewPalette";
 
 import view from "../../reducers/view";
+import pltStore from "../../reducers/boardPalette";
 
 interface IProps {
 	item: IBoardItem;
@@ -26,10 +27,11 @@ const View: React.FC<IProps> = props => {
 
 	const doneIcon = item.isDone ? "-check" : "";
 
-	const [isPaletteVisible, setPaletteVisible] = useState(false);
-	const togglePalette = () => setPaletteVisible(!isPaletteVisible);
+	// const [isPaletteVisible, setPaletteVisible] = useState(true);
+	// const togglePalette = () => setPaletteVisible(!isPaletteVisible);
 
-	const palette = !isPaletteVisible || !data ? null : <Palette src={data} />;
+	// const palette = !pltStore.value || !isPaletteVisible || !data ? null : <Palette src={data} />;
+	const palette = !pltStore.value || !data ? null : <Palette src={data} />;
 
 	return (
 		<div className="d-flex expander">
@@ -41,15 +43,12 @@ const View: React.FC<IProps> = props => {
 					style={{ height, width: "100%", objectFit: view.value }}
 				/>
 			</Tooltip>
-			<div className="absolute" style={{ width: "100%" }}>
+			<div className="absolute w-100">
 				{palette}
-				<div
-					className="hover-only float-right"
-					style={{ visibility: store.value ? "visible" : "collapse" }}
-				>
-					<Button title="Палитра" onClick={togglePalette}>
+				<div className="hover-only float-right" style={{ visibility: store.value ? "visible" : "collapse" }}>
+					{/* <Button title="Палитра" onClick={togglePalette}>
 						<i className="fas fa-palette" />
-					</Button>
+					</Button> */}
 					<TextCollapse
 						value={item.description}
 						onChange={description => onChange({ ...item, description })}

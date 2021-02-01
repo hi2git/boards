@@ -2,26 +2,26 @@ import React from "react";
 import { observer } from "mobx-react";
 
 import { CheckButton } from "../common";
-import control from "../../reducers/boardControl";
+import store from "../../reducers/boardPalette";
 
 interface IProps {}
 
-const Control: React.FC<IProps> = () => {
-	const { value, toggle, mount } = control;
+const Palette: React.FC<IProps> = () => {
+	const { value, toggle, mount } = store;
 	React.useEffect(mount, [mount]);
 
 	return (
 		<CheckButton
-			title="Показать управление"
+			title="Показать палитру"
 			type={value ? "primary" : "default"}
 			onClick={toggle}
 			ghost={value}
 			skipFocus={!value}
 			stopPropagation={false}
 		>
-			<i className="fas fa-eye" />
+			<i className="fas fa-palette" />
 		</CheckButton>
 	);
 };
 
-export default observer(Control);
+export default observer(Palette);
