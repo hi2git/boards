@@ -27,8 +27,7 @@ const ContentTable: React.FC<IProps> = () => {
 				y: Math.floor(i / MAX_COLS),
 				w: WIDTH_COL,
 				h: 1,
-				minW: WIDTH_COL,
-				maxW: WIDTH_COL,
+				isResizable: false,
 			}));
 
 		return results;
@@ -59,7 +58,7 @@ const ContentTable: React.FC<IProps> = () => {
 	const [height, setHeight] = useState(0);
 
 	const divs = items.map(n => (
-		<div key={n.id}>
+		<div key={n.id} style={{ width: height }}>
 			<Item item={n} height={height} onChange={put} onDelete={del} />
 		</div>
 	));
@@ -77,9 +76,9 @@ const ContentTable: React.FC<IProps> = () => {
 				xxs: DEFAULT_COLS,
 			}}
 			rowHeight={height}
-			margin={[5, 5]}
+			margin={[3, 3]}
 			onDragStop={replace}
-			onWidthChange={n => setHeight(n / 3)}
+			onWidthChange={n => setHeight(n / 3 - 6)}
 		>
 			{divs}
 		</GridLayout>

@@ -21,7 +21,7 @@ const Content: React.FC<IProps> = () => {
 	const { item, isAllowSend, set, send } = store;
 
 	return (
-		<Form ref={ref} item={item} keys={keys} labelCol={{ span: 7 }}>
+		<Form ref={ref} item={item} keys={keys} labelCol={{ span: 4 }}>
 			<ValidatedInput title="Логин" keyName={NAME} isRequired onChange={set} />
 			<ValidatedInput title="Пароль" keyName={PASSWORD} isRequired onChange={set} />
 

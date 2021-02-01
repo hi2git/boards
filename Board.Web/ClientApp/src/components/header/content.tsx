@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import * as urls from "../../constants/urls";
 import getUrl from "../../utils/location";
-import { Menu } from "../common";
+import { Drawer, Menu } from "../common";
 
 import Home from "./contentHome";
 import Contacts from "./contentContacts";

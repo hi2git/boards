@@ -9,7 +9,7 @@ import "./app.css";
 
 const App: React.FC = () => (
 	<div className="app">
-		<div className="container py-2">
+		<div className="container-fluid py-2">
 			<Switch>
 				<Route strict path={urls.LOGIN} component={Unauthorized} />
 				<Route strict path={urls.SIGNUP} component={Unauthorized} />
@@ -21,8 +21,8 @@ const App: React.FC = () => (
 
 const Unauthorized: React.FC = () => {
 	return (
-		<div className="row" style={{ marginTop: "30%" }}>
-			<div className="offset-2 col-8">
+		<div className="row" style={{ marginTop: "20%" }}>
+			<div className="offset-3 col-6">
 				<Switch>
 					<Route strict path={urls.LOGIN} component={Login} />
 					<Route strict path={urls.SIGNUP} component={SignUp} />

@@ -33,7 +33,7 @@ const ContentForm: React.FC<IProps> = ({ onOk }) => {
 			autoComplete="on"
 			keys={[LOGIN, PASSWORD]}
 			item={{ login, password }}
-			labelCol={{ span: 6 }}
+			labelCol={{ span: 4 }}
 			onFinish={submit}
 		>
 			<ValidatedInput keyName={LOGIN} title="Логин" onChange={(_, n) => setLogin(n)} isRequired />
