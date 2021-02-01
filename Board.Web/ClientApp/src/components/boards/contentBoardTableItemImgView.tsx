@@ -37,10 +37,10 @@ const View: React.FC<IProps> = props => {
 		<div className="d-flex expander">
 			<Tooltip title={item.description ?? ""}>
 				<img
-					className={className}
+					className={`w-100 ${className}`}
 					src={data}
 					alt="Загрузка..."
-					style={{ height, width: "100%", objectFit: view.value }}
+					style={{ height, objectFit: view.value }}
 				/>
 			</Tooltip>
 			<div className="absolute w-100">

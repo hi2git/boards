@@ -66,7 +66,7 @@ const ContentTable: React.FC<IProps> = () => {
 
 	return (
 		<GridLayout
-			style={{ transform: `scale(${scale.value})`, transformOrigin: "top" }}
+			style={{ transform: `scale(${scale.value / 100})`, transformOrigin: "top" }}
 			className="border-right border-left"
 			layouts={{ lg: layout, md: layout, sm: layout, xs: layout, xxs: layout }}
 			cols={{

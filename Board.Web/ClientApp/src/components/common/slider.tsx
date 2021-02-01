@@ -4,6 +4,6 @@ import { SliderSingleProps } from "antd/lib/slider";
 
 interface IProps extends SliderSingleProps {}
 
-const Slider: React.FC<IProps> = props => <Wrapped min={0.1} max={1} step={0.05} {...props} />;
+const Slider: React.FC<IProps> = props => <Wrapped min={10} max={100} step={5} {...props} />;
 
 export default Slider;

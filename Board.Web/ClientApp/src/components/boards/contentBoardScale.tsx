@@ -12,7 +12,7 @@ const Toggler: React.FC<IProps> = () => {
 
 	return (
 		<div className="border float-right w-25 mr-2 px-2">
-			<Slider value={value} tipFormatter={n => `${n ?? 0 * 100}%`} onChange={setValue} />
+			<Slider value={value} tipFormatter={n => `${n}%`} onChange={setValue} />
 		</div>
 	);
 };

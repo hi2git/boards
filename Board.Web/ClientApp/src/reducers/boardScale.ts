@@ -1,7 +1,10 @@
 import { action, makeAutoObservable, observable } from "mobx";
 import router from "./router";
 
-const DEFAULT_VALUE = 1;
+const MIN = 1;
+const MAX = 100;
+
+const DEFAULT_VALUE = MAX;
 const PARAM = "scale";
 
 class BoardScale {
@@ -12,8 +15,8 @@ class BoardScale {
 	@observable value: number = DEFAULT_VALUE;
 
 	@action setValue = (value: number) => {
-		this.value = Math.min(value, 1);
-		this.value = Math.max(value, 0.1);
+		this.value = Math.min(value, MAX);
+		this.value = Math.max(value, MIN);
 		router.setSearch(PARAM, this.value, DEFAULT_VALUE);
 	};
 
