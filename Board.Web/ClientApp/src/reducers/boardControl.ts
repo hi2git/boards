@@ -11,14 +11,16 @@ class BoardControl {
 
 	@observable value: boolean = DEFAULT_VALUE;
 
-	@action toggle = () => {
-		this.value = !this.value;
-		router.setSearch(PARAM, this.value);
+	@action private setValue = (value: boolean) => {
+		this.value = value;
+		router.setSearch(PARAM, this.value, DEFAULT_VALUE);
 	};
+
+	@action toggle = () => this.setValue(!this.value);
 
 	@action mount = () => {
 		const value = router.getSearch(PARAM) as boolean;
-		this.value = value ?? DEFAULT_VALUE;
+		this.setValue(value ?? DEFAULT_VALUE);
 	};
 }
 

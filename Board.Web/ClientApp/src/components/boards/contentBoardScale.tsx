@@ -10,7 +10,11 @@ const Toggler: React.FC<IProps> = () => {
 	const { value, setValue, mount } = scale;
 	React.useEffect(mount, [mount]);
 
-	return <Slider value={value} onChange={setValue} />;
+	return (
+		<div className="border float-right w-25 mr-2 px-2">
+			<Slider value={value} tipFormatter={n => `${n ?? 0 * 100}%`} onChange={setValue} />
+		</div>
+	);
 };
 
 export default observer(Toggler);

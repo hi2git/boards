@@ -19,9 +19,9 @@ class CustomRouter {
 
 	@action getSearch = (key: string) => this.search[key];
 
-	@action setSearch = (key: string, value?: string | number | boolean) => {
+	@action setSearch = (key: string, value?: string | number | boolean, def?: typeof value) => {
 		const search = this.search;
-		search[key] = value as any;
+		search[key] = def === value ? undefined : (value as any);
 
 		const paramStr = qs.stringify(search);
 		this.router.push(`?${paramStr}`);

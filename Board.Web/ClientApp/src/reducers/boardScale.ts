@@ -12,13 +12,14 @@ class BoardScale {
 	@observable value: number = DEFAULT_VALUE;
 
 	@action setValue = (value: number) => {
-		this.value = value;
-		router.setSearch(PARAM, value);
+		this.value = Math.min(value, 1);
+		this.value = Math.max(value, 0.1);
+		router.setSearch(PARAM, this.value, DEFAULT_VALUE);
 	};
 
 	@action mount = () => {
-		const value = router.getSearch(PARAM);
-		this.value = (value as number) ?? DEFAULT_VALUE;
+		const value = router.getSearch(PARAM) as number;
+		this.setValue(value ?? DEFAULT_VALUE);
 	};
 }
 

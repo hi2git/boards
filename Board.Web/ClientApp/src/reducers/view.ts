@@ -15,12 +15,12 @@ class View {
 
 	@action setValue = async (value: Property.ObjectFit) => {
 		this.value = value;
-		router.setSearch(PARAM, value);
+		router.setSearch(PARAM, value, DEFAULT_VALUE);
 	};
 
 	@action mount = () => {
 		const value = router.getSearch(PARAM) as Property.ObjectFit;
-		this.value = value ?? DEFAULT_VALUE;
+		this.setValue(value ?? DEFAULT_VALUE);
 	};
 }
 
