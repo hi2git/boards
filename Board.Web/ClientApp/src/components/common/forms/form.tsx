@@ -9,6 +9,8 @@ interface IFunc {
 	(form: FormInstance | null): Promise<boolean>;
 }
 
+export const useForm = () => Frm.useForm()[0];
+
 export const isValidateError: IFunc = async form => {
 	if (!form) return true;
 	try {

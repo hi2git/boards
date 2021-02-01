@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 import * as urls from "../constants/urls";
+import router from "../reducers/router";
 
 const api = axios.create();
 
@@ -28,15 +29,19 @@ const successHandler = (response: AxiosResponse<any>) => {
 const errorHandler = (error: any) =>
 	new Promise((_, reject) => {
 		if (error.response.status === 401 || error.response.status === 403) {
-			window.location.href = urls.LOGIN; // TODO: SPA redirect
+			router.push(urls.LOGIN);
+			reject("Пожалуйста, авторизуйтесь");
+		}
+		if (error.response.status === 404) {
+			reject("Не найдено");
 		}
 
-		if (error.response.status === 401 || error.response.status === 403) {
-			if ([401, 403].indexOf(error.response.status) !== -1) {
-				//authActions.logout();
-			}
-			reject();
-		}
+		// if (error.response.status === 401 || error.response.status === 403) {
+		// 	// if ([401, 403].indexOf(error.response.status) !== -1) {
+		// 	// 	//authActions.logout();
+		// 	// }
+		// 	reject();
+		// }
 
 		return reject(error.response.data.message);
 	});

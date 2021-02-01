@@ -9,13 +9,13 @@ using Board.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Board.Web.Controllers {
-	public class BoardController : AbstractApiController {
+	public class BoardItemController : AbstractApiController {
 		private readonly IUserManager _userMgr;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IBoardItemRepo _repo;
 		private readonly IFileStorage _fileStorage;
 
-		public BoardController(IUserManager userMgr, IUnitOfWork unitOfWork, IBoardItemRepo repo, IFileStorage fileStorage) {
+		public BoardItemController(IUserManager userMgr, IUnitOfWork unitOfWork, IBoardItemRepo repo, IFileStorage fileStorage) {
 			_userMgr = userMgr;
 			_unitOfWork = unitOfWork;
 			_repo = repo;

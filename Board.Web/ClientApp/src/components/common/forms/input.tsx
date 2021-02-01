@@ -3,10 +3,12 @@ import { Rule } from "antd/lib/form";
 
 import { FormItem, requireRule } from ".";
 import { Input } from "..";
+import { IInputProps } from "../input";
 
 const emailRule: Rule = { type: "email", message: "Неверный формат email" };
+const requiredRule: Rule = { whitespace: true, message: "Обязательное поле" };
 
-interface IProps {
+interface IProps extends Omit<IInputProps, "onChange"> {
 	keyName: string;
 	title: string;
 	className?: string;
@@ -19,11 +21,23 @@ interface IProps {
 	isMaxChecked?: boolean;
 	isEmail?: boolean;
 	isAutoFocused?: boolean;
+	isInline?: boolean;
 }
 
 export const ValidatedInput: React.FC<IProps> = props => {
-	const { isAutoFocused, title, keyName, className, type = "text", max = 255, onChange } = props;
-	const { isRequired, isReadOnly, rules = [{ whitespace: true, message: "Обязательное поле" }] } = props;
+	const {
+		isInline,
+		isAutoFocused,
+		title,
+		keyName,
+		className,
+		type = "text",
+		max = 255,
+		onChange,
+		isRequired,
+		isReadOnly,
+		rules = [requiredRule],
+	} = props;
 
 	const maxRule = { max: max, message: `${title} превышает ${max} символов` };
 
@@ -32,7 +46,7 @@ export const ValidatedInput: React.FC<IProps> = props => {
 	allRules = props.isEmail ? [emailRule, ...allRules] : allRules;
 
 	return (
-		<FormItem label={title} name={keyName} className={className} rules={allRules}>
+		<FormItem label={isInline ? null : title} name={keyName} className={className} rules={allRules}>
 			<Input
 				disabled={isReadOnly}
 				placeholder={title}

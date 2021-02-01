@@ -19,7 +19,7 @@ const Control: React.FC<IProps> = () => {
 			skipFocus={!value}
 			stopPropagation={false}
 		>
-			<i className="fas fa-eye" />
+			<i className="fas fa-tools" />
 		</CheckButton>
 	);
 };

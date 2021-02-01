@@ -4,6 +4,6 @@ import { DrawerProps } from "antd/lib/drawer";
 
 interface IProps extends DrawerProps {}
 
-const Drawer: React.FC<IProps> = props => <Wrapped closable={false} placement="left" {...props} />;
+const Drawer: React.FC<IProps> = props => <Wrapped width="20%" closable={false} placement="left" {...props} />;
 
 export default Drawer;
