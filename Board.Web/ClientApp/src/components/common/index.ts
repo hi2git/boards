@@ -14,6 +14,5 @@ export { default as Menu } from "./menu";
 export { default as MenuItem } from "./menuItem";
 export { default as TextArea } from "./textarea";
 export { default as Tooltip } from "./tooltip";
-export { default as TextCollapse } from "./textCollapse";
 export { default as RadioGroup } from "./radioGroup";
 export { default as Slider } from "./slider";

@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { observer } from "mobx-react";
 
 import { IBoardItem } from "../../interfaces/components";
-import { Button, FileSelect, TextCollapse, Tooltip } from "../common";
+import { Button, FileSelect, Tooltip } from "../common";
 import store from "../../reducers/boardControl";
 
 import Palette from "./contentBoardTableItemImgViewPalette";
+import DescDlg from "./contentBoardTableItemImgViewDescr";
 
 import view from "../../reducers/view";
 import pltStore from "../../reducers/boardPalette";
@@ -27,10 +28,6 @@ const View: React.FC<IProps> = props => {
 
 	const doneIcon = item.isDone ? "-check" : "";
 
-	// const [isPaletteVisible, setPaletteVisible] = useState(true);
-	// const togglePalette = () => setPaletteVisible(!isPaletteVisible);
-
-	// const palette = !pltStore.value || !isPaletteVisible || !data ? null : <Palette src={data} />;
 	const palette = !pltStore.value || !data ? null : <Palette src={data} />;
 
 	return (
@@ -46,13 +43,7 @@ const View: React.FC<IProps> = props => {
 			<div className="absolute w-100">
 				{palette}
 				<div className="hover-only float-right" style={{ visibility: store.value ? "visible" : "collapse" }}>
-					{/* <Button title="Палитра" onClick={togglePalette}>
-						<i className="fas fa-palette" />
-					</Button> */}
-					<TextCollapse
-						value={item.description}
-						onChange={description => onChange({ ...item, description })}
-					/>
+					<DescDlg item={item} onChange={description => onChange({ ...item, description })} />
 					<Button title="Отметить отправленным" onClick={() => onChange({ ...item, isDone: !item.isDone })}>
 						<i className={`far fa${doneIcon}-square`} />
 					</Button>
