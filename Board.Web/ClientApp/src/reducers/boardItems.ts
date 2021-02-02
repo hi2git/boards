@@ -1,6 +1,8 @@
 import { action, makeAutoObservable, observable } from "mobx";
 import { IBoardItem } from "../interfaces/components";
 
+import board from "./board";
+
 import service from "../services/boardItems";
 
 class BoardItems {
@@ -14,20 +16,22 @@ class BoardItems {
 
 	@action set = (item: IBoardItem) => (this.items = this.items.map(n => (n.id === item.id ? item : n)));
 
+	@action clear = () => this.request();
+
 	@action fetchAll = async () => {
 		this.request();
 		try {
-			this.receive(await service.getAll());
+			this.receive(await service.getAll(board.value as string));
 		} catch (e) {
 			this.setError(e);
 		}
 	};
 	@action sort = async (items: Array<IBoardItem>) => {
-		await service.sort(items);
+		await service.sort(board.value as string, items);
 		await this.fetchAll();
 	};
 	@action post = async (item: IBoardItem) => {
-		await service.post(item);
+		await service.post(board.value as string, item);
 		await this.fetchAll();
 	};
 	@action put = async (item: IBoardItem) => {

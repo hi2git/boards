@@ -7,7 +7,7 @@ using Board.Domain.Models;
 namespace Board.Domain.Repos {
 	public interface IBoardItemRepo : IRepo<BoardItem> {
 
-		Task<List<BoardItem>> GetAll(Guid userId);
+		Task<List<BoardItem>> GetAll(Guid boardId);
 
 	}
 }

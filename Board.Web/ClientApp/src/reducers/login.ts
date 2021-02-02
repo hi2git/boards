@@ -3,6 +3,9 @@ import { action, makeAutoObservable, observable } from "mobx";
 import service from "../services/login";
 import { IUserLogin } from "../interfaces/components";
 import router from "./router";
+import boards from "./boards";
+import board from "./board";
+import boardItems from "./boardItems";
 import * as urls from "../constants/urls";
 
 class Login {
@@ -18,6 +21,11 @@ class Login {
 		try {
 			await service.post(item);
 			this.receive();
+
+			boardItems.clear();
+			boards.clear();
+			board.clear();
+
 			router.push(urls.HOME);
 		} catch (e) {
 			this.receive(e);

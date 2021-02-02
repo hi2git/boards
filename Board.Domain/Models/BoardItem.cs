@@ -5,15 +5,17 @@ namespace Board.Domain.Models {
 
 		protected BoardItem() { }
 
-		public BoardItem(Guid id, Guid userId, int orderNumber, string description = null) : base(id) {
-			this.UserId = userId;
+		public BoardItem(Guid id, Board board, int orderNumber, string description = null) : base(id) {
+			//this.UserId = userId;
+			this.BoardId = board?.Id ?? throw new ArgumentNullException(nameof(board));
 			OrderNumber = orderNumber;
 			Description = description;
 		}
 
 		#region Props
 
-		public Guid UserId { get; protected set; }
+		//public Guid UserId { get; protected set; }
+		public Guid BoardId { get; set; }
 
 		public int OrderNumber { get; set; }
 
@@ -25,7 +27,8 @@ namespace Board.Domain.Models {
 
 		#region Navigation
 
-		public User User { get; protected set; }
+		//public User User { get; protected set; }
+		public Board Board { get; protected set; }
 
 		#endregion
 	}

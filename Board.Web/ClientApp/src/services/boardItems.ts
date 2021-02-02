@@ -4,21 +4,21 @@ import { IBoardItem } from "../interfaces/components";
 import axios from "./api.axios";
 
 class Service {
-	getAll = async () => {
-		const url = `/api/boardItems`;
+	getAll = async (boardId: string) => {
+		const url = `/api/boardItems?id=${boardId}`;
 		const result = await axios.get<Array<IBoardItem>>(url);
 		return result.data;
 	};
 
-	sort = async (items: Array<IBoardItem>) => {
+	sort = async (boardId: string, items: Array<IBoardItem>) => {
 		const url = `/api/boardItems`;
 		const itms = items.map(n => ({ ...n, id: n.id !== "" ? n.id : null, content: undefined }));
-		await axios.put(url, itms);
+		await axios.put(url, { id: boardId, items: itms });
 	};
 
-	post = async (item: IBoardItem) => {
+	post = async (boardId: string, item: IBoardItem) => {
 		const url = "/api/boardItem";
-		await axios.post(url, { ...item, id: null });
+		await axios.post(url, { id: boardId, item: { ...item, id: null } });
 	};
 
 	putContent = async (item: IBoardItem) => {

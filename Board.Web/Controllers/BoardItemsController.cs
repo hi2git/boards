@@ -23,8 +23,8 @@ namespace Board.Web.Controllers {
 		}
 
 		[HttpGet]
-		public async Task<IEnumerable<BoardItemDTO>> GetAll() {
-			var items = await _repo.GetAll(_userMgr.CurrentUserId);
+		public async Task<IEnumerable<BoardItemDTO>> GetAll([FromQuery] Guid id) { // TODO add user check
+			var items = await _repo.GetAll(id);//_userMgr.CurrentUserId);
 
 			var dtos = new List<BoardItemDTO>();
 			foreach (var n in items) {
@@ -33,10 +33,11 @@ namespace Board.Web.Controllers {
 			return dtos;
 		}
 
+		//public async Task Sort([FromBody] IEnumerable<BoardItemDTO> dtos) {
 		[HttpPut]
-		public async Task Sort([FromBody] IEnumerable<BoardItemDTO> dtos) {
-			var origins = await _repo.GetAll(_userMgr.CurrentUserId);
-			var items = dtos.OrderBy(n => n.OrderNumber).Select((n, i) => this.Map(n.Id.Value, i, origins));
+		public async Task Sort([FromBody] SortDTO dto) { // TODO add user check
+			var origins = await _repo.GetAll(dto.Id);//_userMgr.CurrentUserId);
+			var items = dto.Items.OrderBy(n => n.OrderNumber).Select((n, i) => this.Map(n.Id.Value, i, origins));
 
 			foreach (var itm in items) {
 				await _repo.Update(itm);
@@ -56,6 +57,12 @@ namespace Board.Web.Controllers {
 			Description = n.Description,
 			IsDone = n.IsDone
 		};
+
+		public class SortDTO {
+			public Guid Id { get; set; }
+
+			public IEnumerable<BoardItemDTO> Items { get; set; }
+		}
 
 	}
 

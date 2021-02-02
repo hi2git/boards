@@ -1,9 +1,8 @@
-import { storeAnnotation } from "mobx/dist/internal";
 import React from "react";
 import { Button } from "../common";
 import { Form, FormItem, isValidateError, useForm, ValidatedInput } from "../common/forms";
 
-import store from "../../reducers/boards";
+import boards from "../../reducers/boards";
 import { IIdName } from "../../interfaces/components";
 
 const NAME = "name";
@@ -17,7 +16,7 @@ const ContentForm: React.FC<IProps> = () => {
 	const [isError, setError] = React.useState(true);
 
 	return (
-		<Form form={form} keys={[NAME]} item={item} onFinish={() => store.post(item)} layout="inline">
+		<Form form={form} keys={[NAME]} item={item} onFinish={() => boards.post(item)} layout="inline">
 			<ValidatedInput
 				title="Название"
 				keyName={NAME}

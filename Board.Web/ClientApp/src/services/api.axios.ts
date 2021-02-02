@@ -28,6 +28,13 @@ const successHandler = (response: AxiosResponse<any>) => {
 
 const errorHandler = (error: any) =>
 	new Promise((_, reject) => {
+		if (error.response.status === 400) {
+			const entries = Object.entries(error.response.data.errors).map(n => `${n[0]} - ${n[1]}`);
+			const msg = entries.join();
+			console.log(msg);
+			reject(msg);
+		}
+
 		if (error.response.status === 401 || error.response.status === 403) {
 			router.push(urls.LOGIN);
 			reject("Пожалуйста, авторизуйтесь");

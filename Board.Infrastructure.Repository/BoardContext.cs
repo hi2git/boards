@@ -13,6 +13,7 @@ namespace Board.Infrastructure.Repository {
 		#region Props
 
 		public virtual DbSet<User> Users { get; set; }
+		public virtual DbSet<BoardItem> Boards { get; set; }
 		public virtual DbSet<BoardItem> BoardItems { get; set; }
 
 		#endregion
@@ -34,6 +35,15 @@ namespace Board.Infrastructure.Repository {
 					.HasForeignKey(nameof => nameof.RoleId);
 			});
 
+			modelBuilder.Entity<Domain.Models.Board>(builder => {
+				builder.ToTable(typeof(Domain.Models.Board).Name);
+				builder.HasKey(e => e.Id);
+				builder.Property(n => n.Name).IsRequired().HasMaxLength(50);
+				builder.HasOne(n => n.User)
+					.WithMany(n => n.Boards)
+					.HasForeignKey(n => n.UserId);
+			});
+
 			modelBuilder.Entity<BoardItem>(builder => {
 				builder.ToTable(typeof(BoardItem).Name);
 				builder.HasKey(e => e.Id);
@@ -41,9 +51,9 @@ namespace Board.Infrastructure.Repository {
 				builder.Property(n => n.Description);
 				builder.Property(n => n.IsDone).IsRequired();
 
-				builder.HasOne(n => n.User)
+				builder.HasOne(n => n.Board)
 					.WithMany(n => n.BoardItems)
-					.HasForeignKey(n => n.UserId);
+					.HasForeignKey(n => n.BoardId);
 			});
 
 			modelBuilder.Entity<Role>(builder => {

@@ -12,37 +12,36 @@ namespace Board.Web.Controllers {
 	public class BoardItemController : AbstractApiController {
 		private readonly IUserManager _userMgr;
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IBoardRepo _boardRepo;
 		private readonly IBoardItemRepo _repo;
 		private readonly IFileStorage _fileStorage;
 
-		public BoardItemController(IUserManager userMgr, IUnitOfWork unitOfWork, IBoardItemRepo repo, IFileStorage fileStorage) {
+		public BoardItemController(IUserManager userMgr, IUnitOfWork unitOfWork, IBoardRepo boardRepo, IBoardItemRepo repo, IFileStorage fileStorage) {
 			_userMgr = userMgr;
 			_unitOfWork = unitOfWork;
+			_boardRepo = boardRepo;
 			_repo = repo;
 			_fileStorage = fileStorage;
 		}
 
 		[HttpPost]
-		public async Task Create([FromBody] BoardItemDTO item) {
+		public async Task Create([FromBody] IdItemDTO dto) {
 			var id = Guid.NewGuid();
 
-			var newItem = new BoardItem(id, _userMgr.CurrentUserId, item.OrderNumber, item.Description);
-			await _repo.Create(newItem);
+			var board = await _boardRepo.Get(dto.Id) ?? throw new ArgumentException($"Отсутствует доска {dto.Id}");
+			var item = new BoardItem(id, board, dto.Item.OrderNumber, dto.Item.Description); // TODO: check user // _userMgr.CurrentUserId
+
+			await _repo.Create(item);
 			await _unitOfWork.Commit();
 
-			await _fileStorage.Write(id, item.Content);
+			await _fileStorage.Write(id, dto.Item.Content);
 		}
 
 		[HttpPut("content")]
-		public Task UpdateContent([FromBody] BoardItemDTO item) {
-			// TODO: check user before modify
-
-			return _fileStorage.Write(item.Id.Value, item.Content);
-		}
+		public Task UpdateContent([FromBody] BoardItemDTO item) => _fileStorage.Write(item.Id.Value, item.Content); // TODO: check user before modify
 
 		[HttpPut]
-		public async Task Update([FromBody] BoardItemDTO item) {
-			// TODO: check user before modify
+		public async Task Update([FromBody] BoardItemDTO item) { // TODO: check user before modify
 			var entity = await _repo.Get(item.Id.Value);
 			entity = this.Map(item, entity);
 			await _repo.Update(entity);
@@ -50,8 +49,7 @@ namespace Board.Web.Controllers {
 		}
 
 		[HttpDelete]
-		public async Task Delete([FromQuery] Guid id) {
-			// TODO: check user before modify
+		public async Task Delete([FromQuery] Guid id) { // TODO: check user before modify
 			var entity = await _repo.Get(id);
 			await _repo.Delete(entity);
 			await _unitOfWork.Commit();
@@ -65,17 +63,11 @@ namespace Board.Web.Controllers {
 			return entity;
 		}
 
-		//public class BoardItemFullDTO {
-		//	public Guid UserId { get; set; }
+		public class IdItemDTO {
+			public Guid Id { get; set; }
 
-		//	public BoardItemDTO Item { get; set; }
-		//}
-
-		//public class BoardItemDeleteDTO {
-		//	public Guid UserId { get; set; }
-
-		//	public Guid Id { get; set; }
-		//}
+			public BoardItemDTO Item { get; set; }
+		}
 
 	}
 }

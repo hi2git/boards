@@ -12,11 +12,7 @@ interface IProps {}
 
 const SideContent: React.FC<IProps> = () => {
 	const { value, toggle } = sidebar;
-	const { isLoading, error, fetchAll } = boards;
-
-	React.useEffect(() => {
-		fetchAll();
-	}, [fetchAll]);
+	const { isLoading, error } = boards;
 
 	return (
 		<Drawer visible={value} onClose={toggle}>

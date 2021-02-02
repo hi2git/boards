@@ -2,6 +2,7 @@ import { action, makeAutoObservable, observable } from "mobx";
 
 import { IIdName } from "../interfaces/components";
 import service from "../services/boards";
+import board from "./board";
 
 class Store {
 	constructor() {
@@ -9,13 +10,16 @@ class Store {
 	}
 
 	@observable items: Array<IIdName> = [];
-	@observable isLoading: boolean = false;
+	@observable isLoading: boolean = true;
 	@observable error: string | undefined = undefined;
+
+	@action clear = () => this.request();
 
 	@action fetchAll = async () => {
 		this.request();
 		try {
 			this.receive(await service.getAll());
+			board.setValue(this.items[0]?.id);
 		} catch (e) {
 			this.receive([], e);
 		}

@@ -26,7 +26,10 @@ namespace Board.Domain.Models {
 
 		public Role Role { get; protected set; }
 
-		public ICollection<BoardItem> BoardItems { get; protected set; }
+		//public ICollection<BoardItem> BoardItems { get; protected set; }
+
+		public ICollection<Board> Boards { get; protected set; } = new HashSet<Board>();
+
 
 		#endregion
 	}

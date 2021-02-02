@@ -22,8 +22,9 @@ namespace Board.Infrastructure.Repository {
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 			services.AddScoped(typeof(IRepo<>), typeof(AbstractRepo<>));
 
-			services.AddScoped<IBoardItemRepo, BoardItemRepo>();
 			services.AddScoped<IUserRepo, UserRepo>();
+			services.AddScoped<IBoardItemRepo, BoardItemRepo>();
+			services.AddScoped<IBoardRepo, BoardRepo>();
 
 		}
 
