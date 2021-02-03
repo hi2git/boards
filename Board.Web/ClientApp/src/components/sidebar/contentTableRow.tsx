@@ -31,7 +31,7 @@ const Row: React.FC<IProps> = ({ item }) => {
 
 	const del = async () => confirm({ title: "Подтвердите удаление", onOk: () => boards.del(newItem.id) });
 
-	const borderCls = board.value === item.id ? "border-left border-right" : undefined;
+	const borderCls = board.value?.id === item.id ? "border-left border-right" : undefined;
 
 	return (
 		<tr className={`row ${borderCls}`}>
@@ -46,7 +46,13 @@ const Row: React.FC<IProps> = ({ item }) => {
 					onCancel={cancel}
 					onSubmit={submit}
 				/>
-				<Button className="px-0" title={boards.deleteTitle} type="link" onClick={del} disabled={!boards.canDelete}>
+				<Button
+					className="px-0"
+					title={boards.deleteTitle}
+					type="link"
+					onClick={del}
+					disabled={!boards.canDelete}
+				>
 					<i className="fas fa-times" />
 				</Button>
 			</td>
@@ -76,7 +82,7 @@ const ValueCell: React.FC<IValueCellProps> = ({ isEdit, item, onChange, onSubmit
 			/>
 		</Form>
 	) : (
-		<Button title="Показать" type="link" className="px-0" onClick={() => board.setValue(item.id)}>
+		<Button title="Показать" type="link" className="px-0" onClick={() => board.setValue(item)}>
 			{item.name}
 		</Button>
 	);

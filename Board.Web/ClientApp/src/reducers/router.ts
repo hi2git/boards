@@ -1,20 +1,34 @@
-import { action, computed, makeAutoObservable } from "mobx";
+import { action, autorun, computed, makeAutoObservable } from "mobx";
 import { RouterStore } from "mobx-react-router";
 import qs from "query-string";
 
+import * as urls from "../constants/urls";
+
 class CustomRouter {
-	private _router = new RouterStore();
+	private static _router = new RouterStore();
 
 	constructor() {
 		makeAutoObservable(this);
 	}
 
-	public get router() {
-		return this._router;
+	@computed public get router() {
+		return CustomRouter._router;
 	}
 
 	@computed private get search() {
-		return qs.parse(this.router.location.search, { parseBooleans: true, parseNumbers: true });
+		return qs.parse(this.router.location?.search, { parseBooleans: true, parseNumbers: true });
+	}
+
+	@computed get startPath() {
+		const path = "/" + this.router.location?.pathname.split("/")[1]?.toLowerCase();
+		switch (path) {
+			case urls.SETTINGS:
+				return urls.SETTINGS;
+			case urls.CONTACTS:
+				return urls.CONTACTS;
+			default:
+				return urls.HOME;
+		}
 	}
 
 	@action getSearch = (key: string) => this.search[key];

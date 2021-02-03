@@ -8,7 +8,7 @@ interface IProps {}
 
 const Item: React.FC<IProps> = props => {
 	return (
-		<MenuItem title="Контакты" className="float-right" {...props}>
+		<MenuItem title="Настройки" className="float-right" {...props}>
 			<Link to={urls.SETTINGS}>
 				Настройки <i className="fas fa-cog ml-1" />
 			</Link>

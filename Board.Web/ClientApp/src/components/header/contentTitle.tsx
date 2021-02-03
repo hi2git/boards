@@ -1,19 +1,24 @@
+import { observer } from "mobx-react";
 import React from "react";
 import { Link } from "react-router-dom";
 
 import * as urls from "../../constants/urls";
 import { MenuItem } from "../common";
 
+import board from "../../reducers/board";
+
+import "./contentTitle.css";
+
 interface IProps {}
 
 const Item: React.FC<IProps> = props => {
 	return (
-		<MenuItem className="float-left ml-0" title="Лента" {...props}>
+		<MenuItem title={board.value?.name} {...props}>
 			<Link to={urls.HOME}>
-				Лента <i className="fas fa-th ml-1" />
+				<span className="header-title">{board.value?.name}</span>
 			</Link>
 		</MenuItem>
 	);
 };
 
-export default Item;
+export default observer(Item);

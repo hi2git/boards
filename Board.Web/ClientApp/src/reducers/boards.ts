@@ -37,8 +37,8 @@ class Store {
 		this.request();
 		try {
 			const id = await service.post(name);
-			await board.setValue(id);
 			await this.fetchAll();
+			await board.setValue(this.get(id));
 		} catch (e) {
 			this.receive(undefined, e);
 		}
@@ -56,7 +56,7 @@ class Store {
 		this.request();
 		try {
 			await service.del(id);
-			if (board.value === id) await board.setValue(this.first);
+			if (board.value?.id === id) await board.setValue(this.first);
 			await this.fetchAll();
 		} catch (e) {
 			this.receive(undefined, e);
@@ -76,8 +76,10 @@ class Store {
 	};
 
 	@computed private get first() {
-		return this.items[0]?.id;
+		return this.items[0];
 	}
+
+	get = (id: string) => this.items?.find(n => n.id === id);
 }
 
 export default new Store();

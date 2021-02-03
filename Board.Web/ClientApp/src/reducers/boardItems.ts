@@ -21,17 +21,17 @@ class BoardItems {
 	@action fetchAll = async () => {
 		this.request();
 		try {
-			this.receive(await service.getAll(board.value as string));
+			this.receive(await service.getAll(board.value?.id as string));
 		} catch (e) {
 			this.setError(e);
 		}
 	};
 	@action sort = async (items: Array<IBoardItem>) => {
-		await service.sort(board.value as string, items);
+		await service.sort(board.value?.id as string, items);
 		await this.fetchAll();
 	};
 	@action post = async (item: IBoardItem) => {
-		await service.post(board.value as string, item);
+		await service.post(board.value?.id as string, item);
 		await this.fetchAll();
 	};
 	@action put = async (item: IBoardItem) => {
