@@ -4,7 +4,7 @@ import router from "./router";
 const MIN = 1;
 const MAX = 100;
 
-const DEFAULT_VALUE = MAX;
+const DEFAULT_VALUE = 70;
 const PARAM = "scale";
 
 class BoardScale {
