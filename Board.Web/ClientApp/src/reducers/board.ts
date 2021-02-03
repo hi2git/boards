@@ -14,7 +14,6 @@ class Store {
 	@observable value: string | undefined = DEFAULT_VALUE;
 
 	@action setValue = async (value?: string) => {
-		console.log("set board", value);
 		this.value = value;
 		router.setSearch(PARAM, value, DEFAULT_VALUE);
 		if (!!value) await boardItems.fetchAll();

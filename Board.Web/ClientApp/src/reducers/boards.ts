@@ -19,7 +19,6 @@ class Store {
 		this.request();
 		try {
 			this.receive(await service.getAll());
-			// board.setValue(this.items[0]?.id);
 			board.mount(this.items[0]?.id);
 		} catch (e) {
 			this.receive([], e);
@@ -30,8 +29,8 @@ class Store {
 		this.request();
 		try {
 			const id = await service.post(name);
-			await this.fetchAll();
 			await board.setValue(id);
+			await this.fetchAll();
 		} catch (e) {
 			this.receive(undefined, e);
 		}
