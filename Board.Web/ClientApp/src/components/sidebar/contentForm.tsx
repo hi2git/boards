@@ -3,7 +3,6 @@ import { Button } from "../common";
 import { Form, FormItem, isValidateError, useForm, ValidatedInput } from "../common/forms";
 
 import boards from "../../reducers/boards";
-import { IIdName } from "../../interfaces/components";
 
 const NAME = "name";
 
@@ -12,22 +11,23 @@ interface IProps {}
 const ContentForm: React.FC<IProps> = () => {
 	const form = useForm();
 
-	const [item, setItem] = React.useState<IIdName>({ id: "", name: "" });
 	const [isError, setError] = React.useState(true);
+	const [name, setName] = React.useState("");
 
 	return (
-		<Form form={form} keys={[NAME]} item={item} onFinish={() => boards.post(item)} layout="inline">
+		<Form form={form} keys={[NAME]} item={{ name }} onFinish={() => boards.post(name)} layout="inline">
 			<ValidatedInput
+				className="mx-0"
 				title="Название"
 				keyName={NAME}
 				isRequired
 				isInline
-				onChange={async (k, v) => {
-					await setItem({ ...item, [k]: v });
+				onChange={async (_, v) => {
+					await setName(v);
 					setError(await isValidateError(form));
 				}}
 			/>
-			<FormItem>
+			<FormItem className="mx-0">
 				<Button title="Добавить" htmlType="submit" disabled={isError}>
 					<i className="fas fa-plus" />
 				</Button>

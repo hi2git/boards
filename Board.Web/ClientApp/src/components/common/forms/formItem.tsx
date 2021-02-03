@@ -6,10 +6,6 @@ export const requireRule: Rule = { required: true, message: "Обязатель�
 
 interface IProps extends FormItemProps {}
 
-const FormItem: React.FC<IProps> = ({ className = "", children, ...props }) => (
-	<Form.Item {...props} className={`my-2 ${className}`}>
-		{children}
-	</Form.Item>
-);
+const FormItem: React.FC<IProps> = ({ children, ...props }) => <Form.Item {...props}>{children}</Form.Item>;
 
 export default FormItem;

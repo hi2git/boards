@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 
 import { LoadablePanelFull, FileSelect } from "../common";
 
-import store from "../../reducers/boardItems";
+import boardItems from "../../reducers/boardItems";
 
 import Sidebar from "./contentBoardSideBar";
 import Control from "./contentBoardControl";
@@ -12,23 +12,19 @@ import Scale from "./contentBoardScale";
 import ContentTable from "./contentBoardTable";
 import ViewBtns from "./contentBoardViews";
 
-const item = { id: "", isDone: false, orderNumber: store.items.length };
+export const addItem = { id: "", isDone: false, orderNumber: boardItems.items.length };
 
 interface IProps {}
 
 const Board: React.FC<IProps> = () => {
-	const { isLoading, error } = store;
-
-	React.useEffect(() => {
-		store.fetchAll();
-	}, []);
+	const { isLoading, error } = boardItems;
 
 	return (
 		<>
 			<div className="row mt-2">
 				<div className="col-12">
 					<Sidebar />
-					<FileSelect title="Добавить пост" item={item} onChange={store.post} isAdd />
+					<FileSelect title="Добавить пост" item={addItem} onChange={boardItems.post} isAdd />
 					<Control />
 					<Palette />
 

@@ -15,11 +15,13 @@ namespace Board.Web.Controllers {
 		private readonly IUserManager _userMgr;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IBoardItemRepo _repo;
+		private readonly IFileStorage _fileStorage;
 
-		public BoardItemsController(IUserManager userMgr, IUnitOfWork unitOfWork, IBoardItemRepo repo) {
+		public BoardItemsController(IUserManager userMgr, IUnitOfWork unitOfWork, IBoardItemRepo repo, IFileStorage fileStorage) {
 			_userMgr = userMgr;
 			_unitOfWork = unitOfWork;
 			_repo = repo;
+			_fileStorage = fileStorage;
 		}
 
 		[HttpGet]
@@ -33,14 +35,14 @@ namespace Board.Web.Controllers {
 			return dtos;
 		}
 
-		//public async Task Sort([FromBody] IEnumerable<BoardItemDTO> dtos) {
 		[HttpPut]
 		public async Task Sort([FromBody] SortDTO dto) { // TODO add user check
 			var origins = await _repo.GetAll(dto.Id);//_userMgr.CurrentUserId);
 			var items = dto.Items.OrderBy(n => n.OrderNumber).Select((n, i) => this.Map(n.Id.Value, i, origins));
 
-			foreach (var itm in items) {
-				await _repo.Update(itm);
+			foreach (var item in items) {
+				await _repo.Update(item);
+				await _fileStorage.Delete(item.Id);
 			}
 			await _unitOfWork.Commit();
 		}

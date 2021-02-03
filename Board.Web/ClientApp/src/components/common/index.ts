@@ -9,7 +9,7 @@ export { default as AlertPanel } from "./alertPanel";
 export { default as AlertDanger } from "./alertDanger";
 export { default as Checkbox } from "./checkbox";
 export { default as Input } from "./input";
-export { default as Modal } from "./modal";
+export { default as Modal, confirm } from "./modal";
 export { default as Menu } from "./menu";
 export { default as MenuItem } from "./menuItem";
 export { default as TextArea } from "./textarea";

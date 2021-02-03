@@ -1,7 +1,10 @@
 import React from "react";
+import { observer } from "mobx-react";
 
 import { IIdName } from "../../interfaces/components";
-import { Button, Input } from "../common";
+import { Button, confirm } from "../common";
+import { Form, useForm, ValidatedInput } from "../common/forms";
+import nameof from "../../utils/nameof";
 import boards from "../../reducers/boards";
 import board from "../../reducers/board";
 
@@ -15,20 +18,35 @@ const Row: React.FC<IProps> = ({ item }) => {
 	const [isEdit, setEdit] = React.useState(false); // store.put(item)
 	const [name, setName] = React.useState(item.name);
 
-	const newItem = { ...item, name };
-	const submit = () => {
+	let newItem = { ...item, name };
+	const submit = async () => {
 		setEdit(false);
-		boards.put(newItem);
+		await boards.put(newItem);
 	};
 
+	const cancel = async () => {
+		setEdit(false);
+		await setName(item.name);
+	};
+
+	const del = async () => confirm({ title: "Подтвердите удаление", onOk: () => boards.del(newItem.id) });
+
+	const borderCls = board.value === item.id ? "border-left border-right" : undefined;
+
 	return (
-		<tr>
-			<td>
-				<ValueCell isEdit={isEdit} item={newItem} onChange={setName} />
+		<tr className={`row ${borderCls}`}>
+			<td className="col-8">
+				<ValueCell isEdit={isEdit} item={newItem} onChange={setName} onSubmit={submit} />
 			</td>
-			<td className="text-right">
-				<EditSaveBtn isEdit={isEdit} onStartEdit={() => setEdit(true)} onSubmit={submit} />
-				<Button title="Удалить" type="link" onClick={() => boards.del(newItem.id)}>
+			<td className="col-4 pl-0 text-right">
+				<EditSaveBtn
+					isEdit={isEdit}
+					isDisabled={!name}
+					onStartEdit={() => setEdit(true)}
+					onCancel={cancel}
+					onSubmit={submit}
+				/>
+				<Button className="px-0" title="Удалить" type="link" onClick={del}>
 					<i className="fas fa-times" />
 				</Button>
 			</td>
@@ -36,19 +54,32 @@ const Row: React.FC<IProps> = ({ item }) => {
 	);
 };
 
+const NAME = nameof<IIdName>("name");
+
 interface IValueCellProps {
 	isEdit: boolean;
 	item: IIdName;
 	onChange: (value: string) => void;
+	onSubmit: () => void;
 }
 
-const ValueCell: React.FC<IValueCellProps> = ({ isEdit, item, onChange }) =>
-	isEdit ? (
-		<Input value={item.name} onChange={e => onChange(e.target.value)} />
+const ValueCell: React.FC<IValueCellProps> = ({ isEdit, item, onChange, onSubmit }) => {
+	return isEdit ? (
+		<Form keys={[NAME]} item={item} layout="inline" onFinish={onSubmit}>
+			<ValidatedInput
+				title="Название"
+				keyName={NAME}
+				isInline
+				isRequired
+				value={item.name}
+				onChange={(_, value) => onChange(value)}
+			/>
+		</Form>
 	) : (
-		<Button title="Показать" type="link" onClick={() => board.setValue(item.id)}>
+		<Button title="Показать" type="link" className="px-0" onClick={() => board.setValue(item.id)}>
 			{item.name}
 		</Button>
 	);
+};
 
-export default Row;
+export default observer(Row);

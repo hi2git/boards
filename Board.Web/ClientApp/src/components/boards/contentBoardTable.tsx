@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react";
+import { Link } from "react-router-dom";
 
 import { Layout, WidthProvider, Responsive } from "react-grid-layout";
 import { IBoardItem } from "../../interfaces/components";
 import scale from "../../reducers/boardScale";
-import store from "../../reducers/boardItems";
+import boardItems from "../../reducers/boardItems";
 
 import Item from "./contentBoardTableItem";
+import { FileSelect } from "../common";
+import { addItem } from "./contentBoard";
 
 const GridLayout = WidthProvider(Responsive);
 
@@ -17,7 +20,18 @@ const WIDTH_COL = DEFAULT_COLS / MAX_COLS;
 interface IProps {}
 
 const ContentTable: React.FC<IProps> = () => {
-	const { items, put, sort, del } = store;
+	const { items, put, sort, del } = boardItems;
+
+	const [height, setHeight] = useState(0);
+
+	if (items.length < 1)
+		return (
+			<p>
+				Для добавления новых постов нажмите{" "}
+				<FileSelect title="Добавить пост" item={addItem} onChange={boardItems.post} isAdd />
+			</p>
+		);
+
 	const getLayout: (items: Array<IBoardItem>) => Layout[] = items => {
 		const results: Array<Layout> = [...items]
 			.sort((a, b) => a.orderNumber - b.orderNumber)
@@ -54,8 +68,6 @@ const ContentTable: React.FC<IProps> = () => {
 		layout[nwIndex].y = nw.y;
 		return change(layout);
 	};
-
-	const [height, setHeight] = useState(0);
 
 	const divs = items.map(n => (
 		<div key={n.id} style={{ width: height }}>

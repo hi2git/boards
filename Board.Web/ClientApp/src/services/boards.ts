@@ -10,9 +10,10 @@ class Service {
 		return result.data;
 	};
 
-	post = async (item: IIdName) => {
+	post = async (value: string) => {
 		const url = "/api/board";
-		await axios.post(url, { ...item, id: null });
+		const result = await axios.post<string>(url, { value });
+		return result.data;
 	};
 
 	put = async (item: IIdName) => {

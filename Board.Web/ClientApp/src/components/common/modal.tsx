@@ -1,6 +1,8 @@
 import React from "react";
 import { Modal as Mdl } from "antd";
-import { ModalProps } from "antd/lib/modal";
+import { ModalFuncProps, ModalProps } from "antd/lib/modal";
+
+export const confirm = (props: ModalFuncProps) => Mdl.confirm(props);
 
 interface IProps extends ModalProps {
 	// isVisible: boolean;

@@ -19,17 +19,19 @@ class Store {
 		this.request();
 		try {
 			this.receive(await service.getAll());
-			board.setValue(this.items[0]?.id);
+			// board.setValue(this.items[0]?.id);
+			board.mount();
 		} catch (e) {
 			this.receive([], e);
 		}
 	};
 
-	@action post = async (item: IIdName) => {
+	@action post = async (name: string) => {
 		this.request();
 		try {
-			await service.post(item);
+			const id = await service.post(name);
 			await this.fetchAll();
+			await board.setValue(id);
 		} catch (e) {
 			this.receive(undefined, e);
 		}
