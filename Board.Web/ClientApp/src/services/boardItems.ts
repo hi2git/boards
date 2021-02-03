@@ -4,35 +4,44 @@ import { IBoardItem } from "../interfaces/components";
 import axios from "./api.axios";
 
 class Service {
-	getAll = async (boardId: string) => {
+	getAll = async (boardId?: string) => {
+		if (!boardId) {
+			console.error("boardId is undefined");
+			return [];
+		}
 		const url = `/api/boardItems?id=${boardId}`;
 		const result = await axios.get<Array<IBoardItem>>(url);
 		return result.data;
 	};
 
-	sort = async (boardId: string, items: Array<IBoardItem>) => {
+	sort = async (items: Array<IBoardItem>, boardId?: string) => {
+		if (!boardId) return console.error("boardId is undefined");
 		const url = `/api/boardItems`;
 		const itms = items.map(n => ({ ...n, id: n.id !== "" ? n.id : null, content: undefined }));
 		await axios.put(url, { id: boardId, items: itms });
 	};
 
-	post = async (boardId: string, item: IBoardItem) => {
+	post = async (item: IBoardItem, boardId?: string) => {
+		if (!boardId) return console.error("boardId is undefined");
 		const url = "/api/boardItem";
 		await axios.post(url, { id: boardId, item: { ...item, id: null } });
 	};
 
-	putContent = async (item: IBoardItem) => {
+	putContent = async (item: IBoardItem, boardId?: string) => {
+		if (!boardId) return console.error("boardId is undefined");
 		const url = "/api/boardItem/content";
-		await axios.put(url, item);
+		await axios.put(url, { id: boardId, item });
 	};
 
-	put = async (item: IBoardItem) => {
+	put = async (item: IBoardItem, boardId?: string) => {
+		if (!boardId) return console.error("boardId is undefined");
 		const url = "/api/boardItem";
-		await axios.put(url, { ...item, content: undefined });
+		await axios.put(url, { id: boardId, item: { ...item, content: undefined } });
 	};
 
-	del = async (id: string) => {
-		const paramStr = qs.stringify({ id });
+	del = async (id: string, boardId?: string) => {
+		if (!boardId) return console.error("boardId is undefined");
+		const paramStr = qs.stringify({ id: boardId, item: id });
 		const url = `/api/boardItem?${paramStr}`;
 		await axios.delete(url);
 	};

@@ -38,23 +38,23 @@ namespace Board.Web.Controllers {
 		}
 
 		[HttpPut("content")]
-		public Task UpdateContent([FromBody] BoardItemDTO item) => _fileStorage.Write(item.Id.Value, item.Content); // TODO: check user before modify
+		public Task UpdateContent([FromBody] IdItemDTO dto) => _fileStorage.Write(dto.Item.Id.Value, dto.Item.Content); // TODO: check user before modify
 
 		[HttpPut]
-		public async Task Update([FromBody] BoardItemDTO item) { // TODO: check user before modify
-			var entity = await _repo.Get(item.Id.Value);
-			entity = this.Map(item, entity);
+		public async Task Update([FromBody] IdItemDTO dto) { // TODO: check user before modify
+			var entity = await _repo.Get(dto.Item.Id.Value);
+			entity = this.Map(dto.Item, entity);
 			await _repo.Update(entity);
 			await _unitOfWork.Commit();
 		}
 
 		[HttpDelete]
-		public async Task Delete([FromQuery] Guid id) { // TODO: check user before modify
-			var entity = await _repo.Get(id);
+		public async Task Delete([FromQuery] IdItemDTO<Guid> dto) { // TODO: check user before modify
+			var entity = await _repo.Get(dto.Item);
 			await _repo.Delete(entity);
 			await _unitOfWork.Commit();
 
-			await _fileStorage.Delete(id);
+			await _fileStorage.Delete(dto.Item);
 		}
 
 		private BoardItem Map(BoardItemDTO dto, BoardItem entity) {
@@ -63,10 +63,12 @@ namespace Board.Web.Controllers {
 			return entity;
 		}
 
-		public class IdItemDTO {
+		public class IdItemDTO : IdItemDTO<BoardItemDTO> { }
+
+		public class IdItemDTO<T> {
 			public Guid Id { get; set; }
 
-			public BoardItemDTO Item { get; set; }
+			public T Item { get; set; }
 		}
 
 	}

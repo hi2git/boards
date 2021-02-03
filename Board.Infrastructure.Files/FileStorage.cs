@@ -22,6 +22,6 @@ namespace Board.Infrastructure.Files {
 
 		//public Task<string> Read(Guid id) => File.ReadAllTextAsync(PathOf(id));
 
-		public string PathOf(Guid id) => Path.Combine(_appSettings.BoardPath, id.ToString());
+		public string PathOf(Guid id) => Path.Combine(_appSettings.BoardPath, $"{id}.jpg");
 	}
 }

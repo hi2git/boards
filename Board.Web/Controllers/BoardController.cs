@@ -49,8 +49,8 @@ namespace Board.Web.Controllers {
 			var board = await _boardRepo.GetWithItems(id) ?? throw new ArgumentException($"Отсутствует доска {id}");
 
 			foreach (var item in board.BoardItems) {
-				await _itemRepo.Delete(item);
 				await _fileStorage.Delete(item.Id);
+				await _itemRepo.Delete(item);
 			}
 
 			await _boardRepo.Delete(board);

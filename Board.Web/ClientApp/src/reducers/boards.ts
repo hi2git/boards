@@ -27,7 +27,7 @@ class Store {
 		this.request();
 		try {
 			this.receive(await service.getAll());
-			board.mount(this.first);
+			await board.mount(this.first);
 		} catch (e) {
 			this.receive([], e);
 		}

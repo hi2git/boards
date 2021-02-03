@@ -21,17 +21,17 @@ class BoardItems {
 	@action fetchAll = async () => {
 		this.request();
 		try {
-			this.receive(await service.getAll(board.value?.id as string));
+			this.receive(await service.getAll(board.value?.id));
 		} catch (e) {
-			this.setError(e);
+			this.receive(undefined, e);
 		}
 	};
 	@action sort = async (items: Array<IBoardItem>) => {
-		await service.sort(board.value?.id as string, items);
+		await service.sort(items, board.value?.id);
 		await this.fetchAll();
 	};
 	@action post = async (item: IBoardItem) => {
-		await service.post(board.value?.id as string, item);
+		await service.post(item, board.value?.id);
 		await this.fetchAll();
 	};
 	@action put = async (item: IBoardItem) => {
@@ -41,15 +41,15 @@ class BoardItems {
 		await action(item);
 	};
 	@action del = async (id: string) => {
-		await service.del(id);
+		await service.del(id, board.value?.id);
 		await this.fetchAll();
 	};
 
 	@action private putDescription = async (item: IBoardItem) => {
-		await service.put(item);
+		await service.put(item, board.value?.id);
 	};
 	@action private putContent = async (item: IBoardItem) => {
-		await service.putContent(item);
+		await service.putContent(item, board.value?.id);
 	};
 
 	@action private request = () => {
@@ -57,15 +57,10 @@ class BoardItems {
 		this.items = [];
 		this.error = undefined;
 	};
-	@action private receive = (items: Array<IBoardItem>) => {
+	@action private receive = (items?: Array<IBoardItem>, error?: string) => {
 		this.isLoading = false;
-		this.items = [...items];
-		this.error = undefined;
-	};
-	@action private setError = (value: string) => {
-		this.isLoading = false;
-		this.items = [];
-		this.error = value;
+		this.items = items ?? [];
+		this.error = error;
 	};
 }
 
