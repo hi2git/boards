@@ -22,14 +22,16 @@ namespace Board.Web.Controllers {
 		private readonly IUserManager _userMgr;
 		private readonly IPasswordService _pwdService;
 		private readonly IAuthService _authService;
+		private readonly IBoardRepo _boardRepo;
 
-		public UserController(IUnitOfWork unitOfWork, IUserRepo userRepo, IRepo<Role> roleRepo, IUserManager userMgr, IPasswordService pwdService, IAuthService authService) {
+		public UserController(IUnitOfWork unitOfWork, IUserRepo userRepo, IRepo<Role> roleRepo, IUserManager userMgr, IPasswordService pwdService, IAuthService authService, IBoardRepo boardRepo) {
 			_unitOfWork = unitOfWork;
 			_userRepo = userRepo;
 			_roleRepo = roleRepo;
 			_userMgr = userMgr;
 			_pwdService = pwdService;
 			_authService = authService;
+			_boardRepo = boardRepo;
 		}
 
 		[HttpPost, AllowAnonymous]
@@ -39,6 +41,10 @@ namespace Board.Web.Controllers {
 
 			var user = new User(Guid.NewGuid(), dto.Login, passwordHash, role);
 			await _userRepo.Create(user);
+
+			var board = new Domain.Models.Board(Guid.NewGuid(), "MyFirstDesk", user);
+			await _boardRepo.Create(board);
+
 			await _unitOfWork.Commit();
 
 			await _authService.Login(user);

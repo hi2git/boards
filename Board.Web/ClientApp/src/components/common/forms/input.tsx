@@ -54,6 +54,7 @@ export const ValidatedInput: React.FC<IProps> = props => {
 				type={type}
 				maxLength={max}
 				autoFocus={isAutoFocused}
+				allowClear={!isRequired}
 				onChange={e => onChange(keyName, e.target.value)}
 			/>
 		</FormItem>
