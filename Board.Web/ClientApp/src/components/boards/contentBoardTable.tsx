@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react";
-import { Link } from "react-router-dom";
 
 import { Layout, WidthProvider, Responsive } from "react-grid-layout";
 import { IBoardItem } from "../../interfaces/components";
@@ -8,8 +7,7 @@ import scale from "../../reducers/boardScale";
 import boardItems from "../../reducers/boardItems";
 
 import Item from "./contentBoardTableItem";
-import { FileSelect } from "../common";
-import { addItem } from "./contentBoard";
+import None from "./contentBoardTableNone";
 
 const GridLayout = WidthProvider(Responsive);
 
@@ -24,13 +22,7 @@ const ContentTable: React.FC<IProps> = () => {
 
 	const [height, setHeight] = useState(0);
 
-	if (items.length < 1)
-		return (
-			<p>
-				Для добавления новых постов нажмите{" "}
-				<FileSelect title="Добавить пост" item={addItem} onChange={boardItems.post} isAdd />
-			</p>
-		);
+	if (items.length < 1) return <None />;
 
 	const getLayout: (items: Array<IBoardItem>) => Layout[] = items => {
 		const results: Array<Layout> = [...items]

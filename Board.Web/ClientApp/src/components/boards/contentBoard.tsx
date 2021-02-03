@@ -6,13 +6,12 @@ import { LoadablePanelFull, FileSelect } from "../common";
 import boardItems from "../../reducers/boardItems";
 
 import Sidebar from "./contentBoardSideBar";
+import Add from "./contentBoardAdd";
 import Control from "./contentBoardControl";
 import Palette from "./contentBoardPalette";
 import Scale from "./contentBoardScale";
 import ContentTable from "./contentBoardTable";
 import ViewBtns from "./contentBoardViews";
-
-export const addItem = { id: "", isDone: false, orderNumber: boardItems.items.length };
 
 interface IProps {}
 
@@ -24,7 +23,7 @@ const Board: React.FC<IProps> = () => {
 			<div className="row mt-2">
 				<div className="col-12">
 					<Sidebar />
-					<FileSelect title="Добавить пост" item={addItem} onChange={boardItems.post} isAdd />
+					<Add />
 					<Control />
 					<Palette />
 
