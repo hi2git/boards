@@ -14,13 +14,15 @@ namespace Board.Web.Controllers {
 		private readonly IUserRepo _userRepo;
 		private readonly IBoardRepo _boardRepo;
 		private readonly IBoardItemRepo _itemRepo;
+		private readonly IFileStorage _fileStorage;
 
-		public BoardController(IUserManager userMgr, IUnitOfWork unitOfWork, IUserRepo userRepo, IBoardRepo boardRepo, IBoardItemRepo itemRepo) {
+		public BoardController(IUserManager userMgr, IUnitOfWork unitOfWork, IUserRepo userRepo, IBoardRepo boardRepo, IBoardItemRepo itemRepo, IFileStorage fileStorage) {
 			_userMgr = userMgr;
 			_unitOfWork = unitOfWork;
 			_userRepo = userRepo;
 			_boardRepo = boardRepo;
 			_itemRepo = itemRepo;
+			_fileStorage = fileStorage;
 		}
 
 		[HttpPost]
@@ -48,7 +50,7 @@ namespace Board.Web.Controllers {
 
 			foreach (var item in board.BoardItems) {
 				await _itemRepo.Delete(item);
-
+				await _fileStorage.Delete(item.Id);
 			}
 
 			await _boardRepo.Delete(board);

@@ -20,7 +20,7 @@ class Store {
 		try {
 			this.receive(await service.getAll());
 			// board.setValue(this.items[0]?.id);
-			board.mount();
+			board.mount(this.items[0]?.id);
 		} catch (e) {
 			this.receive([], e);
 		}

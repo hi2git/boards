@@ -22,9 +22,9 @@ class Store {
 
 	@action clear = () => this.setValue();
 
-	@action mount = async () => {
+	@action mount = async (defValue?: string) => {
 		const value = router.getSearch(PARAM) as string;
-		await this.setValue(value ?? DEFAULT_VALUE);
+		await this.setValue(value ?? defValue ?? DEFAULT_VALUE);
 	};
 }
 
