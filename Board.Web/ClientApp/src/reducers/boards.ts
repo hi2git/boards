@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, observable } from "mobx";
+import { action, computed, makeAutoObservable, observable } from "mobx";
 
 import { IIdName } from "../interfaces/components";
 import service from "../services/boards";
@@ -13,13 +13,21 @@ class Store {
 	@observable isLoading: boolean = true;
 	@observable error: string | undefined = undefined;
 
+	@computed get canDelete() {
+		return this.items.length > 1;
+	}
+
+	@computed get deleteTitle() {
+		return this.canDelete ? "Удалить" : "Нельзя удалить последнюю доску";
+	}
+
 	@action clear = () => this.request();
 
 	@action fetchAll = async () => {
 		this.request();
 		try {
 			this.receive(await service.getAll());
-			board.mount(this.items[0]?.id);
+			board.mount(this.first);
 		} catch (e) {
 			this.receive([], e);
 		}
@@ -48,6 +56,7 @@ class Store {
 		this.request();
 		try {
 			await service.del(id);
+			if (board.value === id) await board.setValue(this.first);
 			await this.fetchAll();
 		} catch (e) {
 			this.receive(undefined, e);
@@ -65,6 +74,10 @@ class Store {
 		this.items = items ?? this.items;
 		this.error = error;
 	};
+
+	@computed private get first() {
+		return this.items[0]?.id;
+	}
 }
 
 export default new Store();

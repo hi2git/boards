@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 
 import { IIdName } from "../../interfaces/components";
 import { Button, confirm } from "../common";
-import { Form, useForm, ValidatedInput } from "../common/forms";
+import { Form, ValidatedInput } from "../common/forms";
 import nameof from "../../utils/nameof";
 import boards from "../../reducers/boards";
 import board from "../../reducers/board";
@@ -46,7 +46,7 @@ const Row: React.FC<IProps> = ({ item }) => {
 					onCancel={cancel}
 					onSubmit={submit}
 				/>
-				<Button className="px-0" title="Удалить" type="link" onClick={del}>
+				<Button className="px-0" title={boards.deleteTitle} type="link" onClick={del} disabled={!boards.canDelete}>
 					<i className="fas fa-times" />
 				</Button>
 			</td>
