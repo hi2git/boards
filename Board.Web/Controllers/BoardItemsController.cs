@@ -42,7 +42,6 @@ namespace Board.Web.Controllers {
 
 			foreach (var item in items) {
 				await _repo.Update(item);
-				await _fileStorage.Delete(item.Id);
 			}
 			await _unitOfWork.Commit();
 		}
