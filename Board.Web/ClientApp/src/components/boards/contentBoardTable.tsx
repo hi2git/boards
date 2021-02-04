@@ -37,44 +37,46 @@ const ContentTable: React.FC<IProps> = ({ width }) => {
 
 	const DEF = (width ?? 0) / DEFAULT_COLS;
 
-	const divs = items.map(n => {
-		const borderW = touchId === n.id ? 10 : 0;
-		const left = (n.orderNumber % DEFAULT_COLS) * DEF;
-		const top = Math.floor(n.orderNumber / DEFAULT_COLS) * DEF;
-		const height = DEF - 5 - borderW;
-		return (
-			<div
-				key={n.id}
-				draggable
-				style={{
-					border: `${borderW}px solid #91d5ff`,
-					cursor: "grab",
-					width: DEF,
-					height: DEF,
-					position: "absolute",
-					left,
-					top,
-				}}
-				onTouchEnd={async e => {
-					e.preventDefault();
+	const divs = [...items]
+		.sort((a, b) => a.orderNumber - b.orderNumber)
+		.map((n, i) => {
+			const borderW = touchId === n.id ? 10 : 0;
+			const left = (i % DEFAULT_COLS) * DEF;
+			const top = Math.floor(i / DEFAULT_COLS) * DEF;
+			const height = DEF - 5 - borderW;
+			return (
+				<div
+					key={n.id}
+					draggable
+					style={{
+						border: `${borderW}px solid #91d5ff`,
+						cursor: "grab",
+						width: DEF,
+						height: DEF,
+						position: "absolute",
+						left,
+						top,
+					}}
+					onTouchEnd={async e => {
+						e.preventDefault();
 
-					if (!touchId) return setTouchId(n.id);
-					if (touchId === n.id) return setTouchId("");
+						if (!touchId) return setTouchId(n.id);
+						if (touchId === n.id) return setTouchId("");
 
-					await replace(touchId, n.id);
-					return setTouchId("");
-				}}
-				onDragEnd={() => replace(n.id)}
-				onDragOver={e => {
-					e.preventDefault();
-					return setId(n.id);
-				}}
-				onDrop={e => e.preventDefault()}
-			>
-				<Item item={n} height={height} onChange={put} onDelete={del} />
-			</div>
-		);
-	});
+						await replace(touchId, n.id);
+						return setTouchId("");
+					}}
+					onDragEnd={() => replace(n.id)}
+					onDragOver={e => {
+						e.preventDefault();
+						return setId(n.id);
+					}}
+					onDrop={e => e.preventDefault()}
+				>
+					<Item item={n} height={height} onChange={put} onDelete={del} />
+				</div>
+			);
+		});
 
 	return (
 		<div

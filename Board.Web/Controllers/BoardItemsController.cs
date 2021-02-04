@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Board.Domain.DTO;
+using Board.Domain.DTO.BoardItems;
 using Board.Domain.Models;
 using Board.Domain.Repos;
 using Board.Domain.Services;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Board.Domain.DTO {
+namespace Board.Domain.DTO.BoardItems {
 	public class BoardItemDTO {
 
 		public Guid? Id { get; set; }
