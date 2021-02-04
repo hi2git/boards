@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
+using FluentValidation;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -44,6 +46,10 @@ namespace Board.Web.Middlewares {
 			var message = $"Внутренняя ошибка сервера: {exception.Message}";
 
 			switch (exception) {
+				case ValidationException ve:
+					context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+					message = ve.Message;
+					break;
 				case ArgumentException ae:
 					context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 					message = ae.Message;

@@ -65,7 +65,7 @@ class Store {
 
 	@action private request = () => {
 		this.isLoading = true;
-		this.items = [];
+		// this.items = [];
 		this.error = undefined;
 	};
 

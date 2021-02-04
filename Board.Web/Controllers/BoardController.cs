@@ -5,10 +5,15 @@ using Board.Domain.DTO;
 using Board.Domain.Repos;
 using Board.Domain.Services;
 
+using Boards.Application.Commands.Boards;
+
+using MediatR;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Board.Web.Controllers {
 	public class BoardController : AbstractApiController {
+		private readonly IMediator _mediator;
 		private readonly IUserManager _userMgr;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IUserRepo _userRepo;
@@ -16,7 +21,8 @@ namespace Board.Web.Controllers {
 		private readonly IBoardItemRepo _itemRepo;
 		private readonly IFileStorage _fileStorage;
 
-		public BoardController(IUserManager userMgr, IUnitOfWork unitOfWork, IUserRepo userRepo, IBoardRepo boardRepo, IBoardItemRepo itemRepo, IFileStorage fileStorage) {
+		public BoardController(IMediator mediator, IUserManager userMgr, IUnitOfWork unitOfWork, IUserRepo userRepo, IBoardRepo boardRepo, IBoardItemRepo itemRepo, IFileStorage fileStorage) {
+			_mediator = mediator;
 			_userMgr = userMgr;
 			_unitOfWork = unitOfWork;
 			_userRepo = userRepo;
@@ -26,15 +32,16 @@ namespace Board.Web.Controllers {
 		}
 
 		[HttpPost]
-		public async Task<Guid> Create([FromBody] Valueable<string> dto) {
-			var user = await _userRepo.Get(_userMgr.CurrentUserId);
-			var board = new Domain.Models.Board(Guid.NewGuid(), dto.Value, user);
+		public Task<Guid> Create([FromBody] Valueable<string> dto) => _mediator.Send(new BoardCreateCommand(dto.Value));
+		//{
+		//	var user = await _userRepo.Get(_userMgr.CurrentUserId);
+		//	var board = new Domain.Models.Board(Guid.NewGuid(), dto.Value, user);
 
-			await _boardRepo.Create(board);
-			await _unitOfWork.Commit();
+		//	await _boardRepo.Create(board);
+		//	await _unitOfWork.Commit();
 
-			return board.Id;
-		}
+		//	return board.Id;
+		//}
 
 		[HttpPut]
 		public async Task Update([FromBody] IdNameDTO dto) {

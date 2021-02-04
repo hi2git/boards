@@ -24,7 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="9.5.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
@@ -34,6 +36,8 @@
     <ProjectReference Include="..\Board.Infrastructure.Files\Board.Infrastructure.Files.csproj" />
     <ProjectReference Include="..\Board.Infrastructure.Jwt\Board.Infrastructure.Jwt.csproj" />
     <ProjectReference Include="..\Board.Infrastructure.Repository\Board.Infrastructure.Repository.csproj" />
+    <ProjectReference Include="..\Boards.Application.Commands\Boards.Application.Commands.csproj" />
+    <ProjectReference Include="..\Boards.Application.Queries\Boards.Application.Queries.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

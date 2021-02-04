@@ -29,10 +29,12 @@ const successHandler = (response: AxiosResponse<any>) => {
 const errorHandler = (error: any) =>
 	new Promise((_, reject) => {
 		if (error.response.status === 400) {
-			const entries = Object.entries(error.response.data.errors).map(n => `${n[0]} - ${n[1]}`);
-			const msg = entries.join();
-			console.log(msg);
-			reject(msg);
+			if (!!error.response.data.errors) {
+				const entries = Object.entries(error.response.data.errors).map(n => `${n[0]} - ${n[1]}`);
+				const msg = entries.join();
+				console.error(msg);
+				reject(msg);
+			}
 		}
 
 		if (error.response.status === 401 || error.response.status === 403) {
@@ -42,13 +44,6 @@ const errorHandler = (error: any) =>
 		if (error.response.status === 404) {
 			reject("Не найдено");
 		}
-
-		// if (error.response.status === 401 || error.response.status === 403) {
-		// 	// if ([401, 403].indexOf(error.response.status) !== -1) {
-		// 	// 	//authActions.logout();
-		// 	// }
-		// 	reject();
-		// }
 
 		return reject(error.response.data.message);
 	});

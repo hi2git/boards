@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { Drawer, LoadablePanel } from "../common";
+import { AlertDanger, Drawer, LoadablePanel } from "../common";
 import sidebar from "../../reducers/boardSidebar";
 import boards from "../../reducers/boards";
 
@@ -17,7 +17,8 @@ const SideContent: React.FC<IProps> = () => {
 	return (
 		<Drawer visible={value} onClose={toggle}>
 			<h2>Доски</h2>
-			<LoadablePanel isLoading={isLoading} error={error}>
+			<LoadablePanel isLoading={isLoading}>
+				<AlertDanger value={error} />
 				<AddForm />
 				<Table />
 			</LoadablePanel>

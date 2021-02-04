@@ -1,8 +1,17 @@
+using System.Reflection;
+
 using Board.Application;
 using Board.Infrastructure.Files;
 using Board.Infrastructure.Jwt;
 using Board.Infrastructure.Repository;
 using Board.Web.Middlewares;
+
+using Boards.Application.Commands.Boards;
+using Boards.Application.Queries.Boards;
+
+using FluentValidation;
+
+using MediatR;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +36,15 @@ namespace Board.Web {
 			services.AddFiles();
 
 			services.Configure<AppSettings>(Configuration.GetSection("appSettings"));
+
+
+
+			services.AddValidatorsFromAssemblies(_assemblies); //AddValidatorsFromAssemblyContaining<BoardCreateCommand>();
+															   //services.AddValidatorsFromAssemblyContaining<BoardGetAllQuery>();
+
+			services.AddMediatR(_assemblies);
+			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
 
 			services.AddJwtAuth(Configuration);
 
@@ -71,5 +89,10 @@ namespace Board.Web {
 				}
 			});
 		}
+
+		private static readonly Assembly[] _assemblies = new[] {
+			typeof(BoardCreateCommand).Assembly,
+			typeof(BoardGetAllQuery).Assembly,
+		};
 	}
 }
