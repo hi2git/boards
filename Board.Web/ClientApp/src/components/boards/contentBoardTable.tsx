@@ -1,91 +1,88 @@
-import React, { useState } from "react";
+import React from "react";
 import { observer } from "mobx-react";
 
-import { Layout, WidthProvider, Responsive } from "react-grid-layout";
-import { IBoardItem } from "../../interfaces/components";
 import scale from "../../reducers/boardScale";
 import boardItems from "../../reducers/boardItems";
 
 import Item from "./contentBoardTableItem";
 import None from "./contentBoardTableNone";
 
-const GridLayout = WidthProvider(Responsive);
-
-const MAX_COLS = 3;
 const DEFAULT_COLS = 3;
-const WIDTH_COL = DEFAULT_COLS / MAX_COLS;
 
-interface IProps {}
+interface IProps {
+	width?: number;
+}
 
-const ContentTable: React.FC<IProps> = () => {
+const ContentTable: React.FC<IProps> = ({ width }) => {
 	const { items, put, sort, del } = boardItems;
 
-	const [height, setHeight] = useState(0);
+	const [id, setId] = React.useState("");
+	const [touchId, setTouchId] = React.useState("");
 
 	if (items.length < 1) return <None />;
 
-	const getLayout: (items: Array<IBoardItem>) => Layout[] = items => {
-		const results: Array<Layout> = [...items]
-			.sort((a, b) => a.orderNumber - b.orderNumber)
-			.map((n, i) => ({
-				i: n.id,
-				x: (i % MAX_COLS) * WIDTH_COL,
-				y: Math.floor(i / MAX_COLS),
-				w: WIDTH_COL,
-				h: 1,
-				isResizable: false,
-			}));
+	const replace = async (dragId: string, dropId?: string) => {
+		dropId = dropId ?? id;
+		const drag = items.find(n => n.id === dragId);
+		const over = items.find(n => n.id === dropId);
+		if (!drag || !over) return console.error("not found");
 
-		return results;
+		const index = drag.orderNumber;
+		drag.orderNumber = over.orderNumber;
+		over.orderNumber = index;
+
+		setId("");
+		return sort(items);
 	};
 
-	const layout = getLayout(items);
+	const DEF = (width ?? 0) / DEFAULT_COLS;
 
-	const change = (layout: Layout[]) => {
-		const outItems = layout.map(n => {
-			const orderNumber = n.y * MAX_COLS + n.x / WIDTH_COL;
-			const item = items.find(m => n.i === m.id) as IBoardItem;
-			return { ...item, orderNumber };
-		});
-		return sort(outItems);
-	};
+	const divs = items.map(n => {
+		const borderW = touchId === n.id ? 10 : 0;
+		const left = (n.orderNumber % DEFAULT_COLS) * DEF;
+		const top = Math.floor(n.orderNumber / DEFAULT_COLS) * DEF;
+		const height = DEF - 5 - borderW;
+		return (
+			<div
+				key={n.id}
+				draggable
+				style={{
+					border: `${borderW}px solid #91d5ff`,
+					cursor: "grab",
+					width: DEF,
+					height: DEF,
+					position: "absolute",
+					left,
+					top,
+				}}
+				onTouchEnd={async e => {
+					e.preventDefault();
 
-	const replace = (_: Layout[], old: Layout, nw: Layout) => {
-		const wasIndex = layout.findIndex(n => n.x === nw.x && n.y === nw.y);
-		layout[wasIndex].x = old.x;
-		layout[wasIndex].y = old.y;
+					if (!touchId) return setTouchId(n.id);
+					if (touchId === n.id) return setTouchId("");
 
-		const nwIndex = layout.findIndex(n => n.i === nw.i);
-		layout[nwIndex].x = nw.x;
-		layout[nwIndex].y = nw.y;
-		return change(layout);
-	};
-
-	const divs = items.map(n => (
-		<div key={n.id} style={{ width: height }}>
-			<Item item={n} height={height} onChange={put} onDelete={del} />
-		</div>
-	));
+					await replace(touchId, n.id);
+					return setTouchId("");
+				}}
+				onDragEnd={() => replace(n.id)}
+				onDragOver={e => {
+					e.preventDefault();
+					return setId(n.id);
+				}}
+				onDrop={e => e.preventDefault()}
+			>
+				<Item item={n} height={height} onChange={put} onDelete={del} />
+			</div>
+		);
+	});
 
 	return (
-		<GridLayout
+		<div
+			className="border-right border-left w-100"
 			style={{ transform: `scale(${scale.value / 100})`, transformOrigin: "top" }}
-			className="border-right border-left"
-			layouts={{ lg: layout, md: layout, sm: layout, xs: layout, xxs: layout }}
-			cols={{
-				lg: DEFAULT_COLS,
-				md: DEFAULT_COLS,
-				sm: DEFAULT_COLS,
-				xs: DEFAULT_COLS,
-				xxs: DEFAULT_COLS,
-			}}
-			rowHeight={height}
-			margin={[3, 3]}
-			onDragStop={replace}
-			onWidthChange={n => setHeight(n / 3 - 6)}
 		>
 			{divs}
-		</GridLayout>
+		</div>
 	);
 };
 

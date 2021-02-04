@@ -15,13 +15,11 @@ namespace Board.Web.Controllers {
 		private readonly IUserManager _userMgr;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IBoardItemRepo _repo;
-		private readonly IFileStorage _fileStorage;
 
-		public BoardItemsController(IUserManager userMgr, IUnitOfWork unitOfWork, IBoardItemRepo repo, IFileStorage fileStorage) {
+		public BoardItemsController(IUserManager userMgr, IUnitOfWork unitOfWork, IBoardItemRepo repo) {
 			_userMgr = userMgr;
 			_unitOfWork = unitOfWork;
 			_repo = repo;
-			_fileStorage = fileStorage;
 		}
 
 		[HttpGet]

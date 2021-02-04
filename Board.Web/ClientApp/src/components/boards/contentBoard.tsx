@@ -1,5 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
+import { useResizeDetector } from "react-resize-detector";
 
 import { LoadablePanelFull, FileSelect } from "../common";
 
@@ -18,6 +19,8 @@ interface IProps {}
 const Board: React.FC<IProps> = () => {
 	const { isLoading, error } = boardItems;
 
+	const { width, height, ref } = useResizeDetector<HTMLDivElement>();
+
 	return (
 		<>
 			<div className="row mt-2">
@@ -32,9 +35,9 @@ const Board: React.FC<IProps> = () => {
 				</div>
 			</div>
 			<div className="row mt-1">
-				<div className="col-12">
+				<div ref={ref} className="col-12">
 					<LoadablePanelFull isLoading={isLoading} error={error}>
-						<ContentTable />
+						<ContentTable width={width}/>
 					</LoadablePanelFull>
 				</div>
 			</div>

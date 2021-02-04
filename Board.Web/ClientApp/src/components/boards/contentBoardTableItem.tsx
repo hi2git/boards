@@ -22,7 +22,6 @@ class Img extends React.Component<IProps, IState> {
 
 	componentDidMount = () => {
 		const { item } = this.props;
-		// const data = item.content ? `data:image/png;base64, ${item.content}` : undefined;
 		const data = item.content ? `data:image/png;base64, ${item.content}` : `/api/image?id=${item.id}`;
 		return this.setState({ data, error: null });
 	};
@@ -48,14 +47,7 @@ class Img extends React.Component<IProps, IState> {
 		return (
 			<>
 				{error}
-				<View
-					item={item}
-					filter=".png,.jpg,.gif,.ico"
-					onChange={onChange}
-					onDelete={this.delete}
-					data={data}
-					height={height}
-				/>
+				<View item={item} onChange={onChange} onDelete={this.delete} data={data} size={height} />
 			</>
 		);
 	};

@@ -15,8 +15,7 @@ interface IProps {
 	item: IBoardItem;
 	onChange: (item: IBoardItem) => void;
 
-	filter?: string;
-	height: number;
+	size: number;
 	isDisabled?: boolean;
 	className?: string;
 	data?: string;
@@ -24,7 +23,7 @@ interface IProps {
 }
 
 const View: React.FC<IProps> = props => {
-	const { item, className = "", height, data, onChange, onDelete } = props;
+	const { item, className, size, data, onChange, onDelete } = props;
 
 	const doneIcon = item.isDone ? "-check" : "";
 
@@ -34,10 +33,10 @@ const View: React.FC<IProps> = props => {
 		<div className="d-flex expander">
 			<Tooltip title={item.description ?? ""}>
 				<img
-					className={`w-100 ${className}`}
+					className={className}
 					src={data}
 					alt="Загрузка..."
-					style={{ height, objectFit: view.value }}
+					style={{ width: size, height: size, objectFit: view.value }}
 				/>
 			</Tooltip>
 			<div className="absolute w-100">
