@@ -13,19 +13,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace Board.Web.Controllers {
 	public class BoardsController : AbstractApiController {
 		private readonly IMediator _mediator;
-		//private readonly IUserManager _userMgr;
-		//private readonly IBoardRepo _repo;
 
-		public BoardsController(IMediator mediator/*, IUserManager userMgr, IBoardRepo repo*/) {
-			_mediator = mediator;
-			//_userMgr = userMgr;
-			//_repo = repo;
-		}
+		public BoardsController(IMediator mediator) => _mediator = mediator;
 
 		[HttpGet]
 		public Task<IEnumerable<IdNameDTO>> GetAll() => _mediator.Send(new BoardGetAllQuery());
-
-		//private IdNameDTO Map(Domain.Models.Board entity) => new IdNameDTO { Id = entity.Id, Name = entity.Name };
 
 	}
 }

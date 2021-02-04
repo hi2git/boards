@@ -39,7 +39,7 @@ export const ValidatedInput: React.FC<IProps> = props => {
 		rules = [requiredRule],
 	} = props;
 
-	const maxRule = { max: max, message: `${title} превышает ${max} символов` };
+	const maxRule = { max, message: `${title} превышает ${max} символов` };
 
 	let allRules = isRequired ? [requireRule, ...rules] : rules;
 	allRules = props.isMaxChecked ? [maxRule, ...allRules] : allRules;
