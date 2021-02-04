@@ -38,7 +38,7 @@ const ContentTable: React.FC<IProps> = ({ width }) => {
 	const DEF = (width ?? 0) / DEFAULT_COLS;
 
 	const divs = [...items]
-		.sort((a, b) => a.orderNumber - b.orderNumber)
+		.sort((a, b) => b.orderNumber - a.orderNumber)
 		.map((n, i) => {
 			const borderW = touchId === n.id ? 10 : 0;
 			const left = (i % DEFAULT_COLS) * DEF;

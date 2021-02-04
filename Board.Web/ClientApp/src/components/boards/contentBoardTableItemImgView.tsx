@@ -31,7 +31,8 @@ const View: React.FC<IProps> = props => {
 
 	return (
 		<div className="d-flex expander">
-			<Tooltip title={item.description ?? ""}>
+			{/* <Tooltip title={item.description ?? ""}> */}
+			<Tooltip title={item.orderNumber.toString()}>
 				<img
 					className={className}
 					src={data}
