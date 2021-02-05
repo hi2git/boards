@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using Board.Domain.Services;
+using Boards.Application.Queries.Images;
+
+using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
 namespace Board.Web.Controllers {
 	public class ImageController : AbstractApiController {
-		private readonly IFileStorage _fileStorage;
+		private readonly IMediator _mediator;
 
-		public ImageController(IFileStorage fileStorage) => _fileStorage = fileStorage;
+		public ImageController(IMediator mediator) => _mediator = mediator;
 
 		public async Task<IActionResult> Get([FromQuery] Guid id) {
-			var path = _fileStorage.PathOf(id);
+			var path = await _mediator.Send(new ImagePathGetQuery(id));
 			return this.PhysicalFile(path, "image/jpg", $"{id}.jpg");
 		}
 
