@@ -18,5 +18,9 @@ namespace Board.Infrastructure.Repository.Implementation {
 		public Task<List<Domain.Models.Board>> GetAll(Guid userId) => this.Query
 			.Where(n => n.UserId == userId)
 			.ToListAsync();
+
+		public Task<bool> HasName(string name, Guid userId) => this.Query
+			.AnyAsync(n => n.UserId == userId && n.Name == name);
+
 	}
 }

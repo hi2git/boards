@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,10 +24,16 @@ namespace Boards.Application.Commands.Users {
 
 	public class UserCreateCommandValidator : AbstractValidator<UserCreateCommand> {
 
-		public UserCreateCommandValidator() {
+		public UserCreateCommandValidator(IUserRepo repo) {
 			RuleFor(n => n.Item).NotEmpty();
-			RuleFor(n => n.Item.Login).NotEmpty().MaximumLength(50);
 			RuleFor(n => n.Item.Password).NotEmpty().MaximumLength(50);
+			RuleFor(n => n.Item.Login)
+				.NotEmpty()
+				.MaximumLength(50)
+				.CustomAsync(async (n, context, _) => {
+					if (await repo.HasName(n))
+						context.AddFailure($"Имя пользователя {n} уже существует");
+				});
 		}
 
 	}

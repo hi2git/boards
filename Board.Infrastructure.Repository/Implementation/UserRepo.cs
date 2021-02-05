@@ -20,5 +20,6 @@ namespace Board.Infrastructure.Repository.Implementation {
 			.ThenInclude(n => n.BoardItems)
 			.FirstOrDefaultAsync(n => n.Id == id);
 
+		public Task<bool> HasName(string name) => this.Query.AnyAsync(n => n.Name == name);
 	}
 }

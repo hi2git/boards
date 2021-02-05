@@ -22,8 +22,14 @@ namespace Boards.Application.Commands.Boards {
 
 	public class BoardCreateCommandValidator : AbstractValidator<BoardCreateCommand> {
 
-		public BoardCreateCommandValidator() {
-			RuleFor(n => n.Name).NotEmpty().MaximumLength(50);
+		public BoardCreateCommandValidator(IUserManager userMgr, IBoardRepo repo) {
+			RuleFor(n => n.Name)
+				.NotEmpty()
+				.MaximumLength(50)
+				.CustomAsync(async (n, context, _) => {
+					if (await repo.HasName(n, userMgr.CurrentUserId))
+						context.AddFailure($"Название доски {n} уже существует");
+				});
 		}
 	}
 

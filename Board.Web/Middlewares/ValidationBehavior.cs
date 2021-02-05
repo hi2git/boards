@@ -17,7 +17,6 @@ namespace Board.Web.Middlewares {
 		public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators) => _validators = validators ?? new List<IValidator<TRequest>>();
 
 		public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next) {
-
 			var results = new List<ValidationResult>();
 			foreach (var validator in _validators) {
 				results.Add(await validator.ValidateAsync(request, cancellationToken));
@@ -28,7 +27,7 @@ namespace Board.Web.Middlewares {
 
 			if (errors.Any()) {
 				var errorBuilder = new StringBuilder();
-				errorBuilder.AppendLine("Ошибки валидации: ");
+				//errorBuilder.AppendLine("Ошибки валидации: ");
 
 				foreach (var error in errors) {
 					errorBuilder.AppendLine(error.ErrorMessage);

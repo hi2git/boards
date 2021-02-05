@@ -23,10 +23,16 @@ namespace Boards.Application.Commands.Boards {
 
 	public class BoardUpdateCommandValidator : AbstractValidator<BoardUpdateCommand> {
 
-		public BoardUpdateCommandValidator() {
+		public BoardUpdateCommandValidator(IUserManager userMgr, IBoardRepo repo) {
 			RuleFor(n => n.Item).NotEmpty();
 			RuleFor(n => n.Item.Id).NotEmpty();
-			RuleFor(n => n.Item.Name).NotEmpty().MaximumLength(50);
+			RuleFor(n => n.Item.Name)
+				.NotEmpty()
+				.MaximumLength(50)
+				.CustomAsync(async (n, context, _) => {
+					if (await repo.HasName(n, userMgr.CurrentUserId))
+						context.AddFailure($"Название доски {n} уже существует");
+				});
 		}
 	}
 

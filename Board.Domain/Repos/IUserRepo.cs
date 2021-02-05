@@ -10,5 +10,7 @@ namespace Board.Domain.Repos {
 
 		Task<User> GetWithItems(Guid id);
 
+		Task<bool> HasName(string name);
+
 	}
 }

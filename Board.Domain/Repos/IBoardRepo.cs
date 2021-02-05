@@ -9,6 +9,7 @@ namespace Board.Domain.Repos {
 
 		Task<List<Models.Board>> GetAll(Guid userId);
 
+		Task<bool> HasName(string name, Guid userId);
 
 	}
 }
