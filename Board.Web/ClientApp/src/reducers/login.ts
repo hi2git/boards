@@ -36,14 +36,16 @@ class Login {
 		this.request();
 		try {
 			await service.delete();
-			this.receive();
 			this.redirect();
 		} catch (e) {
 			this.receive(e);
 		}
 	};
 
-	@action redirect = () => router.push(urls.LOGIN);
+	@action redirect = () => {
+		this.receive();
+		router.push(urls.LOGIN);
+	};
 
 	@action private request = () => {
 		this.isLoading = true;

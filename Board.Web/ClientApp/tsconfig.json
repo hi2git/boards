@@ -18,5 +18,5 @@
 		"downlevelIteration": true,
 		"experimentalDecorators": true
 	},
-	"include": ["src"]
+	"include": ["src", "src/.d.ts"]
 }

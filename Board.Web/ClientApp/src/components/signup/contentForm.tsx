@@ -2,35 +2,67 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import { FormInstance } from "antd/lib/form";
+import { Captcha, captchaSettings } from "reactjs-captcha";
 
 import store from "../../reducers/signup";
 import nameof from "../../utils/nameof";
 import * as urls from "../../constants/urls";
 import Button from "../common/button";
-import { Form, ValidatedInput } from "../common/forms";
+import { Form, FormItem, ValidatedInput } from "../common/forms";
+import { Input } from "../common";
 
 const NAME = nameof<typeof store.item>("login");
 const PASSWORD = nameof<typeof store.item>("password");
-const keys = [NAME, PASSWORD];
+const EMAIL = nameof<typeof store.item>("email");
+const keys = [NAME, PASSWORD, EMAIL];
+
+captchaSettings.set({
+	captchaEndpoint: "captcha.ashx",
+});
 
 interface IProps {}
 
 const Content: React.FC<IProps> = () => {
 	const ref = React.useRef<FormInstance>(null);
+	const captchaRef = React.useRef<any>();
 
 	const { item, isAllowSend, set, send } = store;
 
-	return (
-		<Form ref={ref} item={item} keys={keys} labelCol={{ span: 4 }}>
-			<ValidatedInput title="Логин" keyName={NAME} isRequired onChange={set} />
-			<ValidatedInput title="Пароль" keyName={PASSWORD} isRequired onChange={set} />
+	const submit = async () => {
+		const captchaCode = captchaRef.current?.getUserEnteredCaptchaCode();
+		const captchaId = captchaRef.current?.getCaptchaId();
+		set("captchaCode", captchaCode);
+		set("captchaId", captchaId);
+		// console.log("captchaCode", captchaCode, "captchaId", captchaId);
+		await send();
+		captchaRef.current?.reloadImage();
+	};
 
+	return (
+		<Form ref={ref} item={item} keys={keys} labelCol={{ span: 4 }} onFinish={submit}>
+			<ValidatedInput
+				autoComplete="new-password"
+				title="Логин"
+				keyName={NAME}
+				isRequired
+				autoFocus
+				onChange={set}
+			/>
+			<ValidatedInput title="Пароль" keyName={PASSWORD} isRequired type="password" onChange={set} />
+			<ValidatedInput title="Email" keyName={EMAIL} isRequired type="email" onChange={set} />
+
+			<FormItem label="Введите символы">
+				<Input id="captchaInput" type="text" />
+				<div className="mt-2">
+					<Captcha captchaStyleName="captcha" ref={captchaRef} />
+				</div>
+			</FormItem>
 			<Button
 				type="primary"
 				className="float-right"
 				title="Зарегистрироваться"
 				disabled={!isAllowSend}
-				onClick={send}
+				htmlType="submit"
 			>
 				Зарегистрироваться
 			</Button>

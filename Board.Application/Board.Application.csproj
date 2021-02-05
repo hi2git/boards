@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Captcha" Version="4.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Board.Domain.DTO\Board.Domain.DTO.csproj" />
   </ItemGroup>
 

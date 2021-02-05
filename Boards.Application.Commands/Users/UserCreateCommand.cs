@@ -10,6 +10,8 @@ using Board.Domain.Models;
 using Board.Domain.Repos;
 using Board.Domain.Services;
 
+using BotDetect.Web;
+
 using FluentValidation;
 
 using MediatR;
@@ -27,6 +29,9 @@ namespace Boards.Application.Commands.Users {
 		public UserCreateCommandValidator(IUserRepo repo) {
 			RuleFor(n => n.Item).NotEmpty();
 			RuleFor(n => n.Item.Password).NotEmpty().MaximumLength(50);
+			RuleFor(n => n.Item.CaptchaId).NotEmpty();
+			RuleFor(n => n.Item.CaptchaCode).NotEmpty().MaximumLength(7);
+			RuleFor(n => n.Item.Email).NotEmpty().EmailAddress();
 			RuleFor(n => n.Item.Login)
 				.NotEmpty()
 				.MaximumLength(50)
@@ -34,6 +39,11 @@ namespace Boards.Application.Commands.Users {
 					if (await repo.HasName(n))
 						context.AddFailure($"Имя пользователя {n} уже существует");
 				});
+			RuleFor(n => n.Item).Custom((n, context) => {
+				if (!new SimpleCaptcha().Validate(n.CaptchaCode, n.CaptchaId)) {
+					context.AddFailure("Введенное значение не соответствует изображению");
+				}
+			});
 		}
 
 	}

@@ -13,21 +13,19 @@ interface IProps extends Omit<IInputProps, "onChange"> {
 	title: string;
 	className?: string;
 	onChange: (key: string, value: string) => void;
-	type?: "password" | "text";
+	type?: "password" | "text" | "email";
 	rules?: Array<Rule>;
 	max?: number;
 	isRequired?: boolean;
 	isReadOnly?: boolean;
 	isMaxChecked?: boolean;
-	isEmail?: boolean;
-	isAutoFocused?: boolean;
+	// isEmail?: boolean;
 	isInline?: boolean;
 }
 
 export const ValidatedInput: React.FC<IProps> = props => {
 	const {
 		isInline,
-		isAutoFocused,
 		title,
 		keyName,
 		className,
@@ -37,23 +35,24 @@ export const ValidatedInput: React.FC<IProps> = props => {
 		isRequired,
 		isReadOnly,
 		rules = [requiredRule],
+		...others
 	} = props;
 
 	const maxRule = { max, message: `${title} превышает ${max} символов` };
 
 	let allRules = isRequired ? [requireRule, ...rules] : rules;
 	allRules = props.isMaxChecked ? [maxRule, ...allRules] : allRules;
-	allRules = props.isEmail ? [emailRule, ...allRules] : allRules;
+	allRules = type === "email" ? [emailRule, ...allRules] : allRules;
 
 	return (
 		<FormItem label={isInline ? null : title} name={keyName} className={className} rules={allRules}>
 			<Input
+				{...others}
 				disabled={isReadOnly}
 				placeholder={title}
 				name={keyName}
 				type={type}
 				maxLength={max}
-				autoFocus={isAutoFocused}
 				allowClear={!isRequired}
 				onChange={e => onChange(keyName, e.target.value)}
 			/>

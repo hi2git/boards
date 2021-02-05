@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<botdetect xmlns="https://captcha.com/schema/net"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="https://captcha.com/schema/net 
+             https://captcha.com/schema/net/botdetect-4.4.2.xsd">
+
+  <captchaStyles>
+    <captchaStyle>
+      <name>captcha</name>
+      <userInputID>captchaInput</userInputID>
+
+      <codeLength>6</codeLength>
+      <soundEnabled>false</soundEnabled>
+      <imageTooltip>Введите символы</imageTooltip>
+      <reloadTooltip>Обновить</reloadTooltip>
+      <helpLinkEnabled>false</helpLinkEnabled>
+      <helpLinkText>Справка</helpLinkText>
+      <disallowedCodeSubstrings>A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z</disallowedCodeSubstrings>
+      
+    </captchaStyle>
+  </captchaStyles>
+</botdetect>

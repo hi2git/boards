@@ -9,6 +9,8 @@ using Board.Web.Middlewares;
 using Boards.Application.Commands.Boards;
 using Boards.Application.Queries.Boards;
 
+using BotDetect.Web;
+
 using FluentValidation;
 
 using MediatR;
@@ -23,13 +25,25 @@ using Microsoft.Extensions.Hosting;
 
 namespace Board.Web {
 	public class Startup {
-		public Startup(IConfiguration configuration) => this.Configuration = configuration;
+		public Startup(IConfiguration configuration) {
+			this.Configuration = configuration;
+			//var builder = new ConfigurationBuilder()
+			//	.SetBasePath(env.ContentRootPath)
+			//	.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+			//	.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+			//	.AddEnvironmentVariables();
+			//Configuration = builder.Build();
+		}
 
 		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services) {
-			services.AddControllersWithViews();
+			services.Configure<IISServerOptions>(options => {
+				options.AllowSynchronousIO = true;
+			});
+
+			//services.AddControllersWithViews();
 			services.AddHttpContextAccessor();
 
 			services.AddDbContext(Configuration);
@@ -37,19 +51,22 @@ namespace Board.Web {
 
 			services.Configure<AppSettings>(Configuration.GetSection("appSettings"));
 
-
-
 			services.AddValidatorsFromAssemblies(_assemblies); //AddValidatorsFromAssemblyContaining<BoardCreateCommand>();
 															   //services.AddValidatorsFromAssemblyContaining<BoardGetAllQuery>();
 
 			services.AddMediatR(_assemblies);
 			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
-
 			services.AddJwtAuth(Configuration);
+			//services.AddAuthorization();
+			//services.AddControllers();
 
 			// In production, the React files will be served from this directory
 			services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/build");
+
+			//services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+			services.AddMvc(); // opts => opts.EnableEndpointRouting = false
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,10 +89,17 @@ namespace Board.Web {
 			});
 			app.UseSecureJwt();
 			app.UseAuthentication();
+
+			app.UseSimpleCaptcha(Configuration.GetSection("BotDetect"));
+			//app.UseMvc();
+
 			app.UseRouting();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints => {
+				endpoints.MapControllerRoute(
+					name: "default",
+					pattern: "{controller=Home}/{action=Index}/{id?}");
 				endpoints.MapControllers(); // Map attribute-routed API controllers //.RequireAuthorization();
 				endpoints.MapDefaultControllerRoute(); // Map conventional MVC controllers using the default route
 													   //endpoints.MapRazorPages();
