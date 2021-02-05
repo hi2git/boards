@@ -25,7 +25,7 @@ namespace Board.Web.Controllers {
 		public Task Update([FromBody] IdItemDTO dto) => _mediator.Send(new BoardItemUpdateCommand(dto.Item));
 
 		[HttpDelete]
-		public Task Delete([FromQuery] IdItemDTO<Guid> dto) => _mediator.Send(new BoardItemDeleteCommand(dto.Item));
+		public Task Delete([FromQuery] IdItemDTO<Guid> dto) => _mediator.Send(new BoardItemDeleteCommand(dto.Id, dto.Item));
 
 	}
 }

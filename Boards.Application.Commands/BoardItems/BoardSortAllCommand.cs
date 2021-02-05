@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +15,7 @@ using MediatR;
 namespace Boards.Application.Commands.BoardItems {
 	public class BoardSortAllCommand : IRequest {
 
-		public BoardSortAllCommand(Guid id, IEnumerable<BoardItemDTO> items) {
+		public BoardSortAllCommand(Guid id, IEnumerable<BoardItemDTO> items = null) {
 			this.Id = id;
 			this.Items = items;
 		}
@@ -31,7 +30,7 @@ namespace Boards.Application.Commands.BoardItems {
 
 		public BoardSortAllCommandValidator() {
 			RuleFor(n => n.Id).NotEmpty();
-			RuleFor(n => n.Items).NotEmpty();
+			//RuleFor(n => n.Items).NotEmpty();
 		}
 
 	}
@@ -47,7 +46,8 @@ namespace Boards.Application.Commands.BoardItems {
 
 		public async Task<Unit> Handle(BoardSortAllCommand request, CancellationToken cancellationToken) {// TODO add user check
 			var origins = await _repo.GetAll(request.Id);//_userMgr.CurrentUserId);
-			var items = request.Items.OrderBy(n => n.OrderNumber).Select((n, i) => this.Map(n.Id.Value, i, origins));
+			var dtos = request.Items?.Cast<IdOrderableDTO>() ?? origins.Select(n => new IdOrderableDTO { Id = n.Id, OrderNumber = n.OrderNumber });
+			var items = dtos.OrderBy(n => n.OrderNumber).Select((n, i) => this.Map(n.Id.Value, i, origins));
 
 			foreach (var item in items) {
 				await _repo.Update(item);
