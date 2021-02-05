@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using Board.Domain.DTO;
-using Board.Infrastructure.Jwt.Interfaces;
+using Board.Application.Services;
+using Board.Domain.DTO.Users;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Security.Claims;
 
-using Board.Domain.DTO;
+using Board.Domain.DTO.Users;
 using Board.Infrastructure.Jwt.Constants;
 
 using Microsoft.IdentityModel.JsonWebTokens;

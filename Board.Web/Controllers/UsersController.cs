@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Board.Domain.DTO;
-using Board.Domain.Models;
-using Board.Domain.Repos;
+
+using Boards.Application.Queries.Users;
+
+using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
 namespace Board.Web.Controllers {
 	public class UsersController : AbstractApiController {
+		private readonly IMediator _mediator;
 
-		private readonly IRepo<User> _repo;
-
-		public UsersController(IUserRepo repo) => _repo = repo;
+		public UsersController(IMediator mediator) => _mediator = mediator;
 
 		[HttpGet]
-		public async Task<IEnumerable<IdNameDTO>> GetAll() => (await _repo.GetAll()).Select(n => new IdNameDTO { Id = n.Id, Name = n.Name });
+		public Task<IEnumerable<IdNameDTO>> GetAll() => _mediator.Send(new UserGetAllQuery());
 
 	}
 }

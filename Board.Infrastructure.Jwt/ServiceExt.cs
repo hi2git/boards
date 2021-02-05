@@ -1,5 +1,6 @@
 ﻿using System;
 
+using Board.Application.Services;
 using Board.Domain.Services;
 using Board.Infrastructure.Jwt.Implementation;
 using Board.Infrastructure.Jwt.Interfaces;

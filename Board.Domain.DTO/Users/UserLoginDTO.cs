@@ -2,7 +2,7 @@
 
 using Board.Domain.Enums;
 
-namespace Board.Domain.DTO {
+namespace Board.Domain.DTO.Users {
 	public class UserLoginDTO {
 
 		public Guid Id { get; set; }

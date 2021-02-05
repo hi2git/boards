@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using Board.Domain.DTO;
+using Board.Domain.DTO.Users;
 using Board.Infrastructure.Jwt.Models;
 
 namespace Board.Infrastructure.Jwt.Interfaces {

@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
-using Board.Domain.DTO;
+using Board.Domain.DTO.Users;
 using Board.Infrastructure.Jwt.Extensions;
 using Board.Infrastructure.Jwt.Interfaces;
 using Board.Infrastructure.Jwt.Models;

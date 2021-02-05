@@ -25,6 +25,7 @@ namespace Board.Infrastructure.Repository {
 			services.AddScoped<IUserRepo, UserRepo>();
 			services.AddScoped<IBoardItemRepo, BoardItemRepo>();
 			services.AddScoped<IBoardRepo, BoardRepo>();
+			services.AddScoped<IRoleRepo, RoleRepo>();
 
 		}
 

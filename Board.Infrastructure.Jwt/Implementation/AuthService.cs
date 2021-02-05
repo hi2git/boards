@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using Board.Domain.DTO;
+using Board.Application.Services;
+using Board.Domain.DTO.Users;
 using Board.Domain.Models;
 using Board.Domain.Repos;
 using Board.Domain.Services;
