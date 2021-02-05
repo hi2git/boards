@@ -19,9 +19,11 @@ namespace Board.Web.Controllers {
 		[HttpPost, AllowAnonymous]
 		public Task Create([FromBody] LoginDTO dto) => _mediator.Send(new UserCreateCommand(dto));
 
-
 		[HttpPut]
 		public Task Update([FromBody] UserSettingsDTO dto) => _mediator.Send(new UserUpdateCommand(dto));
+
+		[HttpDelete]
+		public Task Delete() => _mediator.Send(new UserDeleteCommand());
 
 	}
 

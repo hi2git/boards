@@ -13,6 +13,10 @@ export class Service {
 		const result = await axios.put(url, item);
 		return result.data;
 	};
+	del = async () => {
+		const url = "/api/user";
+		await axios.delete(url);
+	};
 }
 
 export default new Service();

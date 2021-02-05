@@ -14,5 +14,11 @@ namespace Board.Infrastructure.Repository.Implementation {
 		public Task<User> Get(string login) => this.Query
 			.Include(n => n.Role)
 			.FirstOrDefaultAsync(n => n.Name == login);
+
+		public Task<User> GetWithItems(Guid id) => this.Query
+			.Include(n => n.Boards)
+			.ThenInclude(n => n.BoardItems)
+			.FirstOrDefaultAsync(n => n.Id == id);
+
 	}
 }

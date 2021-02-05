@@ -2,6 +2,8 @@ import { action, computed, observable, makeAutoObservable } from "mobx";
 import { IUserSettings } from "../interfaces/components";
 import service from "../services/user";
 
+import login from "./login";
+
 interface IItem {
 	oldPassword?: string;
 	newPassword?: string;
@@ -36,7 +38,7 @@ class Settings {
 
 	@action reload = () => {
 		this.item = {};
-		this.clear();
+		this.receive();
 	};
 
 	@action set = (key: string, value?: string) => {
@@ -45,18 +47,32 @@ class Settings {
 	};
 
 	@action send = async () => {
-		this.isLoading = true;
-		let error = undefined;
+		this.request();
 		try {
 			await service.put(this.dto);
+			this.receive();
 		} catch (e) {
-			error = e;
+			this.receive(e);
 		}
-		this.clear(error);
 	};
 
-	@action private clear = (error?: string) => {
-		// this.item = {};
+	@action del = async () => {
+		this.request();
+		try {
+			await service.del();
+			this.receive();
+			await login.redirect();
+		} catch (e) {
+			this.receive(e);
+		}
+	};
+
+	@action private request = () => {
+		this.isLoading = true;
+		this.error = undefined;
+	};
+
+	@action private receive = (error?: string) => {
 		this.isLoading = false;
 		this.error = error;
 	};

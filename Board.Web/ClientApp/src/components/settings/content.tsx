@@ -17,10 +17,14 @@ const Content: React.FC<IProps> = () => {
 
 	return (
 		<div className="settings">
-			<LoadablePanel isLoading={isLoading}>
-				<AlertDanger value={error} />
-				<Form />
-			</LoadablePanel>
+			<div className="row mt-2">
+				<div className="offset-1 col-6">
+					<LoadablePanel isLoading={isLoading}>
+						<AlertDanger value={error} />
+						<Form />
+					</LoadablePanel>
+				</div>
+			</div>
 		</div>
 	);
 };

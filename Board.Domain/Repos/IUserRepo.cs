@@ -8,5 +8,7 @@ namespace Board.Domain.Repos {
 
 		Task<User> Get(string login);
 
+		Task<User> GetWithItems(Guid id);
+
 	}
 }
