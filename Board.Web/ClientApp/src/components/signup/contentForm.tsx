@@ -44,15 +44,16 @@ const Content: React.FC<IProps> = () => {
 				autoComplete="new-password"
 				title="Логин"
 				keyName={NAME}
+				max={50}
 				isRequired
 				autoFocus
 				onChange={set}
 			/>
-			<ValidatedInput title="Пароль" keyName={PASSWORD} isRequired type="password" onChange={set} />
-			<ValidatedInput title="Email" keyName={EMAIL} isRequired type="email" onChange={set} />
+			<ValidatedInput title="Пароль" keyName={PASSWORD} max={50} isRequired type="password" onChange={set} />
+			<ValidatedInput title="Email" keyName={EMAIL} max={50} isRequired type="email" onChange={set} />
 
 			<FormItem label="Введите символы">
-				<Input id="captchaInput" type="text" />
+				<Input id="captchaInput" type="text" maxLength={6} />
 				<div className="mt-2">
 					<Captcha captchaStyleName="captcha" ref={captchaRef} />
 				</div>

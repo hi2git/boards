@@ -30,7 +30,7 @@ const DescriptionDlg: React.FC<IProps> = ({ item, onChange }) => {
 				}}
 				onCancel={() => setValue()}
 			>
-				<TextArea value={val} onChange={setVal} />
+				<TextArea value={val} autoFocus onChange={setVal} />
 			</Modal>
 		</>
 	);

@@ -36,11 +36,19 @@ const ContentForm: React.FC<IProps> = ({ onOk }) => {
 			labelCol={{ span: 4 }}
 			onFinish={submit}
 		>
-			<ValidatedInput keyName={LOGIN} title="Логин" onChange={(_, n) => setLogin(n)} isRequired autoFocus />
+			<ValidatedInput
+				keyName={LOGIN}
+				title="Логин"
+				max={50}
+				onChange={(_, n) => setLogin(n)}
+				isRequired
+				autoFocus
+			/>
 			<ValidatedInput
 				keyName={PASSWORD}
 				title="Пароль"
 				type="password"
+				max={50}
 				onChange={(_, n) => setPassword(n)}
 				isRequired
 			/>

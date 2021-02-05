@@ -33,8 +33,22 @@ const ContentForm: React.FC<IProps> = () => {
 					<i className="fas fa-times" />
 				</Button>
 			</FormItem>
-			<ValidatedInput title="Старый пароль" keyName={OLD_PASSWORD} type="password" isRequired onChange={set} />
-			<ValidatedInput title="Новый пароль" keyName={NEW_PASSWORD} type="password" isRequired onChange={set} />
+			<ValidatedInput
+				title="Старый пароль"
+				keyName={OLD_PASSWORD}
+				type="password"
+				autoFocus
+				isRequired
+				onChange={set}
+			/>
+			<ValidatedInput
+				title="Новый пароль"
+				autoComplete="new-password"
+				keyName={NEW_PASSWORD}
+				type="password"
+				isRequired
+				onChange={set}
+			/>
 			<ValidatedInput
 				title="Подтвердите пароль"
 				keyName={CONFIRM_PASSWORD}

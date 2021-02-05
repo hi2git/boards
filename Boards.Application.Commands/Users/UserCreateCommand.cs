@@ -30,8 +30,8 @@ namespace Boards.Application.Commands.Users {
 			RuleFor(n => n.Item).NotEmpty();
 			RuleFor(n => n.Item.Password).NotEmpty().MaximumLength(50);
 			RuleFor(n => n.Item.CaptchaId).NotEmpty();
-			RuleFor(n => n.Item.CaptchaCode).NotEmpty().MaximumLength(7);
-			RuleFor(n => n.Item.Email).NotEmpty().EmailAddress();
+			RuleFor(n => n.Item.CaptchaCode).NotEmpty().MaximumLength(6);
+			RuleFor(n => n.Item.Email).NotEmpty().MaximumLength(50).EmailAddress();
 			RuleFor(n => n.Item.Login)
 				.NotEmpty()
 				.MaximumLength(50)

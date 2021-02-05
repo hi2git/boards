@@ -75,7 +75,8 @@ const ValueCell: React.FC<IValueCellProps> = ({ isEdit, item, onChange, onSubmit
 			<ValidatedInput
 				title="Название"
 				keyName={NAME}
-				// max={50}
+				max={50}
+				autoFocus
 				isInline
 				isRequired
 				value={item.name}
