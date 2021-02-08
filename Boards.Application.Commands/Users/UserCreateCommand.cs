@@ -65,13 +65,13 @@ namespace Boards.Application.Commands.Users {
 			_boardRepo = boardRepo;
 		}
 
-		public async Task<Unit> Handle(UserCreateCommand request, CancellationToken cancellationToken) {// Check Captcha
+		public async Task<Unit> Handle(UserCreateCommand request, CancellationToken cancellationToken) {
 			var item = request?.Item ?? throw new ArgumentNullException(nameof(request));
 
 			var passwordHash = _pwdService.Hash(item.Password);
 			var role = await _roleRepo.Get(RoleEnum.User);
 
-			var user = new User(Guid.NewGuid(), item.Login, passwordHash, role);
+			var user = new User(Guid.NewGuid(), item.Login, passwordHash, role, item.Email);
 			await _userRepo.Create(user);
 
 			var board = new Board.Domain.Models.Board(Guid.NewGuid(), "MyFirstDesk", user);

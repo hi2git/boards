@@ -27,7 +27,7 @@ const ContentForm: React.FC<IProps> = () => {
 	const del = () => confirm({ title: "Подтвердите удаление своей учетной записи", onOk: store.del });
 
 	return (
-		<Form ref={ref} item={item} keys={keys} labelCol={{ span: 7 }}>
+		<Form ref={ref} item={item} keys={keys} labelCol={{ span: 7 }} onFinish={send}>
 			<FormItem label="Удалить свою учетную запись">
 				<Button title="Удалить свою учетную запись" danger onClick={del}>
 					<i className="fas fa-times" />
@@ -37,6 +37,7 @@ const ContentForm: React.FC<IProps> = () => {
 				title="Старый пароль"
 				keyName={OLD_PASSWORD}
 				type="password"
+				max={50}
 				autoFocus
 				isRequired
 				onChange={set}
@@ -46,6 +47,7 @@ const ContentForm: React.FC<IProps> = () => {
 				autoComplete="new-password"
 				keyName={NEW_PASSWORD}
 				type="password"
+				max={50}
 				isRequired
 				onChange={set}
 			/>
@@ -53,11 +55,12 @@ const ContentForm: React.FC<IProps> = () => {
 				title="Подтвердите пароль"
 				keyName={CONFIRM_PASSWORD}
 				type="password"
+				max={50}
 				isRequired
 				rules={[{ validator: validatePasswordConfirm, message: "Пароли не совпадают" }]}
 				onChange={set}
 			/>
-			<Button type="primary" className="float-right" title="OK" disabled={!isAllowSend} onClick={send}>
+			<Button type="primary" className="float-right" htmlType="submit" title="OK" disabled={!isAllowSend}>
 				OK
 			</Button>
 		</Form>
