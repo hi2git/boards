@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  board.web:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Debug
+    ports:
+      - "80"
+    volumes:
+      - D:/Boards:/usr/share/boards
