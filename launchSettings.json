@@ -1,0 +1,14 @@
+{
+	"profiles": {
+		"Docker Compose": {
+			"commandName": "DockerCompose",
+			"composeLaunchServiceName": "board.web",
+			"serviceActions": {
+				"board.web": "StartDebugging"
+			},
+			"composeLaunchAction": "LaunchBrowser",
+			"commandVersion": "1.0",
+			"composeLaunchUrl": "{Scheme}://{ServiceIPAddress}{ServicePort}",
+		}
+	}
+}

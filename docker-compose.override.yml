@@ -3,8 +3,8 @@ version: '3.4'
 services:
   board.web:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Debug
+      - ASPNETCORE_ENVIRONMENT=Docker
     ports:
-      - "80"
+      - "8080:80"
     volumes:
       - D:/Boards:/usr/share/boards
