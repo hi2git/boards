@@ -8,6 +8,7 @@ using Board.Web.Middlewares;
 
 using Boards.Application.Commands.Boards;
 using Boards.Application.Queries.Boards;
+using Boards.Infrastructure.Queues;
 
 using BotDetect.Web;
 
@@ -39,15 +40,15 @@ namespace Board.Web {
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services) {
-			services.Configure<IISServerOptions>(options => {
-				options.AllowSynchronousIO = true;
-			});
+			services.Configure<IISServerOptions>(options => { options.AllowSynchronousIO = true; });
 
 			//services.AddControllersWithViews();
 			services.AddHttpContextAccessor();
 
 			services.AddDbContext(Configuration);
-			services.AddFiles();
+			services
+				.AddInfrastructureQueues()
+				.AddInfrastructureFiles();
 
 			services.Configure<AppSettings>(Configuration.GetSection("appSettings"));
 

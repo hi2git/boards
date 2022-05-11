@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Board.Infrastructure.Files {
 	public static class ServicesExt {
 
-		public static void AddFiles(this IServiceCollection services) {
+		public static void AddInfrastructureFiles(this IServiceCollection services) {
 			services.AddScoped<IFileStorage, FileStorage>();
 		}
 

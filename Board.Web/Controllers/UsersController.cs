@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using Board.Domain.Constants;
 using Board.Domain.DTO;
 
 using Boards.Application.Queries.Users;
 
 using MediatR;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Board.Web.Controllers {
+
+	[Authorize(Roles = RoleNames.Admin)]
 	public class UsersController : AbstractApiController {
 		private readonly IMediator _mediator;
 
