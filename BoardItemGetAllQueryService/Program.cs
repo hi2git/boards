@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Board.Infrastructure.Repository;
 
 using MassTransit;
 
@@ -16,6 +17,7 @@ namespace BoardItemGetAllQueryService {
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
 			Host.CreateDefaultBuilder(args)
 				.ConfigureServices((hostContext, services) => {
+					services.AddInfrastructureRepos(hostContext.Configuration);
 
 					services.AddMassTransit(n => {
 						n.AddConsumer<BoardItemGetAllQueryConsumer>();

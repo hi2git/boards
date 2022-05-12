@@ -48,7 +48,7 @@ namespace Board.Web {
 			//services.AddControllersWithViews();
 			services.AddHttpContextAccessor();
 
-			services.AddDbContext(Configuration);
+			services.AddInfrastructureRepos(Configuration);
 			services
 				.AddInfrastructure()
 				.AddInfrastructureFiles();

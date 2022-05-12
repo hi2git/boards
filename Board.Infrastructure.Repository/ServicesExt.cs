@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Board.Infrastructure.Repository {
 	public static class ServicesExt {
 
-		public static void AddDbContext(this IServiceCollection services, IConfiguration configuration) {
+		public static void AddInfrastructureRepos(this IServiceCollection services, IConfiguration configuration) {
 			services.AddDbContext<BoardContext>(options =>
 				options//.UseLazyLoadingProxies()
 				.UseSqlServer(configuration.GetConnectionString("Db"), opt => {
