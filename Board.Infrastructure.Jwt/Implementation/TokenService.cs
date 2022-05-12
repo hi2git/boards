@@ -16,7 +16,7 @@ namespace Board.Infrastructure.Jwt.Implementation {
 		public TokenService(JwtOptions tokenOptions) => _tokenOptions = tokenOptions
 			?? throw new ArgumentNullException($"An instance of valid {nameof(JwtOptions)} must be passed in order to generate a JWT!");
 
-		public async Task<JwtTokenResult> Generate(UserLoginDTO user) {
+		public Task<JwtTokenResult> Generate(UserLoginDTO user) {
 			var expiration = TimeSpan.FromMinutes(_tokenOptions.TokenExpiryInMinutes);
 			var claimsIdentity = user.BuildClaims();
 
@@ -31,10 +31,10 @@ namespace Board.Infrastructure.Jwt.Implementation {
 
 			var accessToken = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-			return new JwtTokenResult {
+			return Task.FromResult(new JwtTokenResult {
 				AccessToken = accessToken,
 				Expires = expiration
-			};
+			});
 		}
 	}
 }

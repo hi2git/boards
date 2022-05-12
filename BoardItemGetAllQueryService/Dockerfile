@@ -16,6 +16,6 @@ RUN dotnet publish "BoardItemGetAllQueryService.csproj" -c Release -o /app/publi
 
 FROM base AS final
 WORKDIR /app
-EXPOSE 80
+#EXPOSE 80
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "BoardItemGetAllQueryService.dll"]

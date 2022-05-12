@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 
 using Board.Application;
@@ -8,11 +9,13 @@ using Board.Web.Middlewares;
 
 using Boards.Application.Commands.Boards;
 using Boards.Application.Queries.Boards;
-using Boards.Infrastructure.Queues;
+using Boards.Infrastructure;
 
 using BotDetect.Web;
 
 using FluentValidation;
+
+using MassTransit;
 
 using MediatR;
 
@@ -47,15 +50,26 @@ namespace Board.Web {
 
 			services.AddDbContext(Configuration);
 			services
-				.AddInfrastructureQueues()
+				.AddInfrastructure()
 				.AddInfrastructureFiles();
+
+			services.AddMassTransit(n => {
+				n.UsingRabbitMq((context, cfg) => {
+					cfg.Host("192.168.1.127", "/", x => { x.Username("rabbitmq"); x.Password("rabbitmq"); });
+				});
+			});
+
+			services.AddOptions<MassTransitHostOptions>()
+				.Configure(options => {
+					options.WaitUntilStarted = true;
+				});
 
 			services.Configure<AppSettings>(Configuration.GetSection("appSettings"));
 
-			services.AddValidatorsFromAssemblies(_assemblies); //AddValidatorsFromAssemblyContaining<BoardCreateCommand>();
-															   //services.AddValidatorsFromAssemblyContaining<BoardGetAllQuery>();
+			services.AddValidatorsFromAssemblies(ASSEMBLIES); //AddValidatorsFromAssemblyContaining<BoardCreateCommand>();
+															  //services.AddValidatorsFromAssemblyContaining<BoardGetAllQuery>();
 
-			services.AddMediatR(_assemblies);
+			services.AddMediatR(ASSEMBLIES);
 			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 			services.AddJwtAuth(Configuration);
@@ -115,7 +129,7 @@ namespace Board.Web {
 			});
 		}
 
-		private static readonly Assembly[] _assemblies = new[] {
+		private static readonly Assembly[] ASSEMBLIES = new[] {
 			typeof(BoardCreateCommand).Assembly,
 			typeof(BoardGetAllQuery).Assembly,
 		};

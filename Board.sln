@@ -29,13 +29,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Application.Queries"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{779E1EC4-662F-4359-8782-D2303C57C16D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Infrastructure.Queues", "Boards.Infrastructure.Queues\Boards.Infrastructure.Queues.csproj", "{A9F292D0-1570-43C4-BA10-01BBD3AADA50}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Infrastructure", "Boards.Infrastructure\Boards.Infrastructure.csproj", "{3AFC45D2-016E-410D-8514-574AFF2A1209}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{19D02544-E7E8-4D68-BDD4-C1AB07B9B75E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoardItemGetAllQueryService", "BoardItemGetAllQueryService\BoardItemGetAllQueryService.csproj", "{321E2D0E-7516-42C8-95F9-A70FE95DAA15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoardItemGetAllQueryService", "BoardItemGetAllQueryService\BoardItemGetAllQueryService.csproj", "{321E2D0E-7516-42C8-95F9-A70FE95DAA15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boards.Domain.Contracts", "Boards.Domain.Contracts\Boards.Domain.Contracts.csproj", "{A1796C36-8BF6-4A62-A7C7-0F6593C6CC3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,10 +83,6 @@ Global
 		{779E1EC4-662F-4359-8782-D2303C57C16D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{779E1EC4-662F-4359-8782-D2303C57C16D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{779E1EC4-662F-4359-8782-D2303C57C16D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A9F292D0-1570-43C4-BA10-01BBD3AADA50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9F292D0-1570-43C4-BA10-01BBD3AADA50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A9F292D0-1570-43C4-BA10-01BBD3AADA50}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A9F292D0-1570-43C4-BA10-01BBD3AADA50}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3AFC45D2-016E-410D-8514-574AFF2A1209}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3AFC45D2-016E-410D-8514-574AFF2A1209}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AFC45D2-016E-410D-8514-574AFF2A1209}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -95,6 +91,10 @@ Global
 		{321E2D0E-7516-42C8-95F9-A70FE95DAA15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{321E2D0E-7516-42C8-95F9-A70FE95DAA15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{321E2D0E-7516-42C8-95F9-A70FE95DAA15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1796C36-8BF6-4A62-A7C7-0F6593C6CC3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1796C36-8BF6-4A62-A7C7-0F6593C6CC3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1796C36-8BF6-4A62-A7C7-0F6593C6CC3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1796C36-8BF6-4A62-A7C7-0F6593C6CC3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,9 +108,9 @@ Global
 		{BF0E4981-7CEF-4CF2-BE15-016400E7B285} = {ECD8A84B-02CF-49F4-92D2-50D09EC473C2}
 		{35DD9C43-1F00-4944-9460-F6BFE7289F7B} = {EFC510FA-5662-4D15-88CE-B904F7EABF18}
 		{BDC61584-828E-4025-B467-249709B092D2} = {EFC510FA-5662-4D15-88CE-B904F7EABF18}
-		{A9F292D0-1570-43C4-BA10-01BBD3AADA50} = {ECD8A84B-02CF-49F4-92D2-50D09EC473C2}
 		{3AFC45D2-016E-410D-8514-574AFF2A1209} = {ECD8A84B-02CF-49F4-92D2-50D09EC473C2}
 		{321E2D0E-7516-42C8-95F9-A70FE95DAA15} = {19D02544-E7E8-4D68-BDD4-C1AB07B9B75E}
+		{A1796C36-8BF6-4A62-A7C7-0F6593C6CC3D} = {702FFC55-0A6A-4046-BDF2-A6540769D089}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C41590B1-C3A5-4A68-9367-1340E76A3B55}

@@ -1,25 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Board.Application.Services;
 using Board.Domain.DTO.BoardItems;
-using Board.Domain.Models;
-using Board.Domain.Repos;
+
+using Boards.Domain.Contracts.BoardItems;
 
 using FluentValidation;
+
+using MassTransit;
 
 using MediatR;
 
 namespace Boards.Application.Queries.BoardItems {
-	public class BoardItemGetAllQuery : IRequest<IEnumerable<BoardItemDTO>> {
-
+	public record BoardItemGetAllQuery : BoardItemGetAllMsg, IRequest<IEnumerable<BoardItemDTO>> {
 		public BoardItemGetAllQuery(Guid id) => this.Id = id;
-
-		public Guid Id { get; }
 	}
 
 	public class BoardItemGetAllQueryValidator : AbstractValidator<BoardItemGetAllQuery> {
@@ -31,32 +28,13 @@ namespace Boards.Application.Queries.BoardItems {
 	}
 
 	internal class BoardItemGetAllQueryHandler : IRequestHandler<BoardItemGetAllQuery, IEnumerable<BoardItemDTO>> {
-		private readonly IRpcClient<IEnumerable<BoardItemDTO>> _client;
+		private readonly IRequestClient<BoardItemGetAllMsg> _client;
 
-		public BoardItemGetAllQueryHandler(IRpcClient<IEnumerable<BoardItemDTO>> client) => _client = client;
+		public BoardItemGetAllQueryHandler(IRequestClient<BoardItemGetAllMsg> client) => _client = client;
 
-		public Task<IEnumerable<BoardItemDTO>> Handle(BoardItemGetAllQuery request, CancellationToken token) => Task.FromResult(_client.Call(request));
-	}
-
-
-	/*
-	internal class BoardItemGetAllQueryHandler : IRequestHandler<BoardItemGetAllQuery, IEnumerable<BoardItemDTO>> {
-		private readonly IBoardItemRepo _repo;
-
-		public BoardItemGetAllQueryHandler(IBoardItemRepo repo) => _repo = repo;
-
-		public async Task<IEnumerable<BoardItemDTO>> Handle(BoardItemGetAllQuery request, CancellationToken cancellationToken) {// TODO add user check
-			var id = request?.Id ?? throw new ArgumentNullException(nameof(request));
-			var items = await _repo.GetAll(id);//_userMgr.CurrentUserId);
-			return items.Select(this.Map);
+		public async Task<IEnumerable<BoardItemDTO>> Handle(BoardItemGetAllQuery request, CancellationToken token) {
+			var response = await _client.GetResponse<BoardItemGetAllResponse>(request, token);
+			return response.Message.Items;
 		}
-
-		private BoardItemDTO Map(BoardItem n) => new() {
-			Id = n.Id,
-			OrderNumber = n.OrderNumber,
-			Description = n.Description,
-			IsDone = n.IsDone
-		};
 	}
-	*/
 }

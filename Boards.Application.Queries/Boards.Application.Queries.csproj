@@ -6,12 +6,13 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="9.5.0" />
+    <PackageReference Include="MassTransit" Version="8.0.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Board.Application\Board.Application.csproj" />
-    <ProjectReference Include="..\Board.Domain.DTO\Board.Domain.DTO.csproj" />
+    <ProjectReference Include="..\Boards.Domain.Contracts\Boards.Domain.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

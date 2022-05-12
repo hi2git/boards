@@ -25,12 +25,12 @@ namespace Board.Infrastructure.Repository.Implementation {
 						await _context.SaveChangesAsync();
 						transaction.Commit();
 					}
-					catch (DbUpdateConcurrencyException ex) {
+					catch (DbUpdateConcurrencyException) {
 						//_logger.LogError(ex.ToString());
 						transaction.Rollback();
 						throw;
 					}
-					catch (Exception ex) {
+					catch (Exception) {
 						//_logger.LogError(ex.ToString());
 						transaction.Rollback();
 						throw;

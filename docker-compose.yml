@@ -10,28 +10,27 @@ services:
     ports:
         - 5672:5672
         - 15672:15672
-    healthcheck:
-      test: [ "CMD", "nc", "-z", "localhost", "5672" ]
-      interval: 5s
-      timeout: 15s
-      retries: 1
+    #healthcheck:
+    #  test: [ "CMD", "nc", "-z", "localhost", "5672" ]
+    #  interval: 5s
+    #  timeout: 15s
+    #  retries: 1
   board.web:
     image: ${DOCKER_REGISTRY-}boardweb
     container_name: Board.Web
-    restart: on-failure
-    depends_on:
-      - rabbitmq
+    #restart: on-failure
+    #depends_on:
+    #  - rabbitmq
     build:
       context: .
       dockerfile: Board.Web\Dockerfile
-  boards.Items:
+  boards.items:
     image: ${DOCKER_REGISTRY-}boardsitems
-    container_name: Boards.Items
-    restart: on-failure
-    depends_on:
-      - rabbitmq
-    ports:
-      - "8081:80"
+    #container_name: Boards.Items
+    #restart: on-failure
+    #depends_on:
+    #  - rabbitmq
+    scale: 3
     build:
       context: .
       dockerfile: BoardItemGetAllQueryService\Dockerfile

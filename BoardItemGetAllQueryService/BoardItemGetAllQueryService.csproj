@@ -14,11 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Boards.Application.Queries\Boards.Application.Queries.csproj" />
-    <ProjectReference Include="..\Boards.Infrastructure.Queues\Boards.Infrastructure.Queues.csproj" />
+    <ProjectReference Include="..\Boards.Domain.Contracts\Boards.Domain.Contracts.csproj" />
   </ItemGroup>
 </Project>
