@@ -34,7 +34,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Boards.Infrastructure.Queues\Boards.Infrastructure.Queues.csproj" />
     <ProjectReference Include="..\Board.Application\Board.Application.csproj" />
     <ProjectReference Include="..\Board.Domain.DTO\Board.Domain.DTO.csproj" />
     <ProjectReference Include="..\Board.Infrastructure.Files\Board.Infrastructure.Files.csproj" />
@@ -42,6 +41,7 @@
     <ProjectReference Include="..\Board.Infrastructure.Repository\Board.Infrastructure.Repository.csproj" />
     <ProjectReference Include="..\Boards.Application.Commands\Boards.Application.Commands.csproj" />
     <ProjectReference Include="..\Boards.Application.Queries\Boards.Application.Queries.csproj" />
+    <ProjectReference Include="..\Boards.Infrastructure.Queues\Boards.Infrastructure.Queues.csproj" />
   </ItemGroup>
 
   <ItemGroup>

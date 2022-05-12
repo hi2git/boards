@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>dotnet-BoardItemGetAllQueryService-80851AC1-69B3-4C5E-A354-7A8709650EED</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\boards</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\boards\.dockerignore" Link=".dockerignore">
+      <DependentUpon>$(DockerDefaultDockerfile)</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Boards.Application.Queries\Boards.Application.Queries.csproj" />
+    <ProjectReference Include="..\Boards.Infrastructure.Queues\Boards.Infrastructure.Queues.csproj" />
+  </ItemGroup>
+</Project>

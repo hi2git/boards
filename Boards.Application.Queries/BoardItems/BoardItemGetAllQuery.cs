@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Board.Application.Services;
 using Board.Domain.DTO.BoardItems;
 using Board.Domain.Models;
 using Board.Domain.Repos;
@@ -30,6 +31,16 @@ namespace Boards.Application.Queries.BoardItems {
 	}
 
 	internal class BoardItemGetAllQueryHandler : IRequestHandler<BoardItemGetAllQuery, IEnumerable<BoardItemDTO>> {
+		private readonly IRpcClient<IEnumerable<BoardItemDTO>> _client;
+
+		public BoardItemGetAllQueryHandler(IRpcClient<IEnumerable<BoardItemDTO>> client) => _client = client;
+
+		public Task<IEnumerable<BoardItemDTO>> Handle(BoardItemGetAllQuery request, CancellationToken token) => Task.FromResult(_client.Call(request));
+	}
+
+
+	/*
+	internal class BoardItemGetAllQueryHandler : IRequestHandler<BoardItemGetAllQuery, IEnumerable<BoardItemDTO>> {
 		private readonly IBoardItemRepo _repo;
 
 		public BoardItemGetAllQueryHandler(IBoardItemRepo repo) => _repo = repo;
@@ -40,11 +51,12 @@ namespace Boards.Application.Queries.BoardItems {
 			return items.Select(this.Map);
 		}
 
-		private BoardItemDTO Map(BoardItem n) => new BoardItemDTO {
+		private BoardItemDTO Map(BoardItem n) => new() {
 			Id = n.Id,
 			OrderNumber = n.OrderNumber,
 			Description = n.Description,
 			IsDone = n.IsDone
 		};
 	}
+	*/
 }

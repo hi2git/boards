@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 namespace Board.Application.Services {
 	public interface IProducer {
 
-		public Task Publish<T>(T dto) where T : class;
+		Task Publish<T>(T dto) where T : class;
+		Task Publish<T>(T dto, string id, string queue) where T : class;
 
 	}
 }
