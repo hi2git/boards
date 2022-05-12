@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  boards.items:
+    scale: 2
+  board.web:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    ports:
+      - "8080:80"
+    volumes:
+      - D:/Boards:/usr/share/boards

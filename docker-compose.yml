@@ -19,8 +19,8 @@ services:
     image: ${DOCKER_REGISTRY-}boardweb
     container_name: Board.Web
     #restart: on-failure
-    #depends_on:
-    #  - rabbitmq
+    depends_on:
+      - rabbitmq
     build:
       context: .
       dockerfile: Board.Web\Dockerfile
@@ -28,9 +28,8 @@ services:
     image: ${DOCKER_REGISTRY-}boardsitems
     #container_name: Boards.Items
     #restart: on-failure
-    #depends_on:
-    #  - rabbitmq
-    scale: 3
+    depends_on:
+      - rabbitmq
     build:
       context: .
       dockerfile: BoardItemGetAllQueryService\Dockerfile

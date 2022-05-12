@@ -55,7 +55,7 @@ namespace Board.Web {
 
 			services.AddMassTransit(n => {
 				n.UsingRabbitMq((context, cfg) => {
-					cfg.Host("192.168.1.127", "/", x => { x.Username("rabbitmq"); x.Password("rabbitmq"); });
+					cfg.Host("rabbitmq", "/", x => { x.Username("rabbitmq"); x.Password("rabbitmq"); });
 				});
 			});
 

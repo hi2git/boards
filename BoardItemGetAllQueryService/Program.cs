@@ -23,7 +23,7 @@ namespace BoardItemGetAllQueryService {
 						n.AddConsumer<BoardItemGetAllQueryConsumer>();
 
 						n.UsingRabbitMq((context, cfg) => {
-							cfg.Host("192.168.1.127", "/", x => { x.Username("rabbitmq"); x.Password("rabbitmq"); });
+							cfg.Host("rabbitmq", "/", x => { x.Username("rabbitmq"); x.Password("rabbitmq"); });
 							cfg.ConfigureEndpoints(context);
 						});
 					});
