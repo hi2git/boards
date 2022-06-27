@@ -1,6 +1,6 @@
 import qs from "query-string";
 
-import { IBoardItem } from "../interfaces/components";
+import { IPost } from "../interfaces/components";
 import axios from "./api.axios";
 
 class Service {
@@ -9,40 +9,40 @@ class Service {
 			console.error("boardId is undefined");
 			return [];
 		}
-		const url = `/api/boardItems?id=${boardId}`;
-		const result = await axios.get<Array<IBoardItem>>(url);
+		const url = `/api/posts?id=${boardId}`;
+		const result = await axios.get<Array<IPost>>(url);
 		return result.data;
 	};
 
-	sort = async (items: Array<IBoardItem>, boardId?: string) => {
+	sort = async (items: Array<IPost>, boardId?: string) => {
 		if (!boardId) return console.error("boardId is undefined");
-		const url = `/api/boardItems`;
+		const url = `/api/posts`;
 		const itms = items.map(n => ({ ...n, id: n.id !== "" ? n.id : null, content: undefined }));
 		await axios.put(url, { id: boardId, items: itms });
 	};
 
-	post = async (item: IBoardItem, boardId?: string) => {
+	post = async (item: IPost, boardId?: string) => {
 		if (!boardId) return console.error("boardId is undefined");
-		const url = "/api/boardItem";
+		const url = "/api/post";
 		await axios.post(url, { id: boardId, item: { ...item, id: null } });
 	};
 
-	putContent = async (item: IBoardItem, boardId?: string) => {
+	putContent = async (item: IPost, boardId?: string) => {
 		if (!boardId) return console.error("boardId is undefined");
-		const url = "/api/boardItem/content";
+		const url = "/api/post/content";
 		await axios.put(url, { id: boardId, item });
 	};
 
-	put = async (item: IBoardItem, boardId?: string) => {
+	put = async (item: IPost, boardId?: string) => {
 		if (!boardId) return console.error("boardId is undefined");
-		const url = "/api/boardItem";
+		const url = "/api/post";
 		await axios.put(url, { id: boardId, item: { ...item, content: undefined } });
 	};
 
 	del = async (id: string, boardId?: string) => {
 		if (!boardId) return console.error("boardId is undefined");
 		const paramStr = qs.stringify({ id: boardId, item: id });
-		const url = `/api/boardItem?${paramStr}`;
+		const url = `/api/post?${paramStr}`;
 		await axios.delete(url);
 	};
 }

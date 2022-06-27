@@ -1,4 +1,4 @@
-export default interface IBoardItem {
+export default interface IPost {
 	id: string;
 	orderNumber: number;
 	isDone: boolean;

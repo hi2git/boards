@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-using Board.Domain.DTO.BoardItems;
+using Board.Domain.DTO.Posts;
 using Board.Domain.Models;
 using Board.Domain.Repos;
 
@@ -10,33 +10,33 @@ using FluentValidation;
 
 using MediatR;
 
-namespace Boards.Application.Commands.BoardItems {
-	public class BoardItemUpdateCommand : IRequest {
+namespace Boards.Application.Commands.Posts {
+	public class PostUpdateCommand : IRequest {
 
-		public BoardItemUpdateCommand(BoardItemDTO item) => this.Item = item;
+		public PostUpdateCommand(PostDTO item) => this.Item = item;
 
-		public BoardItemDTO Item { get; }
+		public PostDTO Item { get; }
 	}
 
-	public class BoardItemUpdateCommandValidator : AbstractValidator<BoardItemUpdateCommand> {
+	public class PostUpdateCommandValidator : AbstractValidator<PostUpdateCommand> {
 
-		public BoardItemUpdateCommandValidator() {
+		public PostUpdateCommandValidator() {
 			RuleFor(n => n.Item).NotEmpty();
 			RuleFor(n => n.Item.Id).NotEmpty();
 			//RuleFor(n => n.Item.OrderNumber).NotEmpty();
 		}
 	}
 
-	internal class BoardItemUpdateCommandHandler : IRequestHandler<BoardItemUpdateCommand> {
+	internal class PostUpdateCommandHandler : IRequestHandler<PostUpdateCommand> {
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IBoardItemRepo _repo;
 
-		public BoardItemUpdateCommandHandler(IUnitOfWork unitOfWork, IBoardItemRepo repo) {
+		public PostUpdateCommandHandler(IUnitOfWork unitOfWork, IBoardItemRepo repo) {
 			_unitOfWork = unitOfWork;
 			_repo = repo;
 		}
 
-		public async Task<Unit> Handle(BoardItemUpdateCommand request, CancellationToken token) {// TODO: check user before modify
+		public async Task<Unit> Handle(PostUpdateCommand request, CancellationToken token) {// TODO: check user before modify
 			var item = request?.Item ?? throw new ArgumentNullException(nameof(request));
 			var entity = await _repo.Get(item.Id.Value, token);
 			entity = this.Map(item, entity);
@@ -46,7 +46,7 @@ namespace Boards.Application.Commands.BoardItems {
 			return Unit.Value;
 		}
 
-		private BoardItem Map(BoardItemDTO dto, BoardItem entity) {
+		private BoardItem Map(PostDTO dto, BoardItem entity) {
 			entity.IsDone = dto.IsDone;
 			entity.Description = dto.Description;
 			return entity;

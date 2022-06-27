@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
 import { AlertDanger, Button } from ".";
-import { IBoardItem } from "../../interfaces/components";
+import { IPost } from "../../interfaces/components";
 
 interface ISelectProps {
-	item: IBoardItem;
-	onChange: (item: IBoardItem) => void;
+	item: IPost;
+	onChange: (item: IPost) => void;
 	filter?: string;
 	title: string;
 	isDisabled?: boolean;
@@ -28,7 +28,7 @@ const Selector: React.FC<ISelectProps> = ({ item, isDisabled, title, onChange, f
 			img.onload = async () => {
 				setError(undefined);
 				const content = img.src.split(",")[1];
-				const itm: IBoardItem = { ...item, content };
+				const itm: IPost = { ...item, content };
 				onChange(itm);
 			};
 

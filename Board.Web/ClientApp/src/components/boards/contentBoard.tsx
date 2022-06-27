@@ -4,7 +4,7 @@ import { useResizeDetector } from "react-resize-detector";
 
 import { LoadablePanelFull, FileSelect } from "../common";
 
-import boardItems from "../../reducers/boardItems";
+import posts from "../../reducers/posts";
 
 import Sidebar from "./contentBoardSideBar";
 import Add from "./contentBoardAdd";
@@ -17,7 +17,7 @@ import ViewBtns from "./contentBoardViews";
 interface IProps {}
 
 const Board: React.FC<IProps> = () => {
-	const { isLoading, error } = boardItems;
+	const { isLoading, error } = posts;
 
 	const { width, height, ref } = useResizeDetector<HTMLDivElement>();
 

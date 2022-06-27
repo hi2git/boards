@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Board.Domain.DTO.BoardItems;
+using Board.Domain.DTO.Posts;
+
 using Boards.Domain.Contracts.BoardItems;
 
 using FluentValidation;
@@ -14,7 +15,7 @@ using MassTransit;
 using MediatR;
 
 namespace Boards.Application.Queries.BoardItems {
-	public record BoardItemGetAllQuery : BoardItemGetAllMsg, IRequest<IEnumerable<BoardItemDTO>> {
+	public record BoardItemGetAllQuery : BoardItemGetAllMsg, IRequest<IEnumerable<PostDTO>> {
 		public BoardItemGetAllQuery(Guid id) => this.Id = id;
 	}
 
@@ -26,12 +27,12 @@ namespace Boards.Application.Queries.BoardItems {
 
 	}
 
-	internal class BoardItemGetAllQueryHandler : IRequestHandler<BoardItemGetAllQuery, IEnumerable<BoardItemDTO>> {
+	internal class BoardItemGetAllQueryHandler : IRequestHandler<BoardItemGetAllQuery, IEnumerable<PostDTO>> {
 		private readonly IRequestClient<BoardItemGetAllMsg> _client;
 
 		public BoardItemGetAllQueryHandler(IRequestClient<BoardItemGetAllMsg> client) => _client = client;
 
-		public async Task<IEnumerable<BoardItemDTO>> Handle(BoardItemGetAllQuery request, CancellationToken token) {
+		public async Task<IEnumerable<PostDTO>> Handle(BoardItemGetAllQuery request, CancellationToken token) {
 			var response = await _client.GetResponse<BoardItemGetAllResponse>(request, token);
 			return response.Message.Items;
 		}

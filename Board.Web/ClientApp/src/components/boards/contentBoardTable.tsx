@@ -2,7 +2,7 @@ import React from "react";
 import { observer } from "mobx-react";
 
 import scale from "../../reducers/boardScale";
-import boardItems from "../../reducers/boardItems";
+import posts from "../../reducers/posts";
 
 import Item from "./contentBoardTableItem";
 import None from "./contentBoardTableNone";
@@ -14,7 +14,7 @@ interface IProps {
 }
 
 const ContentTable: React.FC<IProps> = ({ width }) => {
-	const { items, put, sort, del } = boardItems;
+	const { items, put, sort, del } = posts;
 
 	const [id, setId] = React.useState("");
 	const [touchId, setTouchId] = React.useState("");

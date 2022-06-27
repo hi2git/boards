@@ -1,12 +1,12 @@
 import React from "react";
-import { IBoardItem } from "../../interfaces/components";
+import { IPost } from "../../interfaces/components";
 
 import View from "./contentBoardTableItemImgView";
 
 interface IProps {
-	item: IBoardItem;
+	item: IPost;
 	height: number;
-	onChange: (item: IBoardItem) => void;
+	onChange: (item: IPost) => void;
 	onDelete?: (id: string) => void;
 }
 

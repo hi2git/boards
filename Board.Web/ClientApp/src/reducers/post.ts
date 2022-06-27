@@ -5,7 +5,7 @@ import router from "./router";
 const DEFAULT_VALUE = undefined;
 const PARAM = "item";
 
-class Store {
+class Post {
 	constructor() {
 		makeAutoObservable(this);
 	}
@@ -23,4 +23,4 @@ class Store {
 	};
 }
 
-export default new Store();
+export default new Post();

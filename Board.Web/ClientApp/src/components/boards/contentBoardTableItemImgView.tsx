@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { IBoardItem } from "../../interfaces/components";
+import { IPost } from "../../interfaces/components";
 import { Button, FileSelect, Tooltip } from "../common";
 import store from "../../reducers/boardControl";
 
@@ -12,8 +12,8 @@ import view from "../../reducers/view";
 import pltStore from "../../reducers/boardPalette";
 
 interface IProps {
-	item: IBoardItem;
-	onChange: (item: IBoardItem) => void;
+	item: IPost;
+	onChange: (item: IPost) => void;
 
 	size: number;
 	isDisabled?: boolean;

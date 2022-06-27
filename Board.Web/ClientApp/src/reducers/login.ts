@@ -5,7 +5,7 @@ import { IUserLogin } from "../interfaces/components";
 import router from "./router";
 import boards from "./boards";
 import board from "./board";
-import boardItems from "./boardItems";
+import posts from "./posts";
 import * as urls from "../constants/urls";
 
 class Login {
@@ -22,7 +22,7 @@ class Login {
 			await service.post(item);
 			this.receive();
 
-			boardItems.clear();
+			posts.clear();
 			boards.clear();
 			board.clear();
 

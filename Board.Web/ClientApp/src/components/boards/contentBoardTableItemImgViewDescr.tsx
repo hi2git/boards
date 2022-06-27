@@ -1,12 +1,12 @@
 import { observer } from "mobx-react";
 import React, { useState } from "react";
 import { Button, Modal, TextArea } from "../common";
-import { IBoardItem } from "../../interfaces/components";
+import { IPost } from "../../interfaces/components";
 
-import store from "../../reducers/boardItem";
+import store from "../../reducers/post";
 
 interface IProps {
-	item: IBoardItem;
+	item: IPost;
 	onChange: (value?: string) => void;
 }
 
