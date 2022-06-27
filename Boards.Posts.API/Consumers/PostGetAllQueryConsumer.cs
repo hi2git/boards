@@ -6,12 +6,14 @@ using Boards.Domain.Contracts.BoardItems;
 
 using MassTransit;
 
+using MediatR;
+
 namespace Boards.Posts.API.Consumers {
-	public class GetAllQueryConsumer : IConsumer<BoardItemGetAllMsg> {
+	public class PostGetAllQueryConsumer : IConsumer<BoardItemGetAllMsg> {
 		private readonly ILogger _logger;
 		private readonly IBoardItemRepo _repo;
 
-		public GetAllQueryConsumer(ILogger<GetAllQueryConsumer> logger, IBoardItemRepo repo) {
+		public PostGetAllQueryConsumer(ILogger<PostGetAllQueryConsumer> logger, IBoardItemRepo repo) {
 			_logger = logger;
 			_repo = repo;
 		}

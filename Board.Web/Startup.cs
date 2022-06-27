@@ -1,23 +1,18 @@
 using System;
-using System.Reflection;
 
 using Board.Application;
 using Board.Infrastructure.Files;
 using Board.Infrastructure.Jwt;
 using Board.Infrastructure.Repository;
-using Board.Web.Middlewares;
 
-using Boards.Application.Commands.Boards;
-using Boards.Application.Queries.Boards;
 using Boards.Infrastructure;
+using Boards.Infrastructure.Web;
 
 using BotDetect.Web;
 
-using FluentValidation;
 
 using MassTransit;
 
-using MediatR;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -48,38 +43,18 @@ namespace Board.Web {
 			//services.AddControllersWithViews();
 			services.AddHttpContextAccessor();
 
-			services.AddInfrastructureRepos(Configuration);
 			services
 				.AddInfrastructure()
-				.AddInfrastructureFiles();
-
-			services.AddMassTransit(n => {
-				n.UsingRabbitMq((context, cfg) => {
-					cfg.Host("rabbitmq", "/", x => { x.Username("rabbitmq"); x.Password("rabbitmq"); });
-				});
-			});
-
-			services.AddOptions<MassTransitHostOptions>()
-				.Configure(options => {
-					options.WaitUntilStarted = true;
-				});
+				.AddInfrastructureRepos(Configuration)
+				.AddInfrastructureFiles()
+				.AddInfrastructureWeb();
 
 			services.Configure<AppSettings>(Configuration.GetSection("appSettings"));
 
-			services.AddValidatorsFromAssemblies(ASSEMBLIES); //AddValidatorsFromAssemblyContaining<BoardCreateCommand>();
-															  //services.AddValidatorsFromAssemblyContaining<BoardGetAllQuery>();
-
-			services.AddMediatR(ASSEMBLIES);
-			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-
 			services.AddJwtAuth(Configuration);
-			//services.AddAuthorization();
-			//services.AddControllers();
 
 			// In production, the React files will be served from this directory
 			services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/build");
-
-			//services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 			services.AddMvc(); // opts => opts.EnableEndpointRouting = false
 		}
@@ -96,7 +71,7 @@ namespace Board.Web {
 			app.UseStaticFiles();
 			app.UseSpaStaticFiles();
 
-			app.UseExceptionMiddleware();
+			app.UseInfrastructureWeb();
 
 			app.UseCookiePolicy(new CookiePolicyOptions {
 				MinimumSameSitePolicy = SameSiteMode.Strict,
@@ -129,9 +104,6 @@ namespace Board.Web {
 			});
 		}
 
-		private static readonly Assembly[] ASSEMBLIES = new[] {
-			typeof(BoardCreateCommand).Assembly,
-			typeof(BoardGetAllQuery).Assembly,
-		};
+		
 	}
 }

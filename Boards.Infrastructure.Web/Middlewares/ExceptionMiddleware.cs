@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 using FluentValidation;
 
@@ -10,9 +7,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-using Newtonsoft.Json;
+using System.Text.Json;
 
-namespace Board.Web.Middlewares {
+
+namespace Boards.Infrastructure.Web.Middlewares {
 
 	public static class ExceptionMiddlewareExtensions {
 
@@ -47,16 +45,20 @@ namespace Board.Web.Middlewares {
 
 			switch (exception) {
 				case ValidationException ve:
-					context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+					context.Response.StatusCode = (int)HttpStatusCode.NotAcceptable;
 					message = ve.Message;
 					break;
 				case ArgumentException ae:
 					context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 					message = ae.Message;
 					break;
+				case MassTransit.RequestTimeoutException rte:
+					context.Response.StatusCode = (int)HttpStatusCode.RequestTimeout;
+					message = $"Сервис временно недоступен. Попробуйте повторить попытку позже.";
+					break;
 			}
 
-			var result = JsonConvert.SerializeObject(new { message });
+			var result = JsonSerializer.Serialize(new { message }); //.SerializeObject(new { message });
 			return context.Response.WriteAsync(result);
 		}
 	}

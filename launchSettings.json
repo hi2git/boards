@@ -4,11 +4,12 @@
 			"commandName": "DockerCompose",
 			"composeLaunchServiceName": "board.web",
 			"serviceActions": {
-				"board.web": "StartDebugging"
+				"board.web": "StartDebugging",
+				"boards.posts": "StartDebugging"
 			},
 			"composeLaunchAction": "LaunchBrowser",
 			"commandVersion": "1.0",
-			"composeLaunchUrl": "{Scheme}://{ServiceIPAddress}{ServicePort}",
+			"composeLaunchUrl": "{Scheme}://{ServiceIPAddress}{ServicePort}"
 		}
 	}
 }

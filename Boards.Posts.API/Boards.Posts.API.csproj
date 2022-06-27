@@ -6,10 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>d564b411-4300-478d-9e8f-bb8bdbdb0231</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
   </ItemGroup>
@@ -17,6 +17,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Board.Infrastructure.Repository\Board.Infrastructure.Repository.csproj" />
     <ProjectReference Include="..\Boards.Domain.Contracts\Boards.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\Boards.Infrastructure.Web\Boards.Infrastructure.Web.csproj" />
+    <ProjectReference Include="..\Boards.Posts.Application\Boards.Posts.Application.csproj" />
   </ItemGroup>
 
 </Project>

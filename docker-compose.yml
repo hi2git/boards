@@ -25,12 +25,19 @@ services:
     build:
       context: .
       dockerfile: Board.Web\Dockerfile
+  #boards.posts:
+  #  image: ${DOCKER_REGISTRY-}boardsposts
+  #  #container_name: Boards.Items
+  #  #restart: on-failure
+  #  depends_on:
+  #    - rabbitmq
+  #  build:
+  #    context: .
+  #    dockerfile: Boards.Posts.API\Dockerfile
+
   boards.posts:
     image: ${DOCKER_REGISTRY-}boardsposts
-    #container_name: Boards.Items
-    #restart: on-failure
-    depends_on:
-      - rabbitmq
     build:
       context: .
-      dockerfile: Boards.Posts.API\Dockerfile
+      dockerfile: Boards.Posts.API/Dockerfile
+
