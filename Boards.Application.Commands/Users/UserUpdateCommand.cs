@@ -45,12 +45,12 @@ namespace Boards.Application.Commands.Users {
 			_userRepo = userRepo;
 		}
 
-		public async Task<Unit> Handle(UserUpdateCommand request, CancellationToken cancellationToken) {
+		public async Task<Unit> Handle(UserUpdateCommand request, CancellationToken token) {
 			var item = request?.Item ?? throw new ArgumentNullException(nameof(request));
 			//if (!item.IsPasswordChanged)
 			//	return;
 
-			var user = await _userRepo.Get(_userMgr.CurrentUserId);
+			var user = await _userRepo.Get(_userMgr.CurrentUserId, token);
 			var isOldRight = _pwdService.IsEqual(item.OldPassword, user.Password);
 			if (!isOldRight)
 				throw new ArgumentException("Старый пароль введен неверно");

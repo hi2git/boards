@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Board.Domain.Repos;
@@ -19,29 +20,32 @@ namespace Board.Infrastructure.Repository.Implementation {
 
 		#region Public
 
-		public virtual IQueryable<T> Query => EntityRepo.Query();
+		public virtual IQueryable<T> Query => this.QueryAll;
 
 		public IQueryable<T> QueryAll => EntityRepo.Query();
 
 		/// <inheritdoc/>
-		public virtual Task<List<T>> GetAll() => EntityRepo.GetAll();
+		public virtual Task<List<T>> GetAll(CancellationToken token) => EntityRepo.GetAll(token);
 
 		/// <inheritdoc/>
-		public virtual Task<T> Get(Guid id) => EntityRepo.Get(id);
+		public virtual Task<T> Get(Guid id, CancellationToken token) => EntityRepo.Get(id, token);
 
 		/// <inheritdoc/>
-		public async Task Update(T entity) {
+		public Task Update(T entity) {
 			onSave(entity);
-			await EntityRepo.Update(entity);
+			return EntityRepo.Update(entity);
 		}
 
+		/// <inheritdoc/>
 		protected virtual void onSave(T entity) { }
 
-		protected virtual void onAdd(T entity) { }
 		/// <inheritdoc/>
-		public async Task Create(T entity) {
+		protected virtual void onAdd(T entity) { }
+
+		/// <inheritdoc/>
+		public Task Create(T entity) {
 			onAdd(entity);
-			await EntityRepo.Create(entity);
+			return EntityRepo.Create(entity);
 		}
 
 		/// <inheritdoc/>

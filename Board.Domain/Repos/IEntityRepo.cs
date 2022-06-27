@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Board.Domain.Repos {
@@ -13,7 +14,7 @@ namespace Board.Domain.Repos {
 
 		/// <summary>Выполняет асинхронное получение сущности по идентификатору</summary>
 		/// <returns>искомую сущность или null</returns>
-		Task<T> Get(Guid id);
+		Task<T> Get(Guid id, CancellationToken token);
 
 		/// <summary>Добавляет сущность</summary>
 		/// <param name="entity">сущность для сохранения</param>
@@ -29,12 +30,12 @@ namespace Board.Domain.Repos {
 
 		/// <summary>Возвращает список всех элементов</summary>
 		/// <returns>список всех элементов</returns>
-		Task<List<T>> GetAll();
+		Task<List<T>> GetAll(CancellationToken token);
 
-		/// <summary>Возвращает количество элементов, соответствующих заданному условию</summary>
-		/// <param name="predicate">функция условия</param>
-		/// <returns>количество элементов, соответствующих заданному условию</returns>
-		Task<int> Count(Expression<Func<T, bool>> predicate = null);
+		///// <summary>Возвращает количество элементов, соответствующих заданному условию</summary>
+		///// <param name="predicate">функция условия</param>
+		///// <returns>количество элементов, соответствующих заданному условию</returns>
+		//Task<int> Count(Expression<Func<T, bool>> predicate = null);
 
 		//Task UpdateManyToMany<TKey>(IEnumerable<T> currentItems, IEnumerable<T> newItems, Func<T, TKey> getKey);
 	}

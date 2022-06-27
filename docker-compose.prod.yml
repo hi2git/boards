@@ -10,3 +10,8 @@ services:
       - "8080:80"
     volumes:
       - D:/Boards:/usr/share/boards
+  boards.posts:
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Docker
+    ports:
+        - "8081:80"

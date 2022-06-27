@@ -21,15 +21,16 @@ services:
     #restart: on-failure
     depends_on:
       - rabbitmq
+      - boards.posts
     build:
       context: .
       dockerfile: Board.Web\Dockerfile
-  boards.items:
-    image: ${DOCKER_REGISTRY-}boardsitems
+  boards.posts:
+    image: ${DOCKER_REGISTRY-}boardsposts
     #container_name: Boards.Items
     #restart: on-failure
     depends_on:
       - rabbitmq
     build:
       context: .
-      dockerfile: BoardItemGetAllQueryService\Dockerfile
+      dockerfile: Boards.Posts.API\Dockerfile

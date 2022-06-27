@@ -22,8 +22,8 @@ namespace Boards.Application.Queries.Users {
 
 		public UserGetAllQueryHandler(IUserRepo repo) => _repo = repo;
 
-		public async Task<IEnumerable<IdNameDTO>> Handle(UserGetAllQuery request, CancellationToken cancellationToken) =>
-			(await _repo.GetAll()).Select(this.Map);
+		public async Task<IEnumerable<IdNameDTO>> Handle(UserGetAllQuery request, CancellationToken token) =>
+			(await _repo.GetAll(token)).Select(this.Map);
 
 		private IdNameDTO Map(User user) => new IdNameDTO { Id = user.Id, Name = user.Name };
 	}

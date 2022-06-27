@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Board.Infrastructure.Repository {
 	public static class ServicesExt {
 
-		public static void AddInfrastructureRepos(this IServiceCollection services, IConfiguration configuration) {
+		public static IServiceCollection AddInfrastructureRepos(this IServiceCollection services, IConfiguration configuration) {
 			services.AddDbContext<BoardContext>(options =>
 				options//.UseLazyLoadingProxies()
 				.UseSqlServer(configuration.GetConnectionString("Db"), opt => {
@@ -26,6 +26,8 @@ namespace Board.Infrastructure.Repository {
 			services.AddScoped<IBoardItemRepo, BoardItemRepo>();
 			services.AddScoped<IBoardRepo, BoardRepo>();
 			services.AddScoped<IRoleRepo, RoleRepo>();
+
+			return services;
 
 		}
 

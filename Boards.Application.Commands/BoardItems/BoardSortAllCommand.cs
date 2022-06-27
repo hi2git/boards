@@ -44,8 +44,8 @@ namespace Boards.Application.Commands.BoardItems {
 			_repo = repo;
 		}
 
-		public async Task<Unit> Handle(BoardSortAllCommand request, CancellationToken cancellationToken) {// TODO add user check
-			var origins = await _repo.GetAll(request.Id);//_userMgr.CurrentUserId);
+		public async Task<Unit> Handle(BoardSortAllCommand request, CancellationToken token) {// TODO add user check
+			var origins = await _repo.GetAll(request.Id, token);//_userMgr.CurrentUserId);
 			var dtos = request.Items?.Cast<IdOrderableDTO>() ?? origins.Select(n => new IdOrderableDTO { Id = n.Id, OrderNumber = n.OrderNumber });
 			var items = dtos.OrderBy(n => n.OrderNumber).Select((n, i) => this.Map(n.Id.Value, i, origins));
 

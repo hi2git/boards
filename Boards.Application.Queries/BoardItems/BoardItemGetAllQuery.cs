@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Board.Domain.DTO.BoardItems;
-
 using Boards.Domain.Contracts.BoardItems;
 
 using FluentValidation;

@@ -50,9 +50,9 @@ namespace Boards.Application.Commands.BoardItems {
 			_fileStorage = fileStorage;
 		}
 
-		public async Task<Unit> Handle(BoardItemCreateCommand request, CancellationToken cancellationToken) {
+		public async Task<Unit> Handle(BoardItemCreateCommand request, CancellationToken token) {
 			var dto = request?.Item ?? throw new ArgumentNullException(nameof(request));
-			var board = await _boardRepo.Get(request.Id) ?? throw new ArgumentException($"Отсутствует доска {request.Id}");
+			var board = await _boardRepo.Get(request.Id, token) ?? throw new ArgumentException($"Отсутствует доска {request.Id}");
 			var item = new BoardItem(Guid.NewGuid(), board, dto.OrderNumber, dto.Description); // TODO: check user // _userMgr.CurrentUserId
 
 			await _repo.Create(item);

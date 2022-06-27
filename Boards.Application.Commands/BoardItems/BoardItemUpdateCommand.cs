@@ -36,9 +36,9 @@ namespace Boards.Application.Commands.BoardItems {
 			_repo = repo;
 		}
 
-		public async Task<Unit> Handle(BoardItemUpdateCommand request, CancellationToken cancellationToken) {// TODO: check user before modify
+		public async Task<Unit> Handle(BoardItemUpdateCommand request, CancellationToken token) {// TODO: check user before modify
 			var item = request?.Item ?? throw new ArgumentNullException(nameof(request));
-			var entity = await _repo.Get(item.Id.Value);
+			var entity = await _repo.Get(item.Id.Value, token);
 			entity = this.Map(item, entity);
 			await _repo.Update(entity);
 			await _unitOfWork.Commit();

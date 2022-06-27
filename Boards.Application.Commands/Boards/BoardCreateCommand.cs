@@ -46,8 +46,8 @@ namespace Boards.Application.Commands.Boards {
 			_boardRepo = boardRepo;
 		}
 
-		public async Task<Guid> Handle(BoardCreateCommand request, CancellationToken cancellationToken) {
-			var user = await _userRepo.Get(_userMgr.CurrentUserId);
+		public async Task<Guid> Handle(BoardCreateCommand request, CancellationToken token) {
+			var user = await _userRepo.Get(_userMgr.CurrentUserId, token);
 			var board = new Board.Domain.Models.Board(Guid.NewGuid(), request.Name, user);
 
 			await _boardRepo.Create(board);

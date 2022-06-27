@@ -44,9 +44,9 @@ namespace Boards.Application.Commands.BoardItems {
 			_fileStorage = fileStorage;
 		}
 
-		public async Task<Unit> Handle(BoardItemDeleteCommand request, CancellationToken cancellationToken) {// TODO: check user before modify
+		public async Task<Unit> Handle(BoardItemDeleteCommand request, CancellationToken token) {// TODO: check user before modify
 			var id = request?.Id ?? throw new ArgumentNullException(nameof(request));
-			var entity = await _repo.Get(id);
+			var entity = await _repo.Get(id, token);
 			await _repo.Delete(entity);
 
 			await _unitOfWork.Commit();

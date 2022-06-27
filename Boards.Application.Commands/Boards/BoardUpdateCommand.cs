@@ -45,9 +45,9 @@ namespace Boards.Application.Commands.Boards {
 			_boardRepo = boardRepo;
 		}
 
-		public async Task<Unit> Handle(BoardUpdateCommand request, CancellationToken cancellationToken) {
+		public async Task<Unit> Handle(BoardUpdateCommand request, CancellationToken token) {
 			var id = request?.Item.Id ?? throw new ArgumentNullException(nameof(request));
-			var board = await _boardRepo.Get(id) ?? throw new ArgumentException($"Отсутствует доска {id}");
+			var board = await _boardRepo.Get(id, token) ?? throw new ArgumentException($"Отсутствует доска {id}");
 			board.Name = request?.Item.Name;
 			await _boardRepo.Update(board);
 			await _unitOfWork.Commit();

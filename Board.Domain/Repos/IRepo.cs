@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Board.Domain.Repos {
@@ -12,11 +13,11 @@ namespace Board.Domain.Repos {
 
 		/// <summary>Возвращает список всех сущностей</summary>
 		/// <returns>список всех сущностей</returns>
-		Task<List<T>> GetAll();
+		Task<List<T>> GetAll(CancellationToken token);
 
 		/// <summary>Выполняет асинхронное получение сущности по идентификатору</summary>
 		/// <returns>искомую сущность или null</returns>
-		Task<T> Get(Guid id);
+		Task<T> Get(Guid id, CancellationToken token);
 
 		/// <summary>обновляет сущность</summary>
 		/// <param name="entity">сущность для сохранения</param>
