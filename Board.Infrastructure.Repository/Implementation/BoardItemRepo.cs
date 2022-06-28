@@ -15,6 +15,7 @@ namespace Board.Infrastructure.Repository.Implementation {
 
 		public Task<List<BoardItem>> GetAll(Guid boardId, CancellationToken token) => this.Query
 			.Where(n => n.BoardId == boardId)
+			.OrderByDescending(n => n.OrderNumber)
 			.ToListAsync(token);
 	}
 }

@@ -5,6 +5,8 @@ using Boards.Infrastructure.Web;
 using Boards.Posts.API.Consumers;
 using Boards.Posts.Application.Queries;
 
+using MassTransit;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
@@ -14,7 +16,7 @@ services.AddControllers();
 
 services
 	.AddInfrastructureRepos(builder.Configuration)
-	.AddInfrastructureWeb(assemblies: assemblies, consumers: typeof(PostGetAllQueryConsumer).Assembly)
+	.AddInfrastructureWeb(assemblies: assemblies, n => n.AddConsumers(typeof(PostGetAllQueryConsumer).Assembly))
 ;
 
 var app = builder.Build();

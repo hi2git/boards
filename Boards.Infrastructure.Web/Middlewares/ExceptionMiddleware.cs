@@ -57,8 +57,13 @@ namespace Boards.Infrastructure.Web.Middlewares {
 					break;
 				case MassTransit.RequestTimeoutException:
 					context.Response.StatusCode = (int)HttpStatusCode.RequestTimeout;
-					message = $"Сервис временно недоступен. Попробуйте повторить попытку позже.";
+					message = $"Сервис временно недоступен. Попробуйте повторить попытку позже";
 					break;
+				case MassTransit.MassTransitException ce:
+					context.Response.StatusCode = (int)HttpStatusCode.ServiceUnavailable;
+					message = $"Сервис временно недоступен. {ce.Message}";
+					break;
+
 			}
 
 			var result = JsonSerializer.Serialize(new { message }); //.SerializeObject(new { message });

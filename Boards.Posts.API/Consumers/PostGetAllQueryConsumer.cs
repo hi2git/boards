@@ -12,7 +12,7 @@ namespace Boards.Posts.API.Consumers {
 		public PostGetAllQueryConsumer(IMediator mediator) => _mediator = mediator;
 
 		public async Task Consume(ConsumeContext<PostGetAllMsg> context) {
-			var items = await _mediator.Send(new PostGetAllQuery(context.Message.Id), context.CancellationToken);
+			var items = await _mediator.Send(new PostGetAllQuery(context.Message.Id), context.CancellationToken);	//TODO: use cache
 			await context.RespondAsync(new PostGetAllResponse { Items = items });
 		}
 

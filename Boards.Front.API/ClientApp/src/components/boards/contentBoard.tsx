@@ -19,7 +19,7 @@ interface IProps {}
 const Board: React.FC<IProps> = () => {
 	const { isLoading, error } = posts;
 
-	const { width, height, ref } = useResizeDetector<HTMLDivElement>();
+	const { width, ref } = useResizeDetector<HTMLDivElement>();
 
 	return (
 		<>
@@ -37,7 +37,7 @@ const Board: React.FC<IProps> = () => {
 			<div className="row mt-1">
 				<div ref={ref} className="col-12">
 					<LoadablePanelFull isLoading={isLoading} error={error}>
-						<ContentTable width={width}/>
+						<ContentTable width={width} />
 					</LoadablePanelFull>
 				</div>
 			</div>

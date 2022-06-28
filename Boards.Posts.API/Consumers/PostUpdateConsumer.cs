@@ -11,7 +11,7 @@ namespace Boards.Posts.API.Consumers {
 
 		public PostUpdateConsumer(IMediator mediator) => _mediator = mediator;
 
-		public Task Consume(ConsumeContext<PostUpdateMsg> context) => _mediator.Send(new PostUpdateCommand(context.Message), context.CancellationToken);
+		public Task Consume(ConsumeContext<PostUpdateMsg> context) => _mediator.Send(new PostUpdateCommand(context.Message), context.CancellationToken);    //TODO: drop cache
 	}
 
 	public class PostUpdateConsumerDefinition : ConsumerDefinition<PostUpdateConsumer> {

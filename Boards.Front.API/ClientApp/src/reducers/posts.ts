@@ -21,46 +21,48 @@ class Posts {
 	@action fetchAll = async () => {
 		this.request();
 		try {
-			this.receive(await service.getAll(board.value?.id));
+			this.receive(await service.getAll(board.value?.id)); // TODO use cookie to store board.id
 		} catch (e) {
 			this.receive(undefined, e);
 		}
 	};
-	@action sort = async (items: Array<IPost>) => {
-		await service.sort(items, board.value?.id);
-		await this.fetchAll();
-	};
-	@action post = async (item: IPost) => {
-		await service.post(item, board.value?.id);
-		await this.fetchAll();
-	};
-	@action put = async (item: IPost) => {
-		const isContentChanged = this.items.find(n => n.id === item.id)?.content !== item.content;
-		this.set(item);
-		const action = isContentChanged ? this.putContent : this.putDescription;
-		await action(item);
-	};
-	@action del = async (id: string) => {
-		await service.del(id, board.value?.id);
-		await this.fetchAll();
+
+	@action sort = (items: Array<IPost>) => this.handle(() => service.sort(items, board.value?.id)); // TODO use cookie to store board.id
+
+	@action post = (item: IPost) => this.handle(() => service.post(item, board.value?.id)); // TODO use cookie to store board.id
+
+	@action put = (item: IPost) =>
+		this.handle(async () => {
+			const isContentChanged = this.items.find(n => n.id === item.id)?.content !== item.content;
+			this.set(item);
+			const action = isContentChanged ? this.putContent : this.putDescription;
+			await action(item);
+		});
+
+	@action del = (id: string) => this.handle(() => service.del(id, board.value?.id)); // TODO use cookie to store board.id
+
+	private putDescription = (item: IPost) => service.put(item, board.value?.id); // TODO use cookie to store board.id
+
+	private putContent = (item: IPost) => service.putContent(item, board.value?.id); // TODO use cookie to store board.id
+
+	private handle = async (action: () => Promise<void>) => {
+		this.request();
+		try {
+			await action();
+			await this.fetchAll();
+		} catch (e) {
+			this.receive(undefined, e);
+		}
 	};
 
-	@action private putDescription = async (item: IPost) => {
-		await service.put(item, board.value?.id);
-	};
-	@action private putContent = async (item: IPost) => {
-		await service.putContent(item, board.value?.id);
-	};
-
-	@action private request = () => {
+	private request = () => {
 		this.isLoading = true;
-		this.items = [];
 		this.error = undefined;
 	};
-	@action private receive = (items?: Array<IPost>, error?: string) => {
+	private receive = (items?: Array<IPost>, error?: any) => {
 		this.isLoading = false;
-		this.items = items ?? [];
-		this.error = error;
+		this.items = items ?? this.items;
+		this.error = error as string;
 	};
 }
 

@@ -17,7 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Boards.Infrastructure.Web {
 	public static  class ServiceExt {
 
-		public static IServiceCollection AddInfrastructureWeb(this IServiceCollection services, Assembly[] assemblies, params Assembly[] consumers) {
+		public static IServiceCollection AddInfrastructureWeb(this IServiceCollection services, Assembly[] assemblies, Action<IBusRegistrationConfigurator>? register = null) {
 			services.AddMediatR(assemblies);
 			services.AddValidatorsFromAssemblies(assemblies);
 			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
@@ -26,7 +26,8 @@ namespace Boards.Infrastructure.Web {
 			services.AddHealthChecks();
 
 			services.AddMassTransit(n => {
-				if (consumers.Any() == true) n.AddConsumers(consumers);
+				//if (consumers.Any() == true) n.AddConsumers(consumers);
+				register?.Invoke(n);
 
 				n.UsingRabbitMq((context, cfg) => {
 					cfg.Host("rabbitmq", "/", x => { x.Username("rabbitmq"); x.Password("rabbitmq"); });
@@ -35,9 +36,7 @@ namespace Boards.Infrastructure.Web {
 			});
 
 			services.AddOptions<MassTransitHostOptions>()
-				.Configure(options => {
-					options.WaitUntilStarted = true;
-				});
+				.Configure(options => options.WaitUntilStarted = true);
 
 			return services;
 		}

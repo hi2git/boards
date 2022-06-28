@@ -34,7 +34,6 @@ namespace Boards.Posts.Application.Queries {
 
 		public async Task<IEnumerable<PostDTO>> Handle(PostGetAllQuery request, CancellationToken token) {// TODO add user check
 			var id = request?.Id ?? throw new ArgumentNullException(nameof(request));
-			//_logger.LogInformation($"Received: {id}");
 			var items = await _repo.GetAll(id, token);
 			return items.Select(this.Map);
 		}

@@ -8,21 +8,21 @@ using Board.Domain.DTO.Posts;
 using Board.Domain.Models;
 using Board.Domain.Repos;
 
+using Boards.Domain.Contracts.Posts;
+
 using FluentValidation;
+
+using MassTransit;
 
 using MediatR;
 
 namespace Boards.Application.Commands.Posts {
-	public class PostSortAllCommand : IRequest {
+	public record PostSortAllCommand : PostSortAllMsg, IRequest {
 
 		public PostSortAllCommand(Guid id, IEnumerable<PostDTO> items = null) {
 			this.Id = id;
 			this.Items = items;
 		}
-
-		public Guid Id { get; }
-
-		public IEnumerable<PostDTO> Items { get; }
 
 	}
 
@@ -36,30 +36,15 @@ namespace Boards.Application.Commands.Posts {
 	}
 
 	internal class PostSortAllCommandHandler : IRequestHandler<PostSortAllCommand> {
-		private readonly IUnitOfWork _unitOfWork;
-		private readonly IBoardItemRepo _repo;
+		private readonly IRequestClient<PostSortAllMsg> _client;
 
-		public PostSortAllCommandHandler(IUnitOfWork unitOfWork, IBoardItemRepo repo) {
-			_unitOfWork = unitOfWork;
-			_repo = repo;
+		public PostSortAllCommandHandler(IRequestClient<PostSortAllMsg> client) => _client = client;
+
+		public async Task<Unit> Handle(PostSortAllCommand request, CancellationToken token) {
+			var response = await _client.GetResponse<PostSortedResponse>(request, token);
+			return ThrowIfError(response.Message);
 		}
 
-		public async Task<Unit> Handle(PostSortAllCommand request, CancellationToken token) {// TODO add user check
-			var origins = await _repo.GetAll(request.Id, token);//_userMgr.CurrentUserId);
-			var dtos = request.Items?.Cast<IdOrderableDTO>() ?? origins.Select(n => new IdOrderableDTO { Id = n.Id, OrderNumber = n.OrderNumber });
-			var items = dtos.OrderBy(n => n.OrderNumber).Select((n, i) => this.Map(n.Id.Value, i, origins));
-
-			foreach (var item in items) {
-				await _repo.Update(item);
-			}
-			await _unitOfWork.Commit();
-			return Unit.Value;
-		}
-
-		private BoardItem Map(Guid id, int orderNumber, IEnumerable<BoardItem> origins) {
-			var origin = origins.FirstOrDefault(n => n.Id == id);
-			origin.OrderNumber = orderNumber;
-			return origin;
-		}
+		protected static Unit ThrowIfError(IResponse response) => !response.IsError ? Unit.Value : throw new CommandException(response.Message);
 	}
 }

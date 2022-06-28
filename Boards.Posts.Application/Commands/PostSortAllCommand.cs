@@ -8,17 +8,18 @@ using Board.Domain.DTO.Posts;
 using Board.Domain.Models;
 using Board.Domain.Repos;
 
+using Boards.Domain.Contracts.Posts;
+
 using FluentValidation;
 
 using MediatR;
 
 namespace Boards.Posts.Application.Commands {
-	public class PostSortAllCommand : IRequest {
+	public record PostSortAllCommand : IRequest {
 
-		public PostSortAllCommand(Guid id, IEnumerable<PostDTO> items = null) {
-			this.Id = id;
-			this.Items = items;
-		}
+		public PostSortAllCommand(Guid id) => this.Id = id;
+
+		public PostSortAllCommand(PostSortAllMsg msg) : this(msg.Id) => this.Items = msg.Items;
 
 		public Guid Id { get; }
 
@@ -57,7 +58,7 @@ namespace Boards.Posts.Application.Commands {
 		}
 
 		private BoardItem Map(Guid id, int orderNumber, IEnumerable<BoardItem> origins) {
-			var origin = origins.FirstOrDefault(n => n.Id == id);
+			var origin = origins.FirstOrDefault(n => n.Id == id) ?? throw new Exception($"Отсутствует пост {id}");
 			origin.OrderNumber = orderNumber;
 			return origin;
 		}

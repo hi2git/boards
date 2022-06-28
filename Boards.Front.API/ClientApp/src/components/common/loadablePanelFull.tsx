@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AlertDanger, Modal, Spinner } from ".";
+import { AlertDanger, Spinner } from ".";
 
 interface IProps {
 	isLoading: boolean;
@@ -8,22 +8,23 @@ interface IProps {
 	error?: string | Array<string | null> | null;
 }
 
-const LoadablePanel: React.FC<IProps> = ({ isLoading, error, size, children }) => {
-	const isError = error instanceof Array ? (error as Array<string>)?.filter(n => n)?.length > 0 : error != null;
+const LoadablePanelFull: React.FC<IProps> = ({ isLoading, error, children }) => {
+	// const isError = error instanceof Array ? (error as Array<string>)?.filter(n => n)?.length > 0 : error != null;
 	return (
 		<>
 			{isLoading && <SpinnerCover />}
 			<AlertDanger value={error} />
-			<Result isError={isError}>{children}</Result>
+			{/* <Result isError={isError}>{children}</Result> */}
+			{children}
 		</>
 	);
 };
 
-interface IResultProps {
-	isError: boolean;
-}
+// interface IResultProps {
+// 	isError: boolean;
+// }
 
-export const Result: React.FC<IResultProps> = ({ isError, children }) => <>{!isError && children}</>;
+// export const Result: React.FC<IResultProps> = ({ isError, children }) => <>{!isError && children}</>;
 
 interface ISpinnerCoverProps {
 	// isVisible: boolean;
@@ -40,4 +41,4 @@ const SpinnerCover: React.FC<ISpinnerCoverProps> = () => (
 	</>
 );
 
-export default LoadablePanel;
+export default LoadablePanelFull;
