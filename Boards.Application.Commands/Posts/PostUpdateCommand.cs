@@ -3,19 +3,20 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Board.Domain.DTO.Posts;
-using Board.Domain.Models;
-using Board.Domain.Repos;
+
+using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
+
+using MassTransit;
 
 using MediatR;
 
 namespace Boards.Application.Commands.Posts {
-	public class PostUpdateCommand : IRequest {
+	public record PostUpdateCommand : PostUpdateMsg, IRequest {
 
 		public PostUpdateCommand(PostDTO item) => this.Item = item;
 
-		public PostDTO Item { get; }
 	}
 
 	public class PostUpdateCommandValidator : AbstractValidator<PostUpdateCommand> {
@@ -28,28 +29,15 @@ namespace Boards.Application.Commands.Posts {
 	}
 
 	internal class PostUpdateCommandHandler : IRequestHandler<PostUpdateCommand> {
-		private readonly IUnitOfWork _unitOfWork;
-		private readonly IBoardItemRepo _repo;
+		private readonly ISendEndpointProvider _sendProvider;
 
-		public PostUpdateCommandHandler(IUnitOfWork unitOfWork, IBoardItemRepo repo) {
-			_unitOfWork = unitOfWork;
-			_repo = repo;
-		}
+		public PostUpdateCommandHandler(ISendEndpointProvider sendProvider) => _sendProvider = sendProvider;
 
 		public async Task<Unit> Handle(PostUpdateCommand request, CancellationToken token) {// TODO: check user before modify
-			var item = request?.Item ?? throw new ArgumentNullException(nameof(request));
-			var entity = await _repo.Get(item.Id.Value, token);
-			entity = this.Map(item, entity);
-			await _repo.Update(entity);
-			await _unitOfWork.Commit();
+			var endpoint = await _sendProvider.GetSendEndpoint(new Uri($"queue:{typeof(PostUpdateMsg).FullName}"));
+			await endpoint.Send(request, token);
 
 			return Unit.Value;
-		}
-
-		private BoardItem Map(PostDTO dto, BoardItem entity) {
-			entity.IsDone = dto.IsDone;
-			entity.Description = dto.Description;
-			return entity;
 		}
 
 	}

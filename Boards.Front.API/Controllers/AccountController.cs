@@ -7,7 +7,7 @@ using Board.Domain.DTO.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Board.Web.Controllers {
+namespace Boards.Front.API.Controllers {
 	public class AccountController : AbstractApiController {
 		private readonly IAuthService _authService;
 

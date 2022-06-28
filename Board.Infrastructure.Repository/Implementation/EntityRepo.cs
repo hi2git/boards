@@ -20,7 +20,7 @@ namespace Board.Infrastructure.Repository.Implementation {
 
 		public Task Create(T entity) => _context.Set<T>().AddAsync(entity).AsTask();
 
-		public Task<T> Get(Guid id, CancellationToken token) => _context.Set<T>().FindAsync(id, token).AsTask();
+		public Task<T> Get(Guid id, CancellationToken token) => _context.Set<T>().FindAsync(new object[] { id }, token).AsTask();
 
 		/// <inheritdoc />
 		public Task Delete(T entity) => Task.Run(() => _context.Set<T>().Remove(entity));

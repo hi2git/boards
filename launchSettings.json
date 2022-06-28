@@ -2,9 +2,9 @@
 	"profiles": {
 		"Docker Compose": {
 			"commandName": "DockerCompose",
-			"composeLaunchServiceName": "board.web",
+			"composeLaunchServiceName": "boards.front",
 			"serviceActions": {
-				"board.web": "StartDebugging",
+				"boards.front": "StartDebugging",
 				"boards.posts": "StartDebugging"
 			},
 			"composeLaunchAction": "LaunchBrowser",

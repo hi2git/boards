@@ -5,7 +5,7 @@ using Board.Domain.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Board.Web.Controllers {
+namespace Boards.Front.API.Controllers {
 
 	[ApiController]
 	[Route("api/[controller]")]

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-using Boards.Application.Commands.Boards;
-using Boards.Application.Queries.Boards;
 using Boards.Infrastructure.Web.Middlewares;
 
 using FluentValidation;
@@ -19,11 +17,12 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Boards.Infrastructure.Web {
 	public static  class ServiceExt {
 
-		public static IServiceCollection AddInfrastructureWeb(this IServiceCollection services, params Assembly[] consumers) {
-			services.AddMediatR(ASSEMBLIES);
+		public static IServiceCollection AddInfrastructureWeb(this IServiceCollection services, Assembly[] assemblies, params Assembly[] consumers) {
+			services.AddMediatR(assemblies);
+			services.AddValidatorsFromAssemblies(assemblies);
 			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-			services.AddValidatorsFromAssemblies(ASSEMBLIES);
 
+			services.AddEndpointsApiExplorer().AddSwaggerGen();
 			services.AddHealthChecks();
 
 			services.AddMassTransit(n => {
@@ -43,15 +42,18 @@ namespace Boards.Infrastructure.Web {
 			return services;
 		}
 
-		public static IApplicationBuilder UseInfrastructureWeb(this IApplicationBuilder app) { 
+		public static WebApplication UseInfrastructureWeb(this WebApplication app) { 
 			app.UseExceptionMiddleware();
+
+			app.UseSwagger();
+			app.UseSwaggerUI();
+
+			app.MapControllers();
+
+			app.MapHealthChecks("/hc");
+
 			return app;
 		}
-
-		private static readonly Assembly[] ASSEMBLIES = new[] {
-			typeof(BoardCreateCommand).Assembly,
-			typeof(BoardGetAllQuery).Assembly,
-		};
 
 	}
 }

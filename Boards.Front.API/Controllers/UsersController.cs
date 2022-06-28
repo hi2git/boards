@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Board.Domain.Constants;
@@ -12,7 +13,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Board.Web.Controllers {
+namespace Boards.Front.API.Controllers {
 
 	[Authorize(Roles = RoleNames.Admin)]
 	public class UsersController : AbstractApiController {
@@ -21,7 +22,7 @@ namespace Board.Web.Controllers {
 		public UsersController(IMediator mediator) => _mediator = mediator;
 
 		[HttpGet]
-		public Task<IEnumerable<IdNameDTO>> GetAll() => _mediator.Send(new UserGetAllQuery());
+		public Task<IEnumerable<IdNameDTO>> GetAll(CancellationToken token) => _mediator.Send(new UserGetAllQuery(), token);
 
 	}
 }

@@ -1,41 +1,20 @@
-﻿using Board.Domain.DTO.Posts;
-using Board.Domain.Models;
-using Board.Domain.Repos;
-
-using Boards.Domain.Contracts.BoardItems;
+﻿using Boards.Domain.Contracts.Posts;
+using Boards.Posts.Application.Queries;
 
 using MassTransit;
 
 using MediatR;
 
 namespace Boards.Posts.API.Consumers {
-	public class PostGetAllQueryConsumer : IConsumer<BoardItemGetAllMsg> {
-		private readonly ILogger _logger;
-		private readonly IBoardItemRepo _repo;
+	public class PostGetAllQueryConsumer : IConsumer<PostGetAllMsg> {
+		private readonly IMediator _mediator;
 
-		public PostGetAllQueryConsumer(ILogger<PostGetAllQueryConsumer> logger, IBoardItemRepo repo) {
-			_logger = logger;
-			_repo = repo;
+		public PostGetAllQueryConsumer(IMediator mediator) => _mediator = mediator;
+
+		public async Task Consume(ConsumeContext<PostGetAllMsg> context) {
+			var items = await _mediator.Send(new PostGetAllQuery(context.Message.Id), context.CancellationToken);
+			await context.RespondAsync(new PostGetAllResponse { Items = items });
 		}
-
-		public async Task Consume(ConsumeContext<BoardItemGetAllMsg> context) {
-			var items = await this.Handle(context.Message, context.CancellationToken);
-			await context.RespondAsync(new BoardItemGetAllResponse { Items = items });
-		}
-
-		public async Task<IEnumerable<PostDTO>> Handle(BoardItemGetAllMsg request, CancellationToken token) {// TODO add user check
-			var id = request?.Id ?? throw new ArgumentNullException(nameof(request));
-			_logger.LogInformation($"Received: {id}");
-			var items = await _repo.GetAll(id, token);
-			return items.Select(this.Map);
-		}
-
-		private PostDTO Map(BoardItem n) => new() {
-			Id = n.Id,
-			OrderNumber = n.OrderNumber,
-			Description = n.Description,
-			IsDone = n.IsDone
-		};
 
 	}
 }

@@ -9,7 +9,7 @@ using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace Board.Web.Controllers {
+namespace Boards.Front.API.Controllers {
 	public class PostController : AbstractApiController {
 		private readonly IMediator _mediator;
 

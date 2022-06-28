@@ -12,13 +12,13 @@ RUN apt-get install nodejs
 
 WORKDIR /src
 COPY . .
-WORKDIR "/src/Board.Web"
+WORKDIR "/src/Boards.Front.API"
 
 FROM build AS publish
-RUN dotnet publish "Board.Web.csproj" -c Release -o /app/publish
+RUN dotnet publish "Boards.Front.API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 EXPOSE 80
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Board.Web.dll"]
+ENTRYPOINT ["dotnet", "Boards.Front.API.dll"]

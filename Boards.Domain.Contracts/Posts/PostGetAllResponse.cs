@@ -4,8 +4,8 @@ using System.Linq;
 
 using Board.Domain.DTO.Posts;
 
-namespace Boards.Domain.Contracts.BoardItems {
-	public record BoardItemGetAllResponse {
+namespace Boards.Domain.Contracts.Posts {
+	public record PostGetAllResponse {
 		public IEnumerable<PostDTO> Items { get; set; }
 	}
 }

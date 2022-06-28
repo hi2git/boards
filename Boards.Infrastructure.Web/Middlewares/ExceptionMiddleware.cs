@@ -30,6 +30,9 @@ namespace Boards.Infrastructure.Web.Middlewares {
 			try {
 				await _next(httpContext);
 			}
+			catch (OperationCanceledException e) {
+				_logger.LogDebug($"Cancelled operation: {e.Message}");
+			}
 			catch (Exception ex) {
 				_logger.LogError($"Something went wrong: {ex}");
 				await HandleExceptionAsync(httpContext, ex);
@@ -52,7 +55,7 @@ namespace Boards.Infrastructure.Web.Middlewares {
 					context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 					message = ae.Message;
 					break;
-				case MassTransit.RequestTimeoutException rte:
+				case MassTransit.RequestTimeoutException:
 					context.Response.StatusCode = (int)HttpStatusCode.RequestTimeout;
 					message = $"Сервис временно недоступен. Попробуйте повторить попытку позже.";
 					break;

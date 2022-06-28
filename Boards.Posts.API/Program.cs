@@ -3,17 +3,18 @@ using Board.Infrastructure.Repository;
 
 using Boards.Infrastructure.Web;
 using Boards.Posts.API.Consumers;
+using Boards.Posts.Application.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
+var assemblies = new[] { typeof(PostGetAllQuery).Assembly };
 
 services.AddControllers();
 
-services.AddEndpointsApiExplorer()
-	.AddSwaggerGen()
+services
 	.AddInfrastructureRepos(builder.Configuration)
-	.AddInfrastructureWeb(consumers: typeof(PostGetAllQueryConsumer).Assembly)
+	.AddInfrastructureWeb(assemblies: assemblies, consumers: typeof(PostGetAllQueryConsumer).Assembly)
 ;
 
 var app = builder.Build();
@@ -21,13 +22,11 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment()) {
-	app.UseSwagger();
-	app.UseSwaggerUI();
+
 //}
 
-app.MapControllers();
-
-app.MapHealthChecks("/hc");
+//app.MapControllers();
 app.UseInfrastructureWeb();
+
 
 app.Run();

@@ -15,16 +15,16 @@ services:
     #  interval: 5s
     #  timeout: 15s
     #  retries: 1
-  board.web:
-    image: ${DOCKER_REGISTRY-}boardweb
-    container_name: Board.Web
+  boards.front:
+    image: ${DOCKER_REGISTRY-}boardsfront
+    #container_name: Board.Web
     #restart: on-failure
     depends_on:
       - rabbitmq
       - boards.posts
     build:
       context: .
-      dockerfile: Board.Web\Dockerfile
+      dockerfile: Boards.Front.API\Dockerfile
   #boards.posts:
   #  image: ${DOCKER_REGISTRY-}boardsposts
   #  #container_name: Boards.Items
