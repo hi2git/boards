@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Board.Application\Board.Application.csproj" />
     <ProjectReference Include="..\Board.Domain\Board.Domain.csproj" />
   </ItemGroup>
 

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Board.Domain.DTO.Posts;
 using Board.Domain.Models;
@@ -23,7 +20,7 @@ namespace Boards.Posts.Application.Commands {
 
 		public Guid Id { get; }
 
-		public IEnumerable<PostDTO> Items { get; }
+		public IEnumerable<PostDTO> Items { get; } = Enumerable.Empty<PostDTO>();
 
 	}
 

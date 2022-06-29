@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Board.Domain.DTO.Posts;
 using Board.Domain.Models;
 using Board.Domain.Repos;
 using Board.Domain.Services;
+
+using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
 
@@ -14,9 +14,9 @@ using MediatR;
 namespace Boards.Posts.Application.Commands {
 	public class PostCreateCommand : IRequest {
 
-		public PostCreateCommand(Guid id, PostDTO item) {
-			this.Id = id;
-			this.Item = item;
+		public PostCreateCommand(PostCreateMsg msg) {
+			this.Id = msg.Id;
+			this.Item = msg.Item;
 		}
 
 		public Guid Id { get; }
@@ -52,13 +52,13 @@ namespace Boards.Posts.Application.Commands {
 
 		public async Task<Unit> Handle(PostCreateCommand request, CancellationToken token) {
 			var dto = request?.Item ?? throw new ArgumentNullException(nameof(request));
-			var board = await _boardRepo.Get(request.Id, token) ?? throw new ArgumentException($"Отсутствует доска {request.Id}");
+			var board = await _boardRepo.Get(request.Id, token) ?? throw new ArgumentException($"Отсутствует доска {request.Id}");	// TODO use EntityNotFoundException
 			var item = new BoardItem(Guid.NewGuid(), board, dto.OrderNumber, dto.Description); // TODO: check user // _userMgr.CurrentUserId
 
 			await _repo.Create(item);
 			await _unitOfWork.Commit();
 
-			await _fileStorage.Write(item.Id, dto.Content);
+			await _fileStorage.Write(item.Id, dto.Content);	// TODO: move to Boards.Files
 			return Unit.Value;
 		}
 	}

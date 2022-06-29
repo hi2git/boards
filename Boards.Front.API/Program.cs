@@ -1,13 +1,12 @@
 using System;
 
-using Board.Application;
+using Board.Domain;
 using Board.Infrastructure.Files;
 using Board.Infrastructure.Jwt;
 using Board.Infrastructure.Repository;
 
 using Boards.Application.Commands.Boards;
 using Boards.Application.Queries.Boards;
-using Boards.Domain.Contracts.Posts;
 using Boards.Infrastructure;
 using Boards.Infrastructure.Web;
 
@@ -37,7 +36,7 @@ services
 	.AddInfrastructure()
 	.AddInfrastructureRepos(config)
 	.AddInfrastructureFiles()
-	.AddInfrastructureWeb(assemblies: assemblies); // , n => n.AddRequestClient<PostSortedEvent>(new Uri($"queue:{typeof(PostSortAllMsg).FullName}"))
+	.AddInfrastructureWeb(assemblies: assemblies);
 
 services.Configure<AppSettings>(config.GetSection("appSettings"));
 services.AddJwtAuth(config);

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-using Board.Application;
+using Board.Domain;
 using Board.Domain.Services;
 
 using Microsoft.Extensions.Options;
@@ -19,8 +19,6 @@ namespace Board.Infrastructure.Files {
 		}
 
 		public Task Delete(Guid id) => Task.Run(() => File.Delete(PathOf(id)));
-
-		//public Task<string> Read(Guid id) => File.ReadAllTextAsync(PathOf(id));
 
 		public string PathOf(Guid id) => Path.Combine(_appSettings.BoardPath, $"{id}.jpg");
 	}

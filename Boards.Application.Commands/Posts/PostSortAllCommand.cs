@@ -5,10 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Board.Domain.DTO.Posts;
-using Board.Domain.Models;
-using Board.Domain.Repos;
 
-using Boards.Domain.Contracts;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
