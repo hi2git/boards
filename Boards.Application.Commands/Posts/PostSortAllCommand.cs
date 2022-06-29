@@ -33,14 +33,9 @@ namespace Boards.Application.Commands.Posts {
 
 	}
 
-	internal class PostSortAllCommandHandler : AbstractHandler, IRequestHandler<PostSortAllCommand> {
-		private readonly IRequestClient<PostSortAllMsg> _client;
+	internal class PostSortAllCommandHandler : AbstractHandler<PostSortAllCommand, PostSortAllMsg, PostSortedResponse> {
 
-		public PostSortAllCommandHandler(IRequestClient<PostSortAllMsg> client) => _client = client;
+		public PostSortAllCommandHandler(IRequestClient<PostSortAllMsg> client) : base(client) { }
 
-		public async Task<Unit> Handle(PostSortAllCommand request, CancellationToken token) {
-			var response = await _client.GetResponse<PostSortedResponse>(request, token);
-			return ThrowIfError(response.Message);
-		}
 	}
 }

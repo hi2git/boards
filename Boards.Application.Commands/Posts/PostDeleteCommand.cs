@@ -28,14 +28,9 @@ namespace Boards.Application.Commands.Posts {
 
 	}
 
-	internal class PostDeleteCommandHandler : AbstractHandler, IRequestHandler<PostDeleteCommand> {
-		private readonly IRequestClient<PostDeleteMsg> _client;
+	internal class PostDeleteCommandHandler : AbstractHandler<PostDeleteCommand, PostDeleteMsg, PostDeleteResponse> {
 
-		public PostDeleteCommandHandler(IRequestClient<PostDeleteMsg> client) => _client = client;
+		public PostDeleteCommandHandler(IRequestClient<PostDeleteMsg> client) : base(client) { } 
 
-		public async Task<Unit> Handle(PostDeleteCommand request, CancellationToken token) {
-			var response = await _client.GetResponse<PostDeleteResponse>(request, token);
-			return ThrowIfError(response.Message);
-		}
 	}
 }

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Board.Domain.DTO.Posts;
 
-using Boards.Domain.Contracts;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
@@ -29,17 +26,9 @@ namespace Boards.Application.Commands.Posts {
 		}
 	}
 
-	internal class PostUpdateCommandHandler : AbstractHandler, IRequestHandler<PostUpdateCommand> {
-		private readonly IRequestClient<PostUpdateMsg> _client;
+	internal class PostUpdateCommandHandler : AbstractHandler<PostUpdateCommand, PostUpdateMsg, PostUpdateResponse> {
 
-		public PostUpdateCommandHandler(IRequestClient<PostUpdateMsg> client) => _client = client;
-
-		public async Task<Unit> Handle(PostUpdateCommand request, CancellationToken token) {
-			var response = await _client.GetResponse<PostUpdateResponse>(request, token);
-			return ThrowIfError(response.Message);
-		}
-
-
+		public PostUpdateCommandHandler(IRequestClient<PostUpdateMsg> client) : base(client) { } 
 
 	}
 }

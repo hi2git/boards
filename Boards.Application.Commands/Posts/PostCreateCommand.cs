@@ -35,14 +35,9 @@ namespace Boards.Application.Commands.Posts {
 
 	}
 
-	internal class PostCreateCommandHandler : AbstractHandler, IRequestHandler<PostCreateCommand> {
-		private readonly IRequestClient<PostCreateMsg> _client;
+	internal class PostCreateCommandHandler : AbstractHandler<PostCreateCommand, PostCreateMsg, PostCreateResponse> {
 
-		public PostCreateCommandHandler(IRequestClient<PostCreateMsg> client) => _client = client;
+		public PostCreateCommandHandler(IRequestClient<PostCreateMsg> client) : base(client) { }
 
-		public async Task<Unit> Handle(PostCreateCommand request, CancellationToken token) {
-			var response = await _client.GetResponse<PostCreateResponse>(request, token);
-			return ThrowIfError(response.Message);
-		}
 	}
 }

@@ -28,14 +28,9 @@ namespace Boards.Application.Commands.Posts {
 		}
 	}
 
-	internal class PostContentUpdateCommandGandler : AbstractHandler, IRequestHandler<PostContentUpdateCommand> {
-		private readonly IRequestClient<PostContentUpdateMsg> _client;
+	internal class PostContentUpdateCommandGandler : AbstractHandler<PostContentUpdateCommand, PostContentUpdateMsg, PostContentUpdateResponse> {
 
-		public PostContentUpdateCommandGandler(IRequestClient<PostContentUpdateMsg> client) => _client = client;
+		public PostContentUpdateCommandGandler(IRequestClient<PostContentUpdateMsg> client) : base(client) { }
 
-		public async Task<Unit> Handle(PostContentUpdateCommand request, CancellationToken token) {
-			var response = await _client.GetResponse<PostContentUpdateResponse>(request, token);
-			return ThrowIfError(response.Message);
-		}
 	}
 }
