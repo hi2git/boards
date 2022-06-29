@@ -38,7 +38,6 @@
     <ProjectReference Include="..\Boards.Application.Commands\Boards.Application.Commands.csproj" />
     <ProjectReference Include="..\Boards.Application.Queries\Boards.Application.Queries.csproj" />
     <ProjectReference Include="..\Boards.Infrastructure.Web\Boards.Infrastructure.Web.csproj" />
-    <ProjectReference Include="..\Boards.Infrastructure\Boards.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

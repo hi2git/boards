@@ -31,7 +31,6 @@ var env = builder.Environment;
 services.AddHttpContextAccessor();
 
 services
-	.AddInfrastructure()
 	.AddInfrastructureRepos(config)
 	.AddInfrastructureWeb(assemblies: assemblies);
 
