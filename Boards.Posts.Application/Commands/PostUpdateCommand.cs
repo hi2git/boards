@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Board.Domain.DTO.Posts;
 using Board.Domain.Models;
@@ -13,11 +11,10 @@ using FluentValidation;
 using MediatR;
 
 namespace Boards.Posts.Application.Commands {
-	public class PostUpdateCommand : IRequest {
+	public record PostUpdateCommand : PostUpdateMsg, IRequest {
 
 		public PostUpdateCommand(PostUpdateMsg msg) => this.Item = msg.Item;
 
-		public PostDTO Item { get; }
 	}
 
 	public class PostUpdateCommandValidator : AbstractValidator<PostUpdateCommand> {

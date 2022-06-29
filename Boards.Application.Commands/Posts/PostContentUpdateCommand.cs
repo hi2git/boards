@@ -3,18 +3,20 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Board.Domain.DTO.Posts;
-using Board.Domain.Services;
+
+using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
+
+using MassTransit;
 
 using MediatR;
 
 namespace Boards.Application.Commands.Posts {
-	public class PostContentUpdateCommand : IRequest {
+	public record PostContentUpdateCommand : PostContentUpdateMsg, IRequest {
 
 		public PostContentUpdateCommand(PostDTO item) => this.Item = item;
 
-		public PostDTO Item { get; }
 	}
 
 	public class PostContentUpdateCommandValidator : AbstractValidator<PostContentUpdateCommand> {
@@ -26,15 +28,14 @@ namespace Boards.Application.Commands.Posts {
 		}
 	}
 
-	internal class PostContentUpdateCommandGandler : IRequestHandler<PostContentUpdateCommand> {
-		private readonly IFileStorage _fileStorage;
+	internal class PostContentUpdateCommandGandler : AbstractHandler, IRequestHandler<PostContentUpdateCommand> {
+		private readonly IRequestClient<PostContentUpdateMsg> _client;
 
-		public PostContentUpdateCommandGandler(IFileStorage fileStorage) => _fileStorage = fileStorage;
+		public PostContentUpdateCommandGandler(IRequestClient<PostContentUpdateMsg> client) => _client = client;
 
 		public async Task<Unit> Handle(PostContentUpdateCommand request, CancellationToken token) {
-			var item = request?.Item ?? throw new ArgumentNullException(nameof(request));
-			await _fileStorage.Write(item.Id.Value, item.Content); // TODO: check user before modify
-			return Unit.Value;
+			var response = await _client.GetResponse<PostContentUpdateResponse>(request, token);
+			return ThrowIfError(response.Message);
 		}
 	}
 }

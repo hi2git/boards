@@ -5,16 +5,17 @@ using System.Threading.Tasks;
 using Board.Domain.DTO.Posts;
 using Board.Domain.Services;
 
+using Boards.Domain.Contracts.Posts;
+
 using FluentValidation;
 
 using MediatR;
 
 namespace Boards.Posts.Application.Commands {
-	public class PostContentUpdateCommand : IRequest {
+	public record PostContentUpdateCommand : PostContentUpdateMsg, IRequest {
 
-		public PostContentUpdateCommand(PostDTO item) => this.Item = item;
+		public PostContentUpdateCommand(PostContentUpdateMsg msg) => this.Item = msg.Item;
 
-		public PostDTO Item { get; }
 	}
 
 	public class PostContentUpdateCommandValidator : AbstractValidator<PostContentUpdateCommand> {

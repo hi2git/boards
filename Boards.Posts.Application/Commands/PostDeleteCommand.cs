@@ -12,16 +12,12 @@ using FluentValidation;
 using MediatR;
 
 namespace Boards.Posts.Application.Commands {
-	public class PostDeleteCommand : IRequest {
+	public record PostDeleteCommand : PostDeleteMsg, IRequest {
 
 		public PostDeleteCommand(PostDeleteMsg msg) {
 			this.BoardId = msg.BoardId;
 			this.Id = msg.Id;
 		}
-
-		public Guid BoardId { get; }
-
-		public Guid Id { get; }
 	}
 
 	public class PostDeleteCommandValidator : AbstractValidator<PostDeleteCommand> {

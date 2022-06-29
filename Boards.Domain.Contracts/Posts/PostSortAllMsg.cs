@@ -9,7 +9,7 @@ namespace Boards.Domain.Contracts.Posts {
 
 		public Guid Id { get; set; }
 
-		public IEnumerable<PostDTO> Items { get; set;  }
+		public IEnumerable<PostDTO> Items { get; set;  } = Enumerable.Empty<PostDTO>();
 
 	}
 

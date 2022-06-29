@@ -12,15 +12,12 @@ using FluentValidation;
 using MediatR;
 
 namespace Boards.Posts.Application.Commands {
-	public class PostCreateCommand : IRequest {
+	public record PostCreateCommand : PostCreateMsg, IRequest {
 
 		public PostCreateCommand(PostCreateMsg msg) {
 			this.Id = msg.Id;
 			this.Item = msg.Item;
 		}
-
-		public Guid Id { get; }
-		public PostDTO Item { get; }
 	}
 
 	public class PostCreateCommandValidator : AbstractValidator<PostCreateCommand> {

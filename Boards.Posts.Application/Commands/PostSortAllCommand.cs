@@ -12,15 +12,12 @@ using FluentValidation;
 using MediatR;
 
 namespace Boards.Posts.Application.Commands {
-	public record PostSortAllCommand : IRequest {
+	public record PostSortAllCommand : PostSortAllMsg, IRequest {
 
 		public PostSortAllCommand(Guid id) => this.Id = id;
 
 		public PostSortAllCommand(PostSortAllMsg msg) : this(msg.Id) => this.Items = msg.Items;
 
-		public Guid Id { get; }
-
-		public IEnumerable<PostDTO> Items { get; } = Enumerable.Empty<PostDTO>();
 
 	}
 
