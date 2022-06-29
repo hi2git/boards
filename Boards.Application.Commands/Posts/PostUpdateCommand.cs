@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 using Board.Domain.DTO.Posts;
 
+using Boards.Domain.Contracts;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
@@ -28,17 +29,17 @@ namespace Boards.Application.Commands.Posts {
 		}
 	}
 
-	internal class PostUpdateCommandHandler : IRequestHandler<PostUpdateCommand> {
-		private readonly ISendEndpointProvider _sendProvider;
+	internal class PostUpdateCommandHandler : AbstractHandler, IRequestHandler<PostUpdateCommand> {
+		private readonly IRequestClient<PostUpdateMsg> _client;
 
-		public PostUpdateCommandHandler(ISendEndpointProvider sendProvider) => _sendProvider = sendProvider;
+		public PostUpdateCommandHandler(IRequestClient<PostUpdateMsg> client) => _client = client;
 
-		public async Task<Unit> Handle(PostUpdateCommand request, CancellationToken token) {// TODO: check user before modify
-			var endpoint = await _sendProvider.GetSendEndpoint(new Uri($"queue:{typeof(PostUpdateMsg).FullName}"));
-			await endpoint.Send(request, token);
-
-			return Unit.Value;
+		public async Task<Unit> Handle(PostUpdateCommand request, CancellationToken token) {
+			var response = await _client.GetResponse<PostUpdateResponse>(request, token);
+			return ThrowIfError(response.Message);
 		}
+
+
 
 	}
 }

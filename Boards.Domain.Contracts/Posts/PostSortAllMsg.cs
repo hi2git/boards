@@ -12,4 +12,6 @@ namespace Boards.Domain.Contracts.Posts {
 		public IEnumerable<PostDTO> Items { get; set;  }
 
 	}
+
+	public record PostSortedResponse : AbstractResponse { }
 }

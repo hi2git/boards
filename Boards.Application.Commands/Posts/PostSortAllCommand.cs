@@ -8,6 +8,7 @@ using Board.Domain.DTO.Posts;
 using Board.Domain.Models;
 using Board.Domain.Repos;
 
+using Boards.Domain.Contracts;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
@@ -35,7 +36,7 @@ namespace Boards.Application.Commands.Posts {
 
 	}
 
-	internal class PostSortAllCommandHandler : IRequestHandler<PostSortAllCommand> {
+	internal class PostSortAllCommandHandler : AbstractHandler, IRequestHandler<PostSortAllCommand> {
 		private readonly IRequestClient<PostSortAllMsg> _client;
 
 		public PostSortAllCommandHandler(IRequestClient<PostSortAllMsg> client) => _client = client;
@@ -44,7 +45,5 @@ namespace Boards.Application.Commands.Posts {
 			var response = await _client.GetResponse<PostSortedResponse>(request, token);
 			return ThrowIfError(response.Message);
 		}
-
-		protected static Unit ThrowIfError(IResponse response) => !response.IsError ? Unit.Value : throw new CommandException(response.Message);
 	}
 }

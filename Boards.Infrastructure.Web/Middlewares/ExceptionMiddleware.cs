@@ -34,7 +34,7 @@ namespace Boards.Infrastructure.Web.Middlewares {
 				_logger.LogDebug($"Cancelled operation: {e.Message}");
 			}
 			catch (Exception ex) {
-				_logger.LogError($"Something went wrong: {ex}");
+			_logger.LogError($"Something went wrong: {ex}");
 				await HandleExceptionAsync(httpContext, ex);
 				throw;
 			}
@@ -61,7 +61,7 @@ namespace Boards.Infrastructure.Web.Middlewares {
 					break;
 				case MassTransit.MassTransitException ce:
 					context.Response.StatusCode = (int)HttpStatusCode.ServiceUnavailable;
-					message = $"Сервис временно недоступен. {ce.Message}";
+					message = $"Невозможно выполнить запрос: {ce.Message}";
 					break;
 
 			}

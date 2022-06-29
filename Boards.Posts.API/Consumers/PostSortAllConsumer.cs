@@ -1,33 +1,14 @@
 ﻿using Boards.Domain.Contracts.Posts;
 using Boards.Posts.Application.Commands;
 
-using MassTransit;
-
 using MediatR;
 
 namespace Boards.Posts.API.Consumers {
-	public class PostSortAllConsumer : IConsumer<PostSortAllMsg> {
-		private readonly IMediator _mediator;
+	public class PostSortAllConsumer : AbstractConsumer<PostSortAllMsg, PostSortedResponse> {
 
-		public PostSortAllConsumer(IMediator mediator) => _mediator = mediator;
+		public PostSortAllConsumer(IMediator mediator) : base(mediator) { }
 
-		public async Task Consume(ConsumeContext<PostSortAllMsg> context) {
-			try {
-				await _mediator.Send(new PostSortAllCommand(context.Message));  //TODO: drop cache
-				await context.RespondAsync(new PostSortedResponse());
-			}
-			catch (Exception e) {
-				await context.RespondAsync(new PostSortedResponse(e.Message));
-			}
-		}
-	}
-
-	public class PostSortAllConsumerDefinition : ConsumerDefinition<PostSortAllConsumer> {
-
-		public PostSortAllConsumerDefinition() {
-			this.EndpointName = typeof(PostSortAllMsg).FullName
-				?? throw new ConfigurationException($"Couldn't get name of type {typeof(PostUpdateMsg)}");
-		}
+		protected override Task Handle(PostSortAllMsg item, CancellationToken token) => this.Mediator.Send(new PostSortAllCommand(item), token);  //TODO: drop cache // TODO: skip doubles
 
 	}
 

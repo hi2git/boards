@@ -1,22 +1,15 @@
 ﻿using Boards.Domain.Contracts.Posts;
 using Boards.Posts.Application.Commands;
 
-using MassTransit;
-
 using MediatR;
 
 namespace Boards.Posts.API.Consumers {
-	public class PostUpdateConsumer : IConsumer<PostUpdateMsg> {
-		private readonly IMediator _mediator;
+	public class PostUpdateConsumer : AbstractConsumer<PostUpdateMsg, PostUpdateResponse> {
 
-		public PostUpdateConsumer(IMediator mediator) => _mediator = mediator;
+		public PostUpdateConsumer(IMediator mediator) : base(mediator) { }
 
-		public Task Consume(ConsumeContext<PostUpdateMsg> context) => _mediator.Send(new PostUpdateCommand(context.Message), context.CancellationToken);    //TODO: drop cache
-	}
+		protected override Task Handle(PostUpdateMsg item, CancellationToken token) => this.Mediator.Send(new PostUpdateCommand(item), token);    //TODO: drop cache
 
-	public class PostUpdateConsumerDefinition : ConsumerDefinition<PostUpdateConsumer> {
-
-		public PostUpdateConsumerDefinition()  => this.EndpointName = typeof(PostUpdateMsg).FullName 
-			?? throw new ConfigurationException($"Couldn't get name of type {typeof(PostUpdateMsg)}");
+		
 	}
 }
