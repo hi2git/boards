@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Board.Domain.Repos;
 using Board.Domain.Services;
 
+using Boards.Domain.Contracts.Posts;
+
 using FluentValidation;
 
 using MediatR;
@@ -12,9 +14,9 @@ using MediatR;
 namespace Boards.Posts.Application.Commands {
 	public class PostDeleteCommand : IRequest {
 
-		public PostDeleteCommand(Guid boardId, Guid id) {
-			this.BoardId = boardId;
-			this.Id = id;
+		public PostDeleteCommand(PostDeleteMsg msg) {
+			this.BoardId = msg.BoardId;
+			this.Id = msg.Id;
 		}
 
 		public Guid BoardId { get; }
