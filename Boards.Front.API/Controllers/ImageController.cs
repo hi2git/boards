@@ -16,8 +16,12 @@ namespace Boards.Front.API.Controllers {
 
 		[HttpGet]
 		public async Task<IActionResult> Get([FromQuery] Guid id, CancellationToken token) {
-			var path = await _mediator.Send(new ImagePathGetQuery(id), token);
-			return this.PhysicalFile(path, "image/jpg", $"{id}.jpg");
+			//var path = await _mediator.Send(new ImagePathGetQuery(id), token);
+			//return this.PhysicalFile(path, "image/jpg", $"{id}.jpg");
+			var content = await _mediator.Send(new ImagePathGetQuery(id), token);
+			//return $"data:image/jpg;base64, {content}";
+			var bytes = Convert.FromBase64String(content);
+			return this.File(bytes, "image/jpg", $"{id}.jpg", true);
 		}
 
 	}

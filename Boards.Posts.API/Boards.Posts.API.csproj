@@ -14,9 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Board.Infrastructure.Files\Board.Infrastructure.Files.csproj" />
     <ProjectReference Include="..\Board.Infrastructure.Repository\Board.Infrastructure.Repository.csproj" />
-    <ProjectReference Include="..\Boards.Domain.Contracts\Boards.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\Boards.Commons.Application\Boards.Commons.Application.csproj" />
     <ProjectReference Include="..\Boards.Infrastructure.Web\Boards.Infrastructure.Web.csproj" />
     <ProjectReference Include="..\Boards.Posts.Application\Boards.Posts.Application.csproj" />
   </ItemGroup>

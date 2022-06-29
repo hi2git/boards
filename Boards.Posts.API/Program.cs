@@ -1,6 +1,4 @@
 
-using Board.Domain;
-using Board.Infrastructure.Files;
 using Board.Infrastructure.Repository;
 
 using Boards.Infrastructure.Web;
@@ -17,9 +15,7 @@ var assemblies = new[] { typeof(PostGetAllQuery).Assembly };
 
 services.AddControllers();
 
-services.Configure<AppSettings>(config.GetSection("appSettings"));
 services
-	.AddInfrastructureFiles()	// TODO: Move to Boards.Files
 	.AddInfrastructureRepos(builder.Configuration)
 	.AddInfrastructureWeb(assemblies: assemblies, n => n.AddConsumers(typeof(PostGetAllQueryConsumer).Assembly))
 ;

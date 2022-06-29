@@ -4,7 +4,7 @@ using MassTransit;
 
 using MediatR;
 
-namespace Boards.Posts.API.Consumers {
+namespace Boards.Commons.Application.Consumers {
 	public abstract class AbstractConsumer<TMsg, TResponse> : IConsumer<TMsg> where TMsg : class where TResponse : IResponse, new() {
 
 		public AbstractConsumer(IMediator mediator) => this.Mediator = mediator;

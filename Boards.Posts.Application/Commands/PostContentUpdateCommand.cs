@@ -2,6 +2,8 @@
 
 using Board.Domain.Services;
 
+using Boards.Commons.Application;
+using Boards.Domain.Contracts.Images;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
@@ -25,13 +27,13 @@ namespace Boards.Posts.Application.Commands {
 	}
 
 	internal class PostContentUpdateCommandGandler : IRequestHandler<PostContentUpdateCommand> {
-		private readonly IFileStorage _fileStorage;
+		private readonly IClient<ImageUpdateMsg, ImageUpdateResponse> _client;
 
-		public PostContentUpdateCommandGandler(IFileStorage fileStorage) => _fileStorage = fileStorage;
+		public PostContentUpdateCommandGandler(IClient<ImageUpdateMsg, ImageUpdateResponse> client) => _client = client;
 
 		public async Task<Unit> Handle(PostContentUpdateCommand request, CancellationToken token) {
 			var item = request?.Item ?? throw new ArgumentNullException(nameof(request));
-			await _fileStorage.Write(item.Id.Value, item.Content); // TODO: check user before modify
+			await _client.Send(new(item.Id.Value, item.Content), token); // TODO: check user before modify
 			return Unit.Value;
 		}
 	}

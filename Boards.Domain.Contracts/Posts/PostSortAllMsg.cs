@@ -5,9 +5,7 @@ using System.Linq;
 using Board.Domain.DTO.Posts;
 
 namespace Boards.Domain.Contracts.Posts {
-	public record PostSortAllMsg {
-
-		public Guid Id { get; set; }
+	public record PostSortAllMsg : AbstractMsg {
 
 		public IEnumerable<PostDTO> Items { get; set;  } = Enumerable.Empty<PostDTO>();
 

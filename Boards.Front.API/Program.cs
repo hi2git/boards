@@ -1,7 +1,5 @@
 using System;
 
-using Board.Domain;
-using Board.Infrastructure.Files;
 using Board.Infrastructure.Jwt;
 using Board.Infrastructure.Repository;
 
@@ -35,10 +33,8 @@ services.AddHttpContextAccessor();
 services
 	.AddInfrastructure()
 	.AddInfrastructureRepos(config)
-	.AddInfrastructureFiles()
 	.AddInfrastructureWeb(assemblies: assemblies);
 
-services.Configure<AppSettings>(config.GetSection("appSettings"));
 services.AddJwtAuth(config);
 services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/build");
 services.AddMvc(); // opts => opts.EnableEndpointRouting = false

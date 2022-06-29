@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Board.Domain.Repos;
 using Board.Domain.Services;
 
+using Boards.Commons.Application;
+using Boards.Domain.Contracts.Images;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
@@ -33,13 +35,13 @@ namespace Boards.Posts.Application.Commands {
 		private readonly IMediator _mediator;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IBoardItemRepo _repo;
-		private readonly IFileStorage _fileStorage;
+		private readonly IClient<ImageDeleteMsg, ImageDeleteResponse> _client;
 
-		public PostDeleteCommandHandler(IMediator mediator, IUnitOfWork unitOfWork, IBoardItemRepo repo, IFileStorage fileStorage) {
+		public PostDeleteCommandHandler(IMediator mediator, IUnitOfWork unitOfWork, IBoardItemRepo repo, IClient<ImageDeleteMsg, ImageDeleteResponse> client) {
 			_mediator = mediator;
 			_unitOfWork = unitOfWork;
 			_repo = repo;
-			_fileStorage = fileStorage;
+			_client = client;
 		}
 
 		public async Task<Unit> Handle(PostDeleteCommand request, CancellationToken token) {// TODO: check user before modify
@@ -51,7 +53,7 @@ namespace Boards.Posts.Application.Commands {
 
 			await _mediator.Send(new PostSortAllCommand(request.BoardId));
 
-			await _fileStorage.Delete(id);
+			await _client.Send(new (id), token); // TODO: use PostDeletedEvent
 			return Unit.Value;
 		}
 	}

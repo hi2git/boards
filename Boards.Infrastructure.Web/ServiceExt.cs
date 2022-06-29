@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
+using Boards.Commons.Application;
+using Boards.Infrastructure.Web.Clients;
 using Boards.Infrastructure.Web.Middlewares;
 
 using FluentValidation;
@@ -37,6 +39,8 @@ namespace Boards.Infrastructure.Web {
 
 			services.AddOptions<MassTransitHostOptions>()
 				.Configure(options => options.WaitUntilStarted = true);
+
+			services.AddTransient(typeof(IClient<,>), typeof(RequestClient<,>));
 
 			return services;
 		}

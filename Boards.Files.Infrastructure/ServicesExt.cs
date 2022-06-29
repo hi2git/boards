@@ -1,6 +1,7 @@
 ﻿using System;
 
-using Board.Domain.Services;
+using Boards.Files.Application;
+using Boards.Files.Infrastructure;
 
 using Microsoft.Extensions.DependencyInjection;
 

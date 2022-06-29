@@ -22,9 +22,8 @@ namespace Boards.Application.Commands {
 
 		public async Task<Unit> Handle(TRequest request, CancellationToken token) {
 			var response = await _client.GetResponse<TResponse>(request, token);
-			return ThrowIfError(response.Message);
+			return Unit.Value;
 		}
 
-		private static Unit ThrowIfError(IResponse response) => !response.IsError ? Unit.Value : throw new CommandException(response.Message);
 	}
 }

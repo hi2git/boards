@@ -5,6 +5,8 @@ using Board.Domain.Models;
 using Board.Domain.Repos;
 using Board.Domain.Services;
 
+using Boards.Commons.Application;
+using Boards.Domain.Contracts.Images;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
@@ -38,13 +40,13 @@ namespace Boards.Posts.Application.Commands {
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IBoardRepo _boardRepo;
 		private readonly IBoardItemRepo _repo;
-		private readonly IFileStorage _fileStorage;
+		private readonly IClient<ImageUpdateMsg, ImageUpdateResponse> _client;
 
-		public PostCreateCommandHandler(IUnitOfWork unitOfWork, IBoardRepo boardRepo, IBoardItemRepo repo, IFileStorage fileStorage) {
+		public PostCreateCommandHandler(IUnitOfWork unitOfWork, IBoardRepo boardRepo, IBoardItemRepo repo, IClient<ImageUpdateMsg, ImageUpdateResponse> client) {
 			_unitOfWork = unitOfWork;
 			_boardRepo = boardRepo;
 			_repo = repo;
-			_fileStorage = fileStorage;
+			_client = client;
 		}
 
 		public async Task<Unit> Handle(PostCreateCommand request, CancellationToken token) {
@@ -55,7 +57,7 @@ namespace Boards.Posts.Application.Commands {
 			await _repo.Create(item);
 			await _unitOfWork.Commit();
 
-			await _fileStorage.Write(item.Id, dto.Content);	// TODO: move to Boards.Files
+			await _client.Send(new (item.Id, dto.Content), token);	// TODO: use PostCreatedEvent
 			return Unit.Value;
 		}
 	}

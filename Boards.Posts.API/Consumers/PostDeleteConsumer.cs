@@ -1,4 +1,5 @@
-﻿using Boards.Domain.Contracts.Posts;
+﻿using Boards.Commons.Application.Consumers;
+using Boards.Domain.Contracts.Posts;
 using Boards.Posts.Application.Commands;
 
 using MediatR;

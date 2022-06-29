@@ -2,9 +2,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-using Board.Domain.Services;
+
+using Boards.Domain.Contracts.Images;
 
 using FluentValidation;
+
+using MassTransit;
 
 using MediatR;
 
@@ -25,10 +28,13 @@ namespace Boards.Application.Queries.Images {
 	}
 
 	internal class ImagePathGetQueryHandler : IRequestHandler<ImagePathGetQuery, string> {
-		private readonly IFileStorage _fileStorage;
+		private readonly IRequestClient<ImageGetMsg> _client;
 
-		public ImagePathGetQueryHandler(IFileStorage fileStorage) => _fileStorage = fileStorage;
+		public ImagePathGetQueryHandler(IRequestClient<ImageGetMsg> client) => _client = client;
 
-		public Task<string> Handle(ImagePathGetQuery request, CancellationToken cancellationToken) => Task.Run(() => _fileStorage.PathOf(request.Id));
+		public async Task<string> Handle(ImagePathGetQuery request, CancellationToken token) {
+			var response  = await _client.GetResponse<ImageGetResponse>(new(request.Id), token);
+			return response.Message.Content;
+		}
 	}
 }

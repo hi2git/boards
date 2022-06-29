@@ -4,9 +4,9 @@ using System.Linq;
 using Board.Domain.DTO.Posts;
 
 namespace Boards.Domain.Contracts.Posts {
-	public record PostCreateMsg {
+	public record PostCreateMsg : AbstractMsg {
+		
 
-		public Guid Id { get; set; }
 		public PostDTO Item { get; set; }
 	}
 

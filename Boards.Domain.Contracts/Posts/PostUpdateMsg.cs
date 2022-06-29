@@ -3,7 +3,7 @@
 using Board.Domain.DTO.Posts;
 
 namespace Boards.Domain.Contracts.Posts {
-	public record PostUpdateMsg  {
+	public record PostUpdateMsg : AbstractMsg {
 
 		public PostDTO Item { get; set; }
 

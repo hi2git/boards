@@ -17,7 +17,6 @@ services:
     #  retries: 1
   boards.front:
     image: ${DOCKER_REGISTRY-}boardsfront
-    #container_name: Board.Web
     #restart: on-failure
     depends_on:
       - rabbitmq
@@ -25,19 +24,14 @@ services:
     build:
       context: .
       dockerfile: Boards.Front.API\Dockerfile
-  #boards.posts:
-  #  image: ${DOCKER_REGISTRY-}boardsposts
-  #  #container_name: Boards.Items
-  #  #restart: on-failure
-  #  depends_on:
-  #    - rabbitmq
-  #  build:
-  #    context: .
-  #    dockerfile: Boards.Posts.API\Dockerfile
-
   boards.posts:
     image: ${DOCKER_REGISTRY-}boardsposts
     build:
       context: .
       dockerfile: Boards.Posts.API/Dockerfile
+  boards.files:
+    image: ${DOCKER_REGISTRY-}boardsfiles
+    build:
+      context: .
+      dockerfile: Boards.Files.API/Dockerfile
 
