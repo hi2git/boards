@@ -7,6 +7,8 @@ using Board.Domain.Models;
 using Board.Domain.Repos;
 
 using Boards.Domain.Contracts.Posts;
+using Boards.Posts.Domain.Models;
+using Boards.Posts.Domain.Repos;
 
 using FluentValidation;
 
@@ -28,9 +30,9 @@ namespace Boards.Posts.Application.Queries {
 	}
 
 	internal class PostGetAllQueryHandler : IRequestHandler<PostGetAllQuery, IEnumerable<PostDTO>> {
-		private readonly IBoardItemRepo _repo;
+		private readonly IPostRepo _repo;
 
-		public PostGetAllQueryHandler(IBoardItemRepo repo) => _repo = repo;
+		public PostGetAllQueryHandler(IPostRepo repo) => _repo = repo;
 
 		public async Task<IEnumerable<PostDTO>> Handle(PostGetAllQuery request, CancellationToken token) {// TODO add user check
 			var id = request?.Id ?? throw new ArgumentNullException(nameof(request));
@@ -38,7 +40,7 @@ namespace Boards.Posts.Application.Queries {
 			return items.Select(this.Map);
 		}
 
-		private PostDTO Map(BoardItem n) => new() {
+		private PostDTO Map(Post n) => new() {
 			Id = n.Id,
 			OrderNumber = n.OrderNumber,
 			Description = n.Description,

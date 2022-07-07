@@ -34,7 +34,7 @@ namespace Boards.Infrastructure.Web.Middlewares {
 				_logger.LogDebug($"Cancelled operation: {e.Message}");
 			}
 			catch (Exception ex) {
-			_logger.LogError($"Something went wrong: {ex}");
+				_logger.LogError($"Something went wrong: {ex}");
 				await HandleExceptionAsync(httpContext, ex);
 				throw;
 			}

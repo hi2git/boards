@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Boards.Domain.Contracts.Images;
+using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
 
 using MediatR;
 
 namespace Boards.Files.Application.Commands {
-	public record ImageDeleteCommand : ImageDeleteMsg, IRequest {
-
-		public ImageDeleteCommand(ImageDeleteMsg msg) : base(msg) { }
-
+	public record ImageDeleteCommand : PostDeletedEvent, IRequest {
+		public ImageDeleteCommand(Guid id) : base(id) { }
 	}
 
 	public class ImageDeleteCommandValidator : AbstractValidator<ImageDeleteCommand> {

@@ -5,6 +5,8 @@ using Board.Domain.Models;
 using Board.Domain.Repos;
 
 using Boards.Domain.Contracts.Posts;
+using Boards.Posts.Domain.Models;
+using Boards.Posts.Domain.Repos;
 
 using FluentValidation;
 
@@ -28,9 +30,9 @@ namespace Boards.Posts.Application.Commands {
 
 	internal class PostUpdateCommandHandler : IRequestHandler<PostUpdateCommand> {
 		private readonly IUnitOfWork _unitOfWork;
-		private readonly IBoardItemRepo _repo;
+		private readonly IPostRepo _repo;
 
-		public PostUpdateCommandHandler(IUnitOfWork unitOfWork, IBoardItemRepo repo) {
+		public PostUpdateCommandHandler(IUnitOfWork unitOfWork, IPostRepo repo) {
 			_unitOfWork = unitOfWork;
 			_repo = repo;
 		}
@@ -45,7 +47,7 @@ namespace Boards.Posts.Application.Commands {
 			return Unit.Value;
 		}
 
-		private BoardItem Map(PostDTO dto, BoardItem entity) {
+		private Post Map(PostDTO dto, Post entity) {
 			entity.IsDone = dto.IsDone;
 			entity.Description = dto.Description;
 			return entity;

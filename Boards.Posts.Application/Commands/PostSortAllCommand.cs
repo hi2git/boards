@@ -6,6 +6,8 @@ using Board.Domain.Models;
 using Board.Domain.Repos;
 
 using Boards.Domain.Contracts.Posts;
+using Boards.Posts.Domain.Models;
+using Boards.Posts.Domain.Repos;
 
 using FluentValidation;
 
@@ -32,9 +34,9 @@ namespace Boards.Posts.Application.Commands {
 
 	internal class PostSortAllCommandHandler : IRequestHandler<PostSortAllCommand> {
 		private readonly IUnitOfWork _unitOfWork;
-		private readonly IBoardItemRepo _repo;
+		private readonly IPostRepo _repo;
 
-		public PostSortAllCommandHandler(IUnitOfWork unitOfWork, IBoardItemRepo repo) {
+		public PostSortAllCommandHandler(IUnitOfWork unitOfWork, IPostRepo repo) {
 			_unitOfWork = unitOfWork;
 			_repo = repo;
 		}
@@ -51,7 +53,7 @@ namespace Boards.Posts.Application.Commands {
 			return Unit.Value;
 		}
 
-		private BoardItem Map(Guid id, int orderNumber, IEnumerable<BoardItem> origins) {
+		private Post Map(Guid id, int orderNumber, IEnumerable<Post> origins) {
 			var origin = origins.FirstOrDefault(n => n.Id == id) ?? throw new Exception($"Отсутствует пост {id}");
 			origin.OrderNumber = orderNumber;
 			return origin;

@@ -14,10 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Board.Infrastructure.Repository\Board.Infrastructure.Repository.csproj" />
     <ProjectReference Include="..\Boards.Commons.Application\Boards.Commons.Application.csproj" />
     <ProjectReference Include="..\Boards.Infrastructure.Web\Boards.Infrastructure.Web.csproj" />
     <ProjectReference Include="..\Boards.Posts.Application\Boards.Posts.Application.csproj" />
+    <ProjectReference Include="..\Boards.Posts.Infrastructure\Boards.Posts.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

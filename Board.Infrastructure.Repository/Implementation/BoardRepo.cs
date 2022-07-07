@@ -11,9 +11,9 @@ namespace Board.Infrastructure.Repository.Implementation {
 	internal class BoardRepo : AbstractRepo<Domain.Models.Board>, IBoardRepo {
 		public BoardRepo(BoardContext context) : base(context) { }
 
-		public Task<Domain.Models.Board> GetWithItems(Guid id) => this.Query
-			.Include(n => n.BoardItems)
-			.FirstOrDefaultAsync(n => n.Id == id);
+		//public Task<Domain.Models.Board> GetWithItems(Guid id) => this.Query
+		//	.Include(n => n.BoardItems)
+		//	.FirstOrDefaultAsync(n => n.Id == id);
 
 		public Task<List<Domain.Models.Board>> GetAll(Guid userId) => this.Query
 			.Where(n => n.UserId == userId)

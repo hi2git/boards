@@ -12,9 +12,9 @@ namespace Board.Infrastructure.Repository {
 
 		#region Props
 
-		public virtual DbSet<User> Users { get; set; }
-		public virtual DbSet<BoardItem> Boards { get; set; }
-		public virtual DbSet<BoardItem> BoardItems { get; set; }
+		//public virtual DbSet<User> Users { get; set; }
+		//public virtual DbSet<Board.Domain.Models.Board> Boards { get; set; }
+		//public virtual DbSet<BoardItem> BoardItems { get; set; }
 
 		#endregion
 
@@ -44,17 +44,17 @@ namespace Board.Infrastructure.Repository {
 					.HasForeignKey(n => n.UserId);
 			});
 
-			modelBuilder.Entity<BoardItem>(builder => {
-				builder.ToTable(typeof(BoardItem).Name);
-				builder.HasKey(e => e.Id);
-				builder.Property(n => n.OrderNumber);
-				builder.Property(n => n.Description);
-				builder.Property(n => n.IsDone).IsRequired();
+			//modelBuilder.Entity<BoardItem>(builder => {
+			//	builder.ToTable(typeof(BoardItem).Name);
+			//	builder.HasKey(e => e.Id);
+			//	builder.Property(n => n.OrderNumber);
+			//	builder.Property(n => n.Description);
+			//	builder.Property(n => n.IsDone).IsRequired();
 
-				builder.HasOne(n => n.Board)
-					.WithMany(n => n.BoardItems)
-					.HasForeignKey(n => n.BoardId);
-			});
+			//	builder.HasOne(n => n.Board)
+			//		.WithMany(n => n.BoardItems)
+			//		.HasForeignKey(n => n.BoardId);
+			//});
 
 			modelBuilder.Entity<Role>(builder => {
 				builder.ToTable(typeof(Role).Name);

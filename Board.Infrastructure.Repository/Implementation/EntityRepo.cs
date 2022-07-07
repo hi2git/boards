@@ -12,9 +12,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Board.Infrastructure.Repository.Implementation {
 	internal class EntityRepo<T> : IEntityRepo<T> where T : class {
 
-		private readonly BoardContext _context;
+		private readonly DbContext _context;
 
-		public EntityRepo(BoardContext context) => _context = context;
+		public EntityRepo(DbContext context) => _context = context;
 
 		#region Public
 

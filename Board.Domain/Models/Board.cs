@@ -20,9 +20,6 @@ namespace Board.Domain.Models {
 
 		public User User { get; protected set; }
 
-		public ICollection<BoardItem> BoardItems { get; protected set; } = new HashSet<BoardItem>();
-
-
 		#endregion
 
 

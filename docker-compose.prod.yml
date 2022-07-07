@@ -17,4 +17,4 @@ services:
     ports:
       - "8082:80"
     volumes:
-      - D:/Boards:/usr/share/boards
+      - D:/Boards.Test:/usr/share/boards

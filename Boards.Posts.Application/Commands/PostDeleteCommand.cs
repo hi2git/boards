@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Board.Domain.Repos;
-using Board.Domain.Services;
 
 using Boards.Commons.Application;
 using Boards.Domain.Contracts.Images;
 using Boards.Domain.Contracts.Posts;
+using Boards.Posts.Domain.Repos;
 
 using FluentValidation;
+
+using MassTransit;
 
 using MediatR;
 
@@ -34,14 +34,16 @@ namespace Boards.Posts.Application.Commands {
 	internal class PostDeleteCommandHandler : IRequestHandler<PostDeleteCommand> {
 		private readonly IMediator _mediator;
 		private readonly IUnitOfWork _unitOfWork;
-		private readonly IBoardItemRepo _repo;
-		private readonly IClient<ImageDeleteMsg, ImageDeleteResponse> _client;
+		private readonly IPostRepo _repo;
+		private readonly IPublishEndpoint _publish;
+		//private readonly IClient<ImageDeleteMsg, ImageDeleteResponse> _client;
 
-		public PostDeleteCommandHandler(IMediator mediator, IUnitOfWork unitOfWork, IBoardItemRepo repo, IClient<ImageDeleteMsg, ImageDeleteResponse> client) {
+		public PostDeleteCommandHandler(IMediator mediator, IUnitOfWork unitOfWork, IPostRepo repo, /*IClient<ImageDeleteMsg, ImageDeleteResponse> client*/ IPublishEndpoint publish) {
 			_mediator = mediator;
 			_unitOfWork = unitOfWork;
 			_repo = repo;
-			_client = client;
+			_publish = publish;
+			//_client = client;
 		}
 
 		public async Task<Unit> Handle(PostDeleteCommand request, CancellationToken token) {// TODO: check user before modify
@@ -53,7 +55,8 @@ namespace Boards.Posts.Application.Commands {
 
 			await _mediator.Send(new PostSortAllCommand(request.BoardId));
 
-			await _client.Send(new (id), token); // TODO: use PostDeletedEvent
+			//await _client.Send(new (id), token);
+			await _publish.Publish<PostDeletedEvent>(new(id)); // TODO: put in transaction
 			return Unit.Value;
 		}
 	}

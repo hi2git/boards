@@ -23,31 +23,34 @@ namespace Boards.Application.Commands.Users {
 		private readonly IUserManager _userMgr;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IUserRepo _userRepo;
-		private readonly IBoardRepo _boardRepo;
-		private readonly IBoardItemRepo _itemRepo;
+		//private readonly IBoardRepo _boardRepo;
+		//private readonly IBoardItemRepo _itemRepo;
 
-		public UserDeleteCommandHandler(IAuthService authService, IUserManager userMgr, IUnitOfWork unitOfWork, IUserRepo userRepo, IBoardRepo boardRepo, IBoardItemRepo itemRepo) {
+		public UserDeleteCommandHandler(IAuthService authService, IUserManager userMgr, IUnitOfWork unitOfWork, IUserRepo userRepo) {
 			_authService = authService;
 			_userMgr = userMgr;
 			_unitOfWork = unitOfWork;
 			_userRepo = userRepo;
-			_boardRepo = boardRepo;
-			_itemRepo = itemRepo;
+			//_boardRepo = boardRepo;
+			//_itemRepo = itemRepo;
 		}
 
-		public async Task<Unit> Handle(UserDeleteCommand request, CancellationToken cancellationToken) {
-			var user = await _userRepo.GetWithItems(_userMgr.CurrentUserId) ?? throw new ArgumentException($"Отсутствует пользователь {_userMgr.CurrentUserId}");
+		public async Task<Unit> Handle(UserDeleteCommand request, CancellationToken token) {
+			var user = await _userRepo.Get(_userMgr.CurrentUserId, token) ?? throw new ArgumentException($"Отсутствует пользователь {_userMgr.CurrentUserId}");
 
 			await _authService.Logout();
 
-			foreach (var board in user.Boards) {
-				foreach (var item in board.BoardItems) {
-					await _itemRepo.Delete(item);
-				}
-				await _boardRepo.Delete(board);
-			}
+			//foreach (var board in user.Boards) {		
+			//	foreach (var item in board.BoardItems) {
+			//		await _itemRepo.Delete(item);
+			//	}
+			//	await _boardRepo.Delete(board);
+			//}
+
+			throw new NotImplementedException($"Couldn't delete current user {_userMgr.CurrentUserId}. Method is not implemented");
+
 			await _userRepo.Delete(user);
-			await _unitOfWork.Commit();
+			await _unitOfWork.Commit(); // TODO: publish BoardDeletedEvent
 
 			return Unit.Value;
 		}

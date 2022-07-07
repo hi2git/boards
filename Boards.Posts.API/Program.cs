@@ -1,9 +1,8 @@
 
-using Board.Infrastructure.Repository;
-
 using Boards.Infrastructure.Web;
 using Boards.Posts.API.Consumers;
 using Boards.Posts.Application.Queries;
+using Boards.Posts.Infrastructure;
 
 using MassTransit;
 
@@ -22,6 +21,7 @@ services
 
 var app = builder.Build();
 
+//app.MigrateDatabase();
 
 app.UseInfrastructureWeb();
 

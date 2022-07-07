@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 using Board.Domain.Repos;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace Board.Infrastructure.Repository.Implementation {
-	internal class AbstractRepo<T> : IRepo<T> where T : class {
+	public abstract class AbstractRepo<T> : IRepo<T> where T : class {
 
 		#region Ctors
 
-		public AbstractRepo(BoardContext context) {
+		public AbstractRepo(DbContext context) {
 			context = context ?? throw new ArgumentNullException(nameof(context));
 			this.EntityRepo = new EntityRepo<T>(context);
 		}
