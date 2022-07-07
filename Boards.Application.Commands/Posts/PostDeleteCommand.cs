@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 
+using Boards.Commons.Application;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
-
-using MassTransit;
 
 using MediatR;
 
@@ -29,8 +26,7 @@ namespace Boards.Application.Commands.Posts {
 	}
 
 	internal class PostDeleteCommandHandler : AbstractHandler<PostDeleteCommand, PostDeleteMsg, PostDeleteResponse> {
-
-		public PostDeleteCommandHandler(IRequestClient<PostDeleteMsg> client) : base(client) { } 
+		public PostDeleteCommandHandler(IClient<PostDeleteMsg, PostDeleteResponse> client) : base(client) { } 
 
 	}
 }

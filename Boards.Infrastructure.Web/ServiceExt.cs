@@ -24,6 +24,8 @@ namespace Boards.Infrastructure.Web {
 			services.AddValidatorsFromAssemblies(assemblies);
 			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
+			services.AddControllers();
+
 			services.AddEndpointsApiExplorer().AddSwaggerGen();
 			services.AddHealthChecks();
 

@@ -1,29 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Boards.Commons.Application;
 using Boards.Domain.Contracts;
-
-using MassTransit;
 
 using MediatR;
 
 namespace Boards.Application.Commands {
-	internal class AbstractHandler<TRequest, TMsg, TResponse> : IRequestHandler<TRequest> 
-		where TRequest: IRequest 
-		where TMsg : class 
-		where TResponse : class, IResponse
-	{
-		private readonly IRequestClient<TMsg> _client;
 
-		public AbstractHandler(IRequestClient<TMsg> client) => _client = client;
+	internal abstract class AbstractHandler<TRequest, TMsg, TResponse> : IRequestHandler<TRequest> 
+		where TRequest: IRequest
+		where TMsg : AbstractMsg
+		where TResponse : AbstractResponse
+	{
+		private readonly IClient<TMsg, TResponse> _client;
+
+		public AbstractHandler(IClient<TMsg, TResponse> client) => _client = client;
 
 		public async Task<Unit> Handle(TRequest request, CancellationToken token) {
-			var response = await _client.GetResponse<TResponse>(request, token);
+			var msg = this.GetMsg(request);
+			await _client.Send(msg, token);// GetResponse<TResponse>(request, token);
 			return Unit.Value;
 		}
 
+		protected virtual TMsg GetMsg(TRequest request) => request is TMsg msg 
+			? msg 
+			: throw new InvalidOperationException($"Couldn't get msg for {request.GetType().Name}");
+
 	}
+
 }

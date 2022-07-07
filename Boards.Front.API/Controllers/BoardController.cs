@@ -16,7 +16,7 @@ namespace Boards.Front.API.Controllers {
 		public BoardController(IMediator mediator) => _mediator = mediator;
 
 		[HttpPost]
-		public Task<Guid> Create([FromBody] Valueable<string> dto) => _mediator.Send(new BoardCreateCommand(dto.Value));
+		public Task Create([FromBody] Valueable<string> dto) => _mediator.Send(new BoardCreateCommand(dto.Value));
 
 		[HttpPut]
 		public Task Update([FromBody] IdNameDTO dto) => _mediator.Send(new BoardUpdateCommand(dto));

@@ -13,9 +13,10 @@ namespace Boards.Posts.Infrastructure {
 			modelBuilder.Entity<Post>(builder => {
 				builder.ToTable(typeof(Post).Name);
 				builder.HasKey(e => e.Id);
-				builder.Property(n => n.OrderNumber).IsRequired();
 				builder.Property(n => n.Description);
+				builder.Property(n => n.OrderNumber).IsRequired();
 				builder.Property(n => n.IsDone).IsRequired();
+				builder.Property(n => n.BoardId).IsRequired();
 			});
 
 		}

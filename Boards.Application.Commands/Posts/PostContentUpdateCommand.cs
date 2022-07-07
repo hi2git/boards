@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Board.Domain.DTO.Posts;
 
+using Boards.Commons.Application;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
 
-using MassTransit;
 
 using MediatR;
 
@@ -30,7 +28,7 @@ namespace Boards.Application.Commands.Posts {
 
 	internal class PostContentUpdateCommandGandler : AbstractHandler<PostContentUpdateCommand, PostContentUpdateMsg, PostContentUpdateResponse> {
 
-		public PostContentUpdateCommandGandler(IRequestClient<PostContentUpdateMsg> client) : base(client) { }
+		public PostContentUpdateCommandGandler(IClient<PostContentUpdateMsg, PostContentUpdateResponse> client) : base(client) { }
 
 	}
 }

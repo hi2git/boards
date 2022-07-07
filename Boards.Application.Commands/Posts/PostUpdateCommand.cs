@@ -2,11 +2,10 @@
 
 using Board.Domain.DTO.Posts;
 
+using Boards.Commons.Application;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
-
-using MassTransit;
 
 using MediatR;
 
@@ -28,7 +27,7 @@ namespace Boards.Application.Commands.Posts {
 
 	internal class PostUpdateCommandHandler : AbstractHandler<PostUpdateCommand, PostUpdateMsg, PostUpdateResponse> {
 
-		public PostUpdateCommandHandler(IRequestClient<PostUpdateMsg> client) : base(client) { } 
+		public PostUpdateCommandHandler(IClient<PostUpdateMsg, PostUpdateResponse> client) : base(client) { } 
 
 	}
 }

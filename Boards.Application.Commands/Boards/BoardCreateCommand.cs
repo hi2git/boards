@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
-using Board.Domain.Repos;
 using Board.Domain.Services;
+
+using Boards.Commons.Application;
+using Boards.Domain.Contracts.Boards;
 
 using FluentValidation;
 
 using MediatR;
 
 namespace Boards.Application.Commands.Boards {
-	public class BoardCreateCommand : IRequest<Guid> {
+	public class BoardCreateCommand : IRequest {
 
 		public BoardCreateCommand(string name) => this.Name = name;
 
@@ -22,38 +20,32 @@ namespace Boards.Application.Commands.Boards {
 
 	public class BoardCreateCommandValidator : AbstractValidator<BoardCreateCommand> {
 
-		public BoardCreateCommandValidator(IUserManager userMgr, IBoardRepo repo) {
-			RuleFor(n => n.Name)
-				.NotEmpty()
-				.MaximumLength(50)
-				.CustomAsync(async (n, context, _) => {
-					if (await repo.HasName(n, userMgr.CurrentUserId))
-						context.AddFailure($"Название доски {n} уже существует");
-				});
+		public BoardCreateCommandValidator() {
+			RuleFor(n => n.Name).NotEmpty().MaximumLength(50);
+				//.CustomAsync(async (n, context, _) => {
+				//	if (await repo.HasName(n, userMgr.CurrentUserId))
+				//		context.AddFailure($"Название доски {n} уже существует");
+				//});
 		}
 	}
 
-	internal class BoardCreateCommandHandler : IRequestHandler<BoardCreateCommand, Guid> {
+	internal class BoardCreateCommandHandler : AbstractHandler<BoardCreateCommand, BoardCreateMsg, BoardCreateResponse> {
 		private readonly IUserManager _userMgr;
-		private readonly IUnitOfWork _unitOfWork;
-		private readonly IUserRepo _userRepo;
-		private readonly IBoardRepo _boardRepo;
+		//private readonly IUnitOfWork _unitOfWork;
+		//private readonly IUserRepo _userRepo;
+		//private readonly IBoardRepo _boardRepo;
 
-		public BoardCreateCommandHandler(IUserManager userMgr, IUnitOfWork unitOfWork, IUserRepo userRepo, IBoardRepo boardRepo) {
-			_userMgr = userMgr;
-			_unitOfWork = unitOfWork;
-			_userRepo = userRepo;
-			_boardRepo = boardRepo;
-		}
+		public BoardCreateCommandHandler(IClient<BoardCreateMsg, BoardCreateResponse> client, IUserManager userMgr) : base(client) => _userMgr = userMgr;
 
-		public async Task<Guid> Handle(BoardCreateCommand request, CancellationToken token) {
-			var user = await _userRepo.Get(_userMgr.CurrentUserId, token);
-			var board = new Board.Domain.Models.Board(Guid.NewGuid(), request.Name, user);
+		protected override BoardCreateMsg GetMsg(BoardCreateCommand request) => new(_userMgr.CurrentUserId, request.Name);
 
-			await _boardRepo.Create(board);
-			await _unitOfWork.Commit();
+		//public async Task<Guid> Handle(BoardCreateCommand request, CancellationToken token) {
+		//var user = await _userRepo.Get(_userMgr.CurrentUserId, token);
+		//var board = new Board.Domain.Models.Board(Guid.NewGuid(), request.Name, user);
 
-			return board.Id;
-		}
+		//await _boardRepo.Create(board);
+		//await _unitOfWork.Commit();
+
+		//return board.Id;
 	}
 }

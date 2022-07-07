@@ -23,7 +23,6 @@ namespace Board.Infrastructure.Repository {
 			//services.AddScoped(typeof(IRepo<>), typeof(AbstractRepo<>));
 
 			services.AddScoped<IUserRepo, UserRepo>();
-			services.AddScoped<IBoardRepo, BoardRepo>();
 			services.AddScoped<IRoleRepo, RoleRepo>();
 
 			return services;

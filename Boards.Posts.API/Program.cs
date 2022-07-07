@@ -12,11 +12,10 @@ var services = builder.Services;
 var config = builder.Configuration;
 var assemblies = new[] { typeof(PostGetAllQuery).Assembly };
 
-services.AddControllers();
 
 services
 	.AddInfrastructureRepos(builder.Configuration)
-	.AddInfrastructureWeb(assemblies: assemblies, n => n.AddConsumers(typeof(PostGetAllQueryConsumer).Assembly))
+	.AddInfrastructureWeb(assemblies: assemblies, n => n.AddConsumers(typeof(PostGetAllConsumer).Assembly))
 ;
 
 var app = builder.Build();

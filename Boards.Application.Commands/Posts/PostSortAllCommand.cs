@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Board.Domain.DTO.Posts;
 
+using Boards.Commons.Application;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
 
-using MassTransit;
 
 using MediatR;
 
@@ -35,7 +33,7 @@ namespace Boards.Application.Commands.Posts {
 
 	internal class PostSortAllCommandHandler : AbstractHandler<PostSortAllCommand, PostSortAllMsg, PostSortedResponse> {
 
-		public PostSortAllCommandHandler(IRequestClient<PostSortAllMsg> client) : base(client) { }
+		public PostSortAllCommandHandler(IClient<PostSortAllMsg, PostSortedResponse> client) : base(client) { }
 
 	}
 }

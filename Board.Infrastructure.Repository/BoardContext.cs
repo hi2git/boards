@@ -35,14 +35,14 @@ namespace Board.Infrastructure.Repository {
 					.HasForeignKey(nameof => nameof.RoleId);
 			});
 
-			modelBuilder.Entity<Domain.Models.Board>(builder => {
-				builder.ToTable(typeof(Domain.Models.Board).Name);
-				builder.HasKey(e => e.Id);
-				builder.Property(n => n.Name).IsRequired().HasMaxLength(50);
-				builder.HasOne(n => n.User)
-					.WithMany(n => n.Boards)
-					.HasForeignKey(n => n.UserId);
-			});
+			//modelBuilder.Entity<Domain.Models.Board>(builder => {
+			//	builder.ToTable(typeof(Domain.Models.Board).Name);
+			//	builder.HasKey(e => e.Id);
+			//	builder.Property(n => n.Name).IsRequired().HasMaxLength(50);
+			//	builder.HasOne(n => n.User)
+			//		.WithMany(n => n.Boards)
+			//		.HasForeignKey(n => n.UserId);
+			//});
 
 			//modelBuilder.Entity<BoardItem>(builder => {
 			//	builder.ToTable(typeof(BoardItem).Name);

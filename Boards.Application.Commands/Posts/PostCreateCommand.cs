@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Board.Domain.DTO.Posts;
 
+using Boards.Commons.Application;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
-
-using MassTransit;
 
 using MediatR;
 
@@ -37,7 +34,7 @@ namespace Boards.Application.Commands.Posts {
 
 	internal class PostCreateCommandHandler : AbstractHandler<PostCreateCommand, PostCreateMsg, PostCreateResponse> {
 
-		public PostCreateCommandHandler(IRequestClient<PostCreateMsg> client) : base(client) { }
+		public PostCreateCommandHandler(IClient<PostCreateMsg, PostCreateResponse> client) : base(client) { }
 
 	}
 }

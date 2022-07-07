@@ -54,15 +54,13 @@ namespace Boards.Application.Commands.Users {
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IUserRepo _userRepo;
 		private readonly IRoleRepo _roleRepo;
-		private readonly IBoardRepo _boardRepo;
 
-		public UserCreateCommandHandler(IAuthService authService, IPasswordService pwdService, IUnitOfWork unitOfWork, IUserRepo userRepo, IRoleRepo roleRepo, IBoardRepo boardRepo) {
+		public UserCreateCommandHandler(IAuthService authService, IPasswordService pwdService, IUnitOfWork unitOfWork, IUserRepo userRepo, IRoleRepo roleRepo) {
 			_authService = authService;
 			_pwdService = pwdService;
 			_unitOfWork = unitOfWork;
 			_userRepo = userRepo;
 			_roleRepo = roleRepo;
-			_boardRepo = boardRepo;
 		}
 
 		public async Task<Unit> Handle(UserCreateCommand request, CancellationToken cancellationToken) {
@@ -74,9 +72,9 @@ namespace Boards.Application.Commands.Users {
 			var user = new User(Guid.NewGuid(), item.Login, passwordHash, role, item.Email);
 			await _userRepo.Create(user);
 
-			var board = new Board.Domain.Models.Board(Guid.NewGuid(), "MyFirstDesk", user);
+			//var board = new Board.Domain.Models.Board(Guid.NewGuid(), "MyFirstDesk", user); // TODO: publish UserCreatedEvent
 
-			await _boardRepo.Create(board);
+			//await _boardRepo.Create(board);
 			await _unitOfWork.Commit();
 
 			await _authService.Login(user);
