@@ -33,6 +33,7 @@ namespace Boards.Infrastructure.Web {
 
 				n.UsingRabbitMq((context, cfg) => {
 					cfg.Host("rabbitmq", "/", x => { x.Username("rabbitmq"); x.Password("rabbitmq"); });
+					//cfg.UseMessageRetry(x => x.None());
 					cfg.ConfigureEndpoints(context);
 				});
 			});

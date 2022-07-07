@@ -20,8 +20,6 @@ namespace Boards.Posts.Infrastructure {
 				})
 			);
 
-			//services.AddInfrastructureRepos(config);
-
 			services.AddScoped<IPostRepo, PostRepo>();
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 			

@@ -12,13 +12,16 @@ namespace Board.Infrastructure.Repository.Implementation {
 
 		protected AbstractUnitOfWork(DbContext context) => _context = context;
 
-		public Task Commit() => _context.Database.CreateExecutionStrategy().ExecuteAsync(this.RunTransaction);
+		public Task Commit(Func<Task>? action = null) => _context.Database
+			.CreateExecutionStrategy()
+			.ExecuteAsync(() => this.RunTransaction(action));
 
-		private async Task RunTransaction() {
+		private async Task RunTransaction(Func<Task>? action) {
 			var transaction = _context.Database.BeginTransaction();
 			try {
 				await _context.SaveChangesAsync();
 				transaction.Commit();
+				await (action?.Invoke() ?? Task.CompletedTask);
 			}
 
 			catch (Exception) {

@@ -37,17 +37,6 @@ namespace Board.Infrastructure.Repository.Implementation {
 		/// <inheritdoc />
 		public Task<List<T>> GetAll(CancellationToken token) => _context.Set<T>().ToListAsync(token);
 
-		/// <inheritdoc />
-		//public Task<int> Count(Expression<Func<T, bool>> predicate = null) => predicate == null
-		//	? _context.Set<T>().CountAsync()
-		//	: _context.Set<T>().CountAsync(predicate);
-
-		//public Task UpdateManyToMany<TKey>(IEnumerable<T> currentItems, IEnumerable<T> newItems, Func<T, TKey> getKey) => Task.Run(() => {
-		//	_context.Set<T>().RemoveRange(currentItems.Except(newItems, getKey));
-		//	_context.Set<T>().AddRange(newItems.Except(currentItems, getKey));
-		//});
-
-
 	}
 
 	#endregion

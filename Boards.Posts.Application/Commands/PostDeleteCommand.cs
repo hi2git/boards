@@ -36,9 +36,8 @@ namespace Boards.Posts.Application.Commands {
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IPostRepo _repo;
 		private readonly IPublishEndpoint _publish;
-		//private readonly IClient<ImageDeleteMsg, ImageDeleteResponse> _client;
 
-		public PostDeleteCommandHandler(IMediator mediator, IUnitOfWork unitOfWork, IPostRepo repo, /*IClient<ImageDeleteMsg, ImageDeleteResponse> client*/ IPublishEndpoint publish) {
+		public PostDeleteCommandHandler(IMediator mediator, IUnitOfWork unitOfWork, IPostRepo repo, IPublishEndpoint publish) {
 			_mediator = mediator;
 			_unitOfWork = unitOfWork;
 			_repo = repo;
@@ -51,12 +50,10 @@ namespace Boards.Posts.Application.Commands {
 			var entity = await _repo.Get(id, token);
 			await _repo.Delete(entity);
 
-			await _unitOfWork.Commit();
+			await _unitOfWork.Commit(() => _publish.Publish<PostDeletedEvent>(new(id)));
 
 			await _mediator.Send(new PostSortAllCommand(request.BoardId));
 
-			//await _client.Send(new (id), token);
-			await _publish.Publish<PostDeletedEvent>(new(id)); // TODO: put in transaction
 			return Unit.Value;
 		}
 	}

@@ -48,9 +48,7 @@ namespace Boards.Posts.Application.Commands {
 			var items = await _repo.GetAll(id, token);
 
 			await items.ForEachAsync(_repo.Delete);
-			await _unitOfWork.Commit();
-
-			await items.WhenAll(n => _publish.Publish<PostDeletedEvent>(new(n.Id)));    // TODO: put in transaction
+			await _unitOfWork.Commit(() => items.WhenAll(n => _publish.Publish<PostDeletedEvent>(new(n.Id))));
 
 			return Unit.Value;
 		}

@@ -3,6 +3,6 @@ using System.Threading.Tasks;
 
 namespace Board.Domain.Repos {
 	public interface IUnitOfWork {
-		Task Commit();
+		Task Commit(Func<Task>? action = null);
 	}
 }
