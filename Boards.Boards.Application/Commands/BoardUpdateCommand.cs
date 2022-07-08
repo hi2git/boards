@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Board.Domain.Repos;
 
@@ -28,7 +24,7 @@ namespace Boards.Boards.Application.Commands {
 			RuleFor(n => n.Name).NotEmpty().MaximumLength(50);
 			RuleFor(n => n).CustomAsync(async (n, context, token) => {
 					if (await repo.HasName(n.Name, n.UserId, token))	// except current id ?
-						context.AddFailure($"Название доски {n} уже существует");
+						context.AddFailure($"Название доски \"{n.Name}\" уже существует");
 				});
 		}
 	}
