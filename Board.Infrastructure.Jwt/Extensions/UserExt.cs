@@ -16,13 +16,13 @@ namespace Board.Infrastructure.Jwt.Extensions {
 			var role = user?.Role ?? throw new ArgumentNullException(nameof(user));
 
 			var claims = new List<Claim> {
-				new Claim(ClaimTypes.Name, user.Name),
-				new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+				new (ClaimTypes.Name, user.Name),
+				new (ClaimTypes.NameIdentifier, user.Id.ToString()),
 				//new Claim(ClaimTypes.Surname, user.Name),
-				new Claim(ClaimsIdentity.DefaultRoleClaimType, role?.Name),
-				new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-				new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.TimeOfDay.Ticks.ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer64),
-				new Claim(ClaimNames.RoleId, role.Id.ToString("D"))
+				new (ClaimsIdentity.DefaultRoleClaimType, role.Name),
+				new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+				new (JwtRegisteredClaimNames.Iat, DateTime.UtcNow.TimeOfDay.Ticks.ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer64),
+				new (ClaimNames.RoleId, role.Id.ToString("D"))
 			};
 
 			return new ClaimsIdentity(claims, "token");

@@ -19,14 +19,15 @@ namespace Board.Infrastructure.Jwt.Implementation {
 		public Task<JwtTokenResult> Generate(UserLoginDTO user) {
 			var expiration = TimeSpan.FromMinutes(_tokenOptions.TokenExpiryInMinutes);
 			var claimsIdentity = user.BuildClaims();
+			var creds = new SigningCredentials(_tokenOptions.SigningKey, SecurityAlgorithms.HmacSha256);
 
 			var jwt = new JwtSecurityToken(
-				_tokenOptions.Issuer,
-				_tokenOptions.Audience,
-				claimsIdentity.Claims,
-				DateTime.UtcNow,
-				DateTime.UtcNow.Add(expiration),
-				new SigningCredentials(_tokenOptions.SigningKey, SecurityAlgorithms.HmacSha256)
+				issuer: _tokenOptions.Issuer,
+				audience: _tokenOptions.Audience,
+				claims: claimsIdentity.Claims,
+				notBefore: DateTime.UtcNow,
+				expires: DateTime.UtcNow.Add(expiration),
+				signingCredentials: creds
 			);
 
 			var accessToken = new JwtSecurityTokenHandler().WriteToken(jwt);

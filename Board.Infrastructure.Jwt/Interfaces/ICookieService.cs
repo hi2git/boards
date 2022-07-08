@@ -9,7 +9,7 @@ namespace Board.Infrastructure.Jwt.Interfaces {
 
 		void Add(JwtTokenResult token);
 
-		void Add(string name, string value, bool httpOnly = true);
+		//void Add(string name, string value, bool httpOnly = true);
 
 		void Remove();
 

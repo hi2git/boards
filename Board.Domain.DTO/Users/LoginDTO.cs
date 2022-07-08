@@ -8,9 +8,9 @@ namespace Board.Domain.DTO.Users {
 
 		public string Email { get; set; }
 
-		public string CaptchaId { get; set; }
+		//public string CaptchaId { get; set; }
 
-		public string CaptchaCode { get; set; }
+		//public string CaptchaCode { get; set; }
 
 	}
 }

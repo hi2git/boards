@@ -3,6 +3,7 @@ import { action, computed, makeAutoObservable, observable } from "mobx";
 import { IUserLogin } from "../interfaces/components";
 import service from "../services/user";
 import router from "./router";
+import boards from "./boards";
 import * as urls from "../constants/urls";
 
 class SignUp {
@@ -37,6 +38,7 @@ class SignUp {
 		let error = undefined;
 		try {
 			await service.post(this.item);
+			await boards.post("My first board");
 			router.push(urls.HOME);
 		} catch (e) {
 			error = e;

@@ -5,7 +5,6 @@ using Board.Infrastructure.Repository;
 
 using Boards.Application.Commands.Boards;
 using Boards.Application.Queries.Boards;
-using Boards.Infrastructure;
 using Boards.Infrastructure.Web;
 
 using BotDetect.Web;
@@ -29,6 +28,10 @@ var config = builder.Configuration;
 var env = builder.Environment;
 
 services.AddHttpContextAccessor();
+//services.Configure<KestrelServerOptions>(options =>
+//{
+//	options.AllowSynchronousIO = true;
+//});
 
 services
 	.AddInfrastructureRepos(config)
@@ -57,7 +60,7 @@ app.UseCookiePolicy(new CookiePolicyOptions {
 app.UseSecureJwt();
 app.UseAuthentication();
 
-app.UseSimpleCaptcha(config.GetSection("BotDetect"));
+//app.UseSimpleCaptcha(config.GetSection("BotDetect"));
 
 app.UseAuthorization();
 

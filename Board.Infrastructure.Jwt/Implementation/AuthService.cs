@@ -39,7 +39,7 @@ namespace Board.Infrastructure.Jwt.Implementation {
 
 		public Task Logout() => Task.Run(_cookieService.Remove);
 
-		private UserLoginDTO Map(User u) => new UserLoginDTO {
+		private UserLoginDTO Map(User u) => new() {
 			Id = u.Id,
 			Name = u.Name,
 			PasswordHash = u.Password,

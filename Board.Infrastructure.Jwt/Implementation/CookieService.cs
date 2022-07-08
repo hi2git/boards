@@ -22,11 +22,11 @@ namespace Board.Infrastructure.Jwt.Implementation {
 			}
 		}
 
-		public void Add(string name, string value, bool httpOnly = true) {
-			if (!string.IsNullOrEmpty(name)) {
-				_httpContextAccessor?.HttpContext?.Response?.Cookies?.Append(name, value, new CookieOptions { HttpOnly = httpOnly }); //MaxAge = token.Expires
-			}
-		}
+		//public void Add(string name, string value, bool httpOnly = true) {
+		//	if (!string.IsNullOrEmpty(name)) {
+		//		_httpContextAccessor?.HttpContext?.Response?.Cookies?.Append(name, value, new CookieOptions { HttpOnly = httpOnly }); //MaxAge = token.Expires
+		//	}
+		//}
 
 		public string AuthCookieName => $"SID_{_authOptions?.Issuer}";
 

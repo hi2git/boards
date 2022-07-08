@@ -6,7 +6,11 @@ using Board.Application.Services;
 using Board.Domain.Repos;
 using Board.Domain.Services;
 
+using Boards.Domain.Contracts.Users;
+
 using FluentValidation;
+
+using MassTransit;
 
 using MediatR;
 
@@ -23,14 +27,17 @@ namespace Boards.Application.Commands.Users {
 		private readonly IUserManager _userMgr;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IUserRepo _userRepo;
+		private readonly IPublishEndpoint _publish;
+
 		//private readonly IBoardRepo _boardRepo;
 		//private readonly IBoardItemRepo _itemRepo;
 
-		public UserDeleteCommandHandler(IAuthService authService, IUserManager userMgr, IUnitOfWork unitOfWork, IUserRepo userRepo) {
+		public UserDeleteCommandHandler(IAuthService authService, IUserManager userMgr, IUnitOfWork unitOfWork, IUserRepo userRepo, IPublishEndpoint publish ) {
 			_authService = authService;
 			_userMgr = userMgr;
 			_unitOfWork = unitOfWork;
 			_userRepo = userRepo;
+			_publish = publish;
 			//_boardRepo = boardRepo;
 			//_itemRepo = itemRepo;
 		}
@@ -47,10 +54,8 @@ namespace Boards.Application.Commands.Users {
 			//	await _boardRepo.Delete(board);
 			//}
 
-			throw new NotImplementedException($"Couldn't delete current user {_userMgr.CurrentUserId}. Method is not implemented");
-
 			await _userRepo.Delete(user);
-			await _unitOfWork.Commit(); // TODO: publish BoardDeletedEvent
+			await _unitOfWork.Commit(() => _publish.Publish<UserDeletedEvent>(new(user.Id)));
 
 			return Unit.Value;
 		}

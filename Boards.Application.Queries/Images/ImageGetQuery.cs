@@ -12,14 +12,14 @@ using MassTransit;
 using MediatR;
 
 namespace Boards.Application.Queries.Images {
-	public class ImagePathGetQuery : IRequest<string> {
+	public class ImageGetQuery : IRequest<string> {
 
-		public ImagePathGetQuery(Guid id) => this.Id = id;
+		public ImageGetQuery(Guid id) => this.Id = id;
 
 		public Guid Id { get; }
 	}
 
-	public class ImagePathGetQueryValidator : AbstractValidator<ImagePathGetQuery> {
+	public class ImagePathGetQueryValidator : AbstractValidator<ImageGetQuery> {
 
 		public ImagePathGetQueryValidator() {
 			RuleFor(n => n.Id).NotEmpty();
@@ -27,12 +27,12 @@ namespace Boards.Application.Queries.Images {
 
 	}
 
-	internal class ImagePathGetQueryHandler : IRequestHandler<ImagePathGetQuery, string> {
+	internal class ImageGetQueryHandler : IRequestHandler<ImageGetQuery, string> {
 		private readonly IRequestClient<ImageGetMsg> _client;
 
-		public ImagePathGetQueryHandler(IRequestClient<ImageGetMsg> client) => _client = client;
+		public ImageGetQueryHandler(IRequestClient<ImageGetMsg> client) => _client = client;
 
-		public async Task<string> Handle(ImagePathGetQuery request, CancellationToken token) {
+		public async Task<string> Handle(ImageGetQuery request, CancellationToken token) {
 			var response  = await _client.GetResponse<ImageGetResponse>(new(request.Id), token);
 			return response.Message.Content;
 		}
