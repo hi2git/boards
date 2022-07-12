@@ -21,7 +21,9 @@ namespace Boards.Posts.Infrastructure {
 				})
 			);
 
-			services.AddScoped<IPostRepo, PostRepo>();
+			services.AddTransient<IPostRepo, PostRepo>();
+			services.AddTransient<IEventRepo, EventRepo>();
+
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 			return services;

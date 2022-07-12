@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Board.Domain.Repos {
 	public interface IRepo<T> where T : class {
 
-		IQueryable<T> Query { get; }
+		//IQueryable<T> Query { get; }
 
-		IQueryable<T> QueryAll { get; }
+		//IQueryable<T> QueryAll { get; }
 
 		/// <summary>Возвращает список всех сущностей</summary>
 		/// <returns>список всех сущностей</returns>

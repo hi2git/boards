@@ -21,7 +21,9 @@ namespace Boards.Boards.Infrastructure {
 				})
 			);
 
-			services.AddScoped<IBoardRepo, BoardRepo>();
+			services.AddTransient<IBoardRepo, BoardRepo>();
+			services.AddTransient<IEventRepo, EventRepo>();
+
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 			return services;

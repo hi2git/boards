@@ -1,4 +1,7 @@
-﻿using Boards.Domain.Contracts;
+﻿using Board.Domain.Models;
+using Board.Domain.Repos;
+
+using Boards.Domain.Contracts;
 
 using MassTransit;
 
@@ -6,10 +9,15 @@ using MediatR;
 
 namespace Boards.Commons.Application.Consumers {
 	public abstract class AbstractConsumer<TMsg, TResponse> : IConsumer<TMsg> where TMsg : class where TResponse : IResponse, new() {
+		private readonly IEventRepo _eventRepo;
 
-		public AbstractConsumer(IMediator mediator) => this.Mediator = mediator;
+		public AbstractConsumer(IMediator mediator, IEventRepo eventRepo) {
+			this.Mediator = mediator;
+			_eventRepo = eventRepo;
+		}
 
 		public async Task Consume(ConsumeContext<TMsg> context) {
+			await this.HandleEvent(context.MessageId);
 			var msg = await this.TryConsume(context.Message, context.CancellationToken);
 			var response = new TResponse() { Message = msg ?? string.Empty };
 			await context.RespondAsync(response);
@@ -34,6 +42,14 @@ namespace Boards.Commons.Application.Consumers {
 				msg = e.Message; // TODO: log msg
 			}
 			return msg;
+		}
+
+		private async Task HandleEvent(Guid? messageId) {
+			var name = typeof(TMsg).Name;
+			var id = messageId ?? throw new InvalidOperationException($"No MessageId found for {name}");
+			var @event = new IntegrationEvent(id, name, DateTime.Now); // TODO: use IDateService
+
+			await _eventRepo.Create(@event);
 		}
 
 		#endregion

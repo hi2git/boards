@@ -12,7 +12,7 @@ namespace Board.Domain.Models {
 
 		#region Navigation
 
-		public virtual ICollection<User> Users { get; set; } = new HashSet<User>();
+		public virtual ICollection<User> Users { get; protected set; } = new HashSet<User>();
 
 		#endregion
 

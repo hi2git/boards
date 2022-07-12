@@ -2,6 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 
+using Board.Domain.DTO.Images;
+
+using Boards.Application.Commands.Images;
 using Boards.Application.Queries.Images;
 
 using MediatR;
@@ -16,13 +19,13 @@ namespace Boards.Front.API.Controllers {
 
 		[HttpGet]
 		public async Task<IActionResult> Get([FromQuery] Guid id, CancellationToken token) {
-			//var path = await _mediator.Send(new ImagePathGetQuery(id), token);
-			//return this.PhysicalFile(path, "image/jpg", $"{id}.jpg");
 			var content = await _mediator.Send(new ImageGetQuery(id), token);
-			//return $"data:image/jpg;base64, {content}";
 			var bytes = Convert.FromBase64String(content);
 			return this.File(bytes, "image/jpg", $"{id}.jpg", true);
 		}
+
+		[HttpPut]
+		public Task Update([FromBody] ImageDTO dto) => _mediator.Send(new ImageUpdateCommand(dto));
 
 	}
 }

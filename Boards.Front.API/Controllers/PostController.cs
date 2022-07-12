@@ -18,8 +18,8 @@ namespace Boards.Front.API.Controllers {
 		[HttpPost]
 		public Task Create([FromBody] IdItemDTO dto) => _mediator.Send(new PostCreateCommand(dto.Id, dto.Item));
 
-		[HttpPut("content")]
-		public Task UpdateContent([FromBody] IdItemDTO dto) => _mediator.Send(new PostContentUpdateCommand(dto.Item));
+		//[HttpPut("content")]
+		//public Task UpdateContent([FromBody] IdItemDTO dto) => _mediator.Send(new PostContentUpdateCommand(dto.Item));
 
 		[HttpPut]
 		public Task Update([FromBody] IdItemDTO dto) => _mediator.Send(new PostUpdateCommand(dto.Item));

@@ -9,58 +9,45 @@ using Board.Domain.Repos;
 using Microsoft.EntityFrameworkCore;
 
 namespace Board.Infrastructure.Repository.Implementation {
-	public abstract class AbstractRepo<T> : IRepo<T> where T : class {
+	public abstract class AbstractRepo<T> : IRepo<T> where T : class {	// TODO: where T : Entity
+		private readonly DbContext _context;
 
 		#region Ctors
 
-		public AbstractRepo(DbContext context) {
-			context = context ?? throw new ArgumentNullException(nameof(context));
-			this.EntityRepo = new EntityRepo<T>(context);
-		}
+		public AbstractRepo(DbContext context) => _context = context ?? throw new ArgumentNullException(nameof(context));
 
 		#endregion
 
 		#region Public
 
-		public virtual IQueryable<T> Query => this.QueryAll;
-
-		public IQueryable<T> QueryAll => EntityRepo.Query();
+		/// <inheritdoc/>
+		public virtual Task<List<T>> GetAll(CancellationToken token) => this.Items.ToListAsync(token);
 
 		/// <inheritdoc/>
-		public virtual Task<List<T>> GetAll(CancellationToken token) => EntityRepo.GetAll(token);
+		public virtual Task<T> Get(Guid id, CancellationToken token) => this.Items.FindAsync(new object[] { id }, token).AsTask();
 
 		/// <inheritdoc/>
-		public virtual Task<T> Get(Guid id, CancellationToken token) => EntityRepo.Get(id, token);
+		public Task Update(T entity) => Task.Run(() => this.Items.Update(entity));
 
 		/// <inheritdoc/>
-		public Task Update(T entity) {
-			onSave(entity);
-			return EntityRepo.Update(entity);
-		}
+		public Task Create(T entity) => this.Items.AddAsync(entity).AsTask();
 
 		/// <inheritdoc/>
-		protected virtual void onSave(T entity) { }
-
-		/// <inheritdoc/>
-		protected virtual void onAdd(T entity) { }
-
-		/// <inheritdoc/>
-		public Task Create(T entity) {
-			onAdd(entity);
-			return EntityRepo.Create(entity);
-		}
-
-		/// <inheritdoc/>
-		public virtual Task Delete(T entity) => EntityRepo.Delete(entity);
-
-		//public Task UpdateManyToMany<TKey>(IEnumerable<T> currentItems, IEnumerable<T> newItems, Func<T, TKey> getKey) =>
-		//	EntityRepo.UpdateManyToMany(currentItems, newItems, getKey);
+		public virtual Task Delete(T entity) => Task.Run(() => this.Items.Remove(entity));
 
 		#endregion
 
 		#region Protected
 
-		protected private IEntityRepo<T> EntityRepo { get; }
+		protected virtual IQueryable<T> Query => this.QueryAll;
+
+		protected IQueryable<T> QueryAll => _context.Set<T>();
+
+		#endregion
+
+		#region Private
+
+		private DbSet<T> Items => _context.Set<T>();
 
 		#endregion
 

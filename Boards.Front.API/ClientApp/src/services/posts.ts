@@ -29,8 +29,8 @@ class Service {
 
 	putContent = async (item: IPost, boardId?: string) => {
 		if (!boardId) return console.error("boardId is undefined");
-		const url = "/api/post/content";
-		await axios.put(url, { id: boardId, item });
+		const url = "/api/image";
+		await axios.put(url, item);
 	};
 
 	put = async (item: IPost, boardId?: string) => {
