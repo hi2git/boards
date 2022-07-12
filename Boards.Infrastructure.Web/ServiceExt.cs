@@ -48,7 +48,7 @@ namespace Boards.Infrastructure.Web {
 			return services;
 		}
 
-		public static WebApplication UseInfrastructureWeb(this WebApplication app) { 
+		public static WebApplication UseInfrastructureWeb(this WebApplication app) {
 			app.UseExceptionMiddleware();
 
 			app.UseSwagger();

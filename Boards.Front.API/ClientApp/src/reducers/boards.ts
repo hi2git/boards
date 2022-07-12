@@ -38,7 +38,9 @@ class Store {
 		try {
 			const id = await service.post(name);
 			await this.fetchAll();
-			await board.setValue(this.get(id));
+			const item = this.get(id);
+			console.log("item", item);
+			await board.setValue(item);
 		} catch (e) {
 			this.receive(undefined, e);
 		}

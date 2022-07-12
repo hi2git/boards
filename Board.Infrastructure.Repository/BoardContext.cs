@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Board.Infrastructure.Repository {
 	public class BoardContext : DbContext {
-		public BoardContext([NotNull] DbContextOptions options) : base(options) => this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
+		public BoardContext(DbContextOptions options) : base(options) => this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
 
 		#region Props
 

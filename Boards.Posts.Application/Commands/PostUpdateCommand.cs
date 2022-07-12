@@ -1,7 +1,6 @@
 ﻿using System;
 
 using Board.Domain.DTO.Posts;
-using Board.Domain.Models;
 using Board.Domain.Repos;
 
 using Boards.Domain.Contracts.Posts;
@@ -42,7 +41,7 @@ namespace Boards.Posts.Application.Commands {
 			var entity = await _repo.Get(item.Id.Value, token);
 			entity = this.Map(item, entity);
 			await _repo.Update(entity);
-			await _unitOfWork.Commit();
+			await _unitOfWork.Commit();	// TODO: save Intergration event
 
 			return Unit.Value;
 		}

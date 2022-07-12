@@ -14,15 +14,13 @@ var assemblies = new[] { typeof(PostGetAllQuery).Assembly };
 
 
 services
-	.AddInfrastructureRepos(builder.Configuration)
+	.AddInfrastructureRepos(config)
 	.AddInfrastructureWeb(assemblies: assemblies, n => n.AddConsumers(typeof(PostGetAllConsumer).Assembly))
 ;
 
 var app = builder.Build();
 
-//app.MigrateDatabase();
-
+app.Services.Migrate();
 app.UseInfrastructureWeb();
-
 
 app.Run();

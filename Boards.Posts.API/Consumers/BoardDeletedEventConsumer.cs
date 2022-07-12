@@ -11,6 +11,6 @@ namespace Boards.Posts.API.Consumers {
 
 		public BoardDeletedEventConsumer(IMediator mediator) => _mediator = mediator;
 
-		public Task Consume(ConsumeContext<BoardDeletedEvent> context) => _mediator.Send(new PostDeleteAllCommand(context.Message.Id));
+		public Task Consume(ConsumeContext<BoardDeletedEvent> context) => _mediator.Send(new PostDeleteAllCommand(context.Message.Id));  
 	}
 }
