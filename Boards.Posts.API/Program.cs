@@ -14,7 +14,7 @@ var assemblies = new[] { typeof(PostGetAllQuery).Assembly };
 
 
 services
-	.AddInfrastructureRepos(config)
+	.AddRepos(config)
 	.AddInfrastructureWeb(assemblies: assemblies, n => n.AddConsumers(typeof(PostGetAllConsumer).Assembly))
 ;
 

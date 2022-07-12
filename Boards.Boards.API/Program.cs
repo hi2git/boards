@@ -12,12 +12,13 @@ var config = builder.Configuration;
 var assemblies = new[] { typeof(BoardGetAllQuery).Assembly };
 
 services
-	.AddInfrastructureRepos(builder.Configuration)
+	.AddRepos(builder.Configuration)
 	.AddInfrastructureWeb(assemblies: assemblies, n => n.AddConsumers(typeof(BoardGetAllConsumer).Assembly))
 ;
 
 var app = builder.Build();
 
+app.Services.Migrate();
 app.UseInfrastructureWeb();
 
 app.Run();
