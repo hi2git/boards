@@ -22,6 +22,24 @@ namespace Boards.Boards.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Board.Domain.Models.IntegrationEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IntegrationEvent", (string)null);
+                });
+
             modelBuilder.Entity("Boards.Boards.Domain.Models.Board", b =>
                 {
                     b.Property<Guid>("Id")

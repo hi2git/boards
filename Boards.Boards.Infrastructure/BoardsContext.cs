@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 
+using Board.Domain.Models;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Boards.Boards.Infrastructure {
@@ -13,9 +15,13 @@ namespace Boards.Boards.Infrastructure {
 				builder.HasKey(e => e.Id);
 				builder.Property(n => n.Name).IsRequired().HasMaxLength(50);
 				builder.Property(n => n.UserId).IsRequired();
-				//builder.HasOne(n => n.User)
-				//	.WithMany(n => n.Boards)
-				//	.HasForeignKey(n => n.UserId);
+			});
+
+			modelBuilder.Entity<IntegrationEvent>(builder => {
+				builder.ToTable(typeof(IntegrationEvent).Name);
+				builder.HasKey(e => e.Id);
+				builder.Property(n => n.Name).IsRequired();
+				builder.Property(n => n.Date).IsRequired();
 			});
 
 		}
