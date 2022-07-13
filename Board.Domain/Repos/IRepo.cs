@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Board.Domain.Models;
+using Boards.Domain.Models;
 
 namespace Board.Domain.Repos {
 	public interface IRepo<T> where T : Entity<Guid> {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Board.Domain.Models;
+using Boards.Domain.Models;
 
 namespace Boards.Boards.Domain.Models {
 	public class Board : Nameable {

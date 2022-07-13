@@ -16,7 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Boards.Commons.Application\Boards.Commons.Application.csproj" />
     <ProjectReference Include="..\Boards.Files.Infrastructure\Boards.Files.Infrastructure.csproj" />
-    <ProjectReference Include="..\Boards.Infrastructure.Web\Boards.Infrastructure.Web.csproj" />
+    <ProjectReference Include="..\Boards.Infrastructure.Web\Boards.Commons.Infrastructure.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>

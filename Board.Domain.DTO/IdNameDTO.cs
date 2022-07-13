@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Board.Domain.DTO {
+namespace Boards.Commons.Domain.DTOs {
 	public class IdNameDTO {
 
 		public Guid Id { get; set; }

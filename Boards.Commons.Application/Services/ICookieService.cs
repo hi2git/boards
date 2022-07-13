@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Board.Domain.DTO.Jwt;
+using Boards.Commons.Domain.DTOs.Jwt;
 
 namespace Boards.Commons.Application.Services {
 	public interface ICookieService {
@@ -10,7 +10,5 @@ namespace Boards.Commons.Application.Services {
 		void Add(JwtTokenDTO token);
 
 		void Remove();
-
-
 	}
 }

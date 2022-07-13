@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Board.Domain.DTO.Posts {
+namespace Boards.Commons.Domain.DTOs.Posts {
 	public class IdItemDTO : IdItemDTO<PostDTO> { }
 
 	public class IdItemDTO<T> {

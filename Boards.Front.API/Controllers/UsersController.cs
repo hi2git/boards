@@ -4,9 +4,9 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Board.Domain.Constants;
-using Board.Domain.DTO;
 
 using Boards.Application.Queries.Users;
+using Boards.Commons.Domain.DTOs;
 
 using MediatR;
 

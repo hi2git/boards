@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using Board.Domain.DTO.Jwt;
-
+using Boards.Commons.Domain.DTOs.Jwt;
 using Boards.Domain.Contracts.Auths;
 
 using FluentValidation;

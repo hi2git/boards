@@ -1,7 +1,7 @@
 ﻿using System;
 
-using Board.Domain.DTO.Jwt;
-using Board.Domain.DTO.Users;
+using Boards.Commons.Domain.DTOs.Jwt;
+using Boards.Commons.Domain.DTOs.Users;
 
 namespace Boards.Users.Application {
 	public interface ITokenService {

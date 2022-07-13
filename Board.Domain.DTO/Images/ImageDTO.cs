@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Board.Domain.DTO.Images {
+namespace Boards.Commons.Domain.DTOs.Images {
 	public class ImageDTO {
 
 		public Guid Id { get; set; }

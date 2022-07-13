@@ -4,8 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Board.Domain.DTO;
-
+using Boards.Commons.Domain.DTOs;
 using Boards.Domain.Contracts.Users;
 
 using FluentValidation;

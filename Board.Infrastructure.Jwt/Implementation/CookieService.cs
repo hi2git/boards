@@ -1,8 +1,7 @@
 ﻿using System;
 
-using Board.Domain.DTO.Jwt;
-
 using Boards.Commons.Application.Services;
+using Boards.Commons.Domain.DTOs.Jwt;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;

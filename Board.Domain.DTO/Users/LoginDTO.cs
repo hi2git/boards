@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Board.Domain.DTO.Users {
+namespace Boards.Commons.Domain.DTOs.Users {
 	public record LoginDTO {
 
 		public LoginDTO() { }

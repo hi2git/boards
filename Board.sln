@@ -5,11 +5,11 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Front.API", "Boards.Front.API\Boards.Front.API.csproj", "{146E51DA-5DED-40AE-94A2-A467079848DC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Board.Domain.DTO", "Board.Domain.DTO\Board.Domain.DTO.csproj", "{9A578DEC-9409-4EBE-BFAB-A3AFDA2EA106}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Commons.Domain.DTOs", "Board.Domain.DTO\Boards.Commons.Domain.DTOs.csproj", "{9A578DEC-9409-4EBE-BFAB-A3AFDA2EA106}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Board.Domain", "Board.Domain\Board.Domain.csproj", "{E833D56A-DE3F-40A2-9388-F3C4747CCFB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Commons.Domain", "Board.Domain\Boards.Commons.Domain.csproj", "{E833D56A-DE3F-40A2-9388-F3C4747CCFB5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Common.Infrastructure.Repos", "Board.Infrastructure.Repository\Boards.Common.Infrastructure.Repos.csproj", "{15FEB348-D638-4A58-BC23-C4336B8214B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Commons.Infrastructure.Repos", "Board.Infrastructure.Repository\Boards.Commons.Infrastructure.Repos.csproj", "{15FEB348-D638-4A58-BC23-C4336B8214B6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Board.Infrastructure.Jwt", "Board.Infrastructure.Jwt\Board.Infrastructure.Jwt.csproj", "{BF0E4981-7CEF-4CF2-BE15-016400E7B285}"
 EndProject
@@ -19,13 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Application.Queries"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{779E1EC4-662F-4359-8782-D2303C57C16D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Domain.Contracts", "Boards.Domain.Contracts\Boards.Domain.Contracts.csproj", "{A1796C36-8BF6-4A62-A7C7-0F6593C6CC3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Commons.Domain.Contracts", "Boards.Domain.Contracts\Boards.Commons.Domain.Contracts.csproj", "{A1796C36-8BF6-4A62-A7C7-0F6593C6CC3D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Posts.API", "Boards.Posts.API\Boards.Posts.API.csproj", "{8367E036-FD03-4C56-AC10-8BF5D5355A9B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Posts.Application", "Boards.Posts.Application\Boards.Posts.Application.csproj", "{59748B95-C25A-4383-AA47-0256CE98CEC6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Infrastructure.Web", "Boards.Infrastructure.Web\Boards.Infrastructure.Web.csproj", "{98AA0436-6E1D-42D9-A22C-462E71460BD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Commons.Infrastructure.Web", "Boards.Infrastructure.Web\Boards.Commons.Infrastructure.Web.csproj", "{98AA0436-6E1D-42D9-A22C-462E71460BD2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Front", "Front", "{87BBA330-5A04-4FE3-9FB5-8F5444DA9EA0}"
 EndProject

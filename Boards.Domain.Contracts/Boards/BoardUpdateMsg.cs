@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using Board.Domain.DTO;
+using Boards.Commons.Domain.DTOs;
 
 namespace Boards.Domain.Contracts.Boards {
 	public record BoardUpdateMsg : AbstractMsg {

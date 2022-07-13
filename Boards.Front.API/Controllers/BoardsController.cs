@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Board.Domain.DTO;
-
 using Boards.Application.Queries.Boards;
+using Boards.Commons.Domain.DTOs;
 
 using MediatR;
 

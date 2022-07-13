@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 
-using Board.Domain.DTO;
-
 using Boards.Commons.Application;
 using Boards.Commons.Application.Services;
+using Boards.Commons.Domain.DTOs;
 using Boards.Domain.Contracts.Boards;
 
 using FluentValidation;

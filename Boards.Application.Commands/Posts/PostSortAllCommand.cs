@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Board.Domain.DTO.Posts;
-
 using Boards.Commons.Application;
+using Boards.Commons.Domain.DTOs.Posts;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;

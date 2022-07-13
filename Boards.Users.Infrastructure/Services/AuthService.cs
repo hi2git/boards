@@ -1,8 +1,7 @@
 ﻿using System;
 
-using Board.Domain.DTO.Jwt;
-using Board.Domain.DTO.Users;
-
+using Boards.Commons.Domain.DTOs.Jwt;
+using Boards.Commons.Domain.DTOs.Users;
 using Boards.Users.Application;
 using Boards.Users.Domain.Models;
 using Boards.Users.Domain.Repos;

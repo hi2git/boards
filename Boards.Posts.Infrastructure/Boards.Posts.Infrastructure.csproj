@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Board.Infrastructure.Repository\Boards.Common.Infrastructure.Repos.csproj" />
+    <ProjectReference Include="..\Board.Infrastructure.Repository\Boards.Commons.Infrastructure.Repos.csproj" />
     <ProjectReference Include="..\Boards.Posts.Domain\Boards.Posts.Domain.csproj" />
   </ItemGroup>
 

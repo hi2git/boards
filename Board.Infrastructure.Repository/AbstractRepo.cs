@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Board.Domain.Models;
 using Board.Domain.Repos;
+
+using Boards.Domain.Models;
 
 using Microsoft.EntityFrameworkCore;
 

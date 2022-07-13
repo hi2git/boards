@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Board.Domain.DTO.Posts;
-
 using Boards.Application.Commands.Posts;
 using Boards.Application.Queries.Posts;
+using Boards.Commons.Domain.DTOs.Posts;
 
 using MediatR;
 

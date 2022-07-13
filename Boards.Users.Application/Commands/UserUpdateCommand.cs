@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
-using Board.Domain.DTO.Users;
 using Board.Domain.Repos;
 
 using Boards.Domain.Contracts.Users;

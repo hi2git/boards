@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Board.Infrastructure.Repository\Boards.Common.Infrastructure.Repos.csproj" />
+    <ProjectReference Include="..\Board.Infrastructure.Repository\Boards.Commons.Infrastructure.Repos.csproj" />
     <ProjectReference Include="..\Boards.Users.Application\Boards.Users.Application.csproj" />
   </ItemGroup>
 

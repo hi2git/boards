@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Board.Domain.Models {
+namespace Boards.Domain.Models {
 
 	public abstract class Entity : Entity<Guid> {
 		protected Entity() { }

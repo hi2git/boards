@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Board.Domain.Models;
+using Boards.Domain.Models;
 
 namespace Boards.Posts.Domain.Models {
 	public class Post : Entity {

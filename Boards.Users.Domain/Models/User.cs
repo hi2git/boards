@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 
 using Board.Domain.Enums;
-using Board.Domain.Models;
+
+using Boards.Domain.Models;
 
 namespace Boards.Users.Domain.Models {
 	public class User : Nameable {

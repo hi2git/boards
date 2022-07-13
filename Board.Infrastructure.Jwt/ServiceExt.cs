@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Text;
 
-using Board.Domain.DTO.Jwt;
-
 using Board.Infrastructure.Jwt.Implementation;
 using Board.Infrastructure.Jwt.Middlewares;
 
 using Boards.Commons.Application.Services;
+using Boards.Commons.Domain.DTOs.Jwt;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;

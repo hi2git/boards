@@ -3,10 +3,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Board.Domain.DTO.Users;
-
 using Boards.Application.Commands.Auths;
 using Boards.Commons.Application;
+using Boards.Commons.Domain.DTOs.Users;
 using Boards.Domain.Contracts.Users;
 
 using FluentValidation;

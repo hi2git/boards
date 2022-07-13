@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using Board.Domain.DTO.Users;
+using Boards.Commons.Domain.DTOs.Users;
 
 namespace Boards.Domain.Contracts.Users {
 	public record UserCreateMsg : AbstractMsg {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Board.Domain.DTO.Jwt {
+namespace Boards.Commons.Domain.DTOs.Jwt {
 	public class JwtTokenDTO {
 
 		public string AccessToken { get; set; }

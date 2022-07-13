@@ -1,8 +1,7 @@
 ﻿using System;
 
-using Board.Domain.DTO.Images;
-
 using Boards.Commons.Application;
+using Boards.Commons.Domain.DTOs.Images;
 using Boards.Domain.Contracts.Images;
 
 using FluentValidation;

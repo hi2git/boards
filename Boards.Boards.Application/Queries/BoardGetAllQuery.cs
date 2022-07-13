@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
 
-using Board.Domain.DTO;
-
 using Boards.Boards.Domain.Repos;
+using Boards.Commons.Domain.DTOs;
 using Boards.Domain.Contracts.Boards;
 
 using FluentValidation;

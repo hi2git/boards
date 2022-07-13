@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 
+using Boards.Domain.Models;
+
 namespace Board.Domain.Models {
 	public class IntegrationEvent : Nameable {
 

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 
-using Board.Domain.DTO.Jwt;
-using Board.Domain.DTO.Users;
+using Boards.Commons.Domain.DTOs.Jwt;
+using Boards.Commons.Domain.DTOs.Users;
 
 namespace Boards.Domain.Contracts.Auths {
 	public record TokenGetMsg : AbstractMsg {

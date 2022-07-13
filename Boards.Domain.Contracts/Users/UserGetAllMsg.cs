@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Board.Domain.DTO;
+using Boards.Commons.Domain.DTOs;
 
 namespace Boards.Domain.Contracts.Users {
 	public record UserGetAllMsg : AbstractMsg { }

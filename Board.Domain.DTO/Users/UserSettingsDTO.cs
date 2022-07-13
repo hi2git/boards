@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Board.Domain.DTO.Users {
+namespace Boards.Commons.Domain.DTOs.Users {
 	public class UserSettingsDTO {
 
 		public string OldPassword { get; set; }

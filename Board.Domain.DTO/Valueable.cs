@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Board.Domain.DTO {
+namespace Boards.Commons.Domain.DTOs {
 	public class Valueable<T> {
 		public T Value { get; set; }
 	}

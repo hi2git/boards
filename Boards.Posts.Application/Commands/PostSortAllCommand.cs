@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 
-using Board.Domain.DTO.Posts;
-using Board.Domain.Models;
 using Board.Domain.Repos;
 
+using Boards.Commons.Domain.DTOs.Posts;
 using Boards.Domain.Contracts.Posts;
 using Boards.Posts.Domain.Models;
 using Boards.Posts.Domain.Repos;

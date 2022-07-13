@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using Board.Domain.DTO;
-
+using Boards.Commons.Domain.DTOs;
 using Boards.Domain.Contracts.Users;
 using Boards.Users.Domain.Models;
 using Boards.Users.Domain.Repos;
