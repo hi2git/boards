@@ -8,7 +8,7 @@ using Boards.Boards.Domain.Repos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Board.Infrastructure.Repository;
+using Boards.Common.Infrastructure.Repos;
 
 namespace Boards.Boards.Infrastructure {
 	public static class ServicesExt {

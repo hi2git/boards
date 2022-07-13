@@ -4,12 +4,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Board.Domain.Models;
+
 namespace Board.Domain.Repos {
-	public interface IRepo<T> where T : class {
-
-		//IQueryable<T> Query { get; }
-
-		//IQueryable<T> QueryAll { get; }
+	public interface IRepo<T> where T : Entity<Guid> {
 
 		/// <summary>Возвращает список всех сущностей</summary>
 		/// <returns>список всех сущностей</returns>
@@ -30,8 +28,6 @@ namespace Board.Domain.Repos {
 		/// <summary>Удаляет сущность из репозитория</summary>
 		/// <param name="entity">сущность для удаления</param>
 		Task Delete(T entity);
-
-		//Task UpdateManyToMany<TKey>(IEnumerable<T> currentItems, IEnumerable<T> newItems, Func<T, TKey> getKey);
 
 	}
 }

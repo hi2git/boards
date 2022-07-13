@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using Board.Infrastructure.Repository;
-
+using Boards.Common.Infrastructure.Repos;
 using Boards.Posts.Infrastructure;
 
 namespace Boards.Users.Infrastructure.Repos {

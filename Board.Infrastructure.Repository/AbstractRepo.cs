@@ -4,12 +4,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Board.Domain.Models;
 using Board.Domain.Repos;
 
 using Microsoft.EntityFrameworkCore;
 
 namespace Board.Infrastructure.Repository {
-	public abstract class AbstractRepo<T> : IRepo<T> where T : class {  // TODO: where T : Entity
+	public abstract class AbstractRepo<T> : IRepo<T> where T : Entity<Guid> { 
 		private readonly DbContext _context;
 
 		#region Ctors

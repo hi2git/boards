@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Board.Domain.DTO", "Board.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Board.Domain", "Board.Domain\Board.Domain.csproj", "{E833D56A-DE3F-40A2-9388-F3C4747CCFB5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Board.Infrastructure.Repository", "Board.Infrastructure.Repository\Board.Infrastructure.Repository.csproj", "{15FEB348-D638-4A58-BC23-C4336B8214B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Common.Infrastructure.Repos", "Board.Infrastructure.Repository\Boards.Common.Infrastructure.Repos.csproj", "{15FEB348-D638-4A58-BC23-C4336B8214B6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Board.Infrastructure.Jwt", "Board.Infrastructure.Jwt\Board.Infrastructure.Jwt.csproj", "{BF0E4981-7CEF-4CF2-BE15-016400E7B285}"
 EndProject
@@ -59,13 +59,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Boards.Infrastructur
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{452D5803-AA3F-4B35-80D5-F3FA3E60B5FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boards.Users.API", "Boards.Users.API\Boards.Users.API.csproj", "{C72E9357-B4D8-41D9-883E-99ECDEB252F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Users.API", "Boards.Users.API\Boards.Users.API.csproj", "{C72E9357-B4D8-41D9-883E-99ECDEB252F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boards.Users.Infrastructure", "Boards.Users.Infrastructure\Boards.Users.Infrastructure.csproj", "{681F6D50-6F8C-40AF-ABCD-EBC704DB4D10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Users.Infrastructure", "Boards.Users.Infrastructure\Boards.Users.Infrastructure.csproj", "{681F6D50-6F8C-40AF-ABCD-EBC704DB4D10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boards.Users.Domain", "Boards.Users.Domain\Boards.Users.Domain.csproj", "{D30E5CCE-6C4E-4129-B99E-5C48CC8AE398}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Users.Domain", "Boards.Users.Domain\Boards.Users.Domain.csproj", "{D30E5CCE-6C4E-4129-B99E-5C48CC8AE398}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boards.Users.Application", "Boards.Users.Application\Boards.Users.Application.csproj", "{D01D1E20-7886-4B78-988E-E6B9CFF50141}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boards.Users.Application", "Boards.Users.Application\Boards.Users.Application.csproj", "{D01D1E20-7886-4B78-988E-E6B9CFF50141}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

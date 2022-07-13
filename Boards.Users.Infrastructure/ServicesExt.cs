@@ -1,8 +1,8 @@
 ﻿using System;
 
 using Board.Domain.Repos;
-using Board.Infrastructure.Repository;
 
+using Boards.Common.Infrastructure.Repos;
 using Boards.Users.Application;
 using Boards.Users.Domain.Repos;
 using Boards.Users.Infrastructure.Repos;
