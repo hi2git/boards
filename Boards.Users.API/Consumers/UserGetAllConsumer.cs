@@ -1,16 +1,17 @@
-﻿using Boards.Domain.Contracts.Users;
+﻿using Boards.Commons.Application.Consumers;
+using Boards.Domain.Contracts.Users;
 using Boards.Users.Application.Queries;
-
-using MassTransit;
 
 using MediatR;
 
 namespace Boards.Users.API.Consumers {
-	public class UserGetAllConsumer : IConsumer<UserGetAllMsg> {
-		private readonly IMediator _mediator;
+	public class UserGetAllConsumer : AbstractGetConsumer<UserGetAllMsg, UserGetAllResponse> {
 
-		public UserGetAllConsumer(IMediator mediator) => _mediator = mediator;
+		public UserGetAllConsumer(IMediator mediator) : base(mediator) { }
 
-		public Task Consume(ConsumeContext<UserGetAllMsg> context) => _mediator.Send(new UserGetAllQuery(), context.CancellationToken);
+		protected override async Task<UserGetAllResponse> Handle(UserGetAllMsg item, CancellationToken token) {
+			var items = await this.Mediator.Send(new UserGetAllQuery(), token);
+			return new() { Items = items };
+		}
 	}
 }

@@ -6,7 +6,7 @@ using MassTransit;
 using MediatR;
 
 namespace Boards.Posts.API.Consumers {
-	public class BoardDeletedEventConsumer : IConsumer<BoardDeletedEvent> {
+	public class BoardDeletedEventConsumer : IConsumer<BoardDeletedEvent> {	// TODO: handle errors
 		private readonly IMediator _mediator;
 
 		public BoardDeletedEventConsumer(IMediator mediator) => _mediator = mediator;
