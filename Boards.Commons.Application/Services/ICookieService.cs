@@ -7,7 +7,7 @@ namespace Boards.Commons.Application.Services {
 
 		string AuthCookieName { get; }
 
-		void Add(JwtTokenResult token);
+		void Add(JwtTokenDTO token);
 
 		void Remove();
 

@@ -14,7 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace Boards.Users.Infrastructure.Services {
 	internal class TokenService : ITokenService {
 
-		public Task<JwtTokenResult> Generate(UserLoginDTO user, AuthSettings auth) {
+		public Task<JwtTokenDTO> Generate(UserLoginDTO user, AuthSettings auth) {
 			var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(auth.Secret));
 			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 			var expiration = TimeSpan.FromMinutes(auth.Lifetime);
@@ -31,7 +31,7 @@ namespace Boards.Users.Infrastructure.Services {
 
 			var accessToken = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-			return Task.FromResult(new JwtTokenResult {
+			return Task.FromResult(new JwtTokenDTO {
 				AccessToken = accessToken,
 				Expires = expiration
 			});

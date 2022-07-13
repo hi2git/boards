@@ -22,7 +22,7 @@ namespace Boards.Domain.Contracts.Auths {
 
 	public record TokenGetResponse : AbstractResponse {
 
-		public JwtTokenResult Token { get; set; }
+		public JwtTokenDTO Token { get; set; }
 
 	}
 }

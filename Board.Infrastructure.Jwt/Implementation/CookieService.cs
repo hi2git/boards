@@ -19,7 +19,7 @@ namespace Board.Infrastructure.Jwt.Implementation {
 
 		public string AuthCookieName => $"SID_{_auth.Issuer}";
 
-		public void Add(JwtTokenResult token) {
+		public void Add(JwtTokenDTO token) {
 			token = token ?? throw new ArgumentNullException(nameof(token));
 			_httpContextAccessor?.HttpContext?.Response?.Cookies?.Append(AuthCookieName, token.AccessToken, new CookieOptions { HttpOnly = true }); //MaxAge = token.Expires
 		}

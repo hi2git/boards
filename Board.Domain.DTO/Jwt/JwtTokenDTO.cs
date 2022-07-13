@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Board.Domain.DTO.Jwt {
-	public class JwtTokenResult {
+	public class JwtTokenDTO {
 
 		public string AccessToken { get; set; }
 

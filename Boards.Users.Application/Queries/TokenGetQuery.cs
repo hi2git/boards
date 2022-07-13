@@ -10,7 +10,7 @@ using FluentValidation;
 using MediatR;
 
 namespace Boards.Users.Application.Queries {
-	public record TokenGetQuery : TokenGetMsg, IRequest<JwtTokenResult> {
+	public record TokenGetQuery : TokenGetMsg, IRequest<JwtTokenDTO> {
 
 		public TokenGetQuery(TokenGetMsg msg) : base(msg.Item, msg.Auth) { }
 	}
@@ -32,11 +32,11 @@ namespace Boards.Users.Application.Queries {
 
 	}
 
-	internal class TokenGetQueryHandler : IRequestHandler<TokenGetQuery, JwtTokenResult> {
+	internal class TokenGetQueryHandler : IRequestHandler<TokenGetQuery, JwtTokenDTO> {
 		private readonly IAuthService _authSvc;
 
 		public TokenGetQueryHandler(IAuthService authSvc) => _authSvc = authSvc;
 
-		public Task<JwtTokenResult> Handle(TokenGetQuery request, CancellationToken token) => _authSvc.Login(request.Item, request.Auth, token);
+		public Task<JwtTokenDTO> Handle(TokenGetQuery request, CancellationToken token) => _authSvc.Login(request.Item, request.Auth, token);
 	}
 }
