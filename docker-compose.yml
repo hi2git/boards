@@ -39,4 +39,9 @@ services:
     build:
       context: .
       dockerfile: Boards.Boards.API/Dockerfile
+  boards.users:
+    image: ${DOCKER_REGISTRY-}boardsusers
+    build:
+      context: .
+      dockerfile: Boards.Users.API/Dockerfile
 

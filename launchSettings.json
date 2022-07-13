@@ -1,15 +1,19 @@
 {
-	"profiles": {
-		"Docker Compose": {
-			"commandName": "DockerCompose",
-			"composeLaunchServiceName": "boards.front",
-			"serviceActions": {
-				"boards.front": "StartDebugging",
-				"boards.posts": "StartDebugging"
-			},
-			"composeLaunchAction": "LaunchBrowser",
-			"commandVersion": "1.0",
-			"composeLaunchUrl": "{Scheme}://{ServiceIPAddress}{ServicePort}"
-		}
-	}
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "boards.front",
+      "composeLaunchUrl": "{Scheme}://{ServiceIPAddress}{ServicePort}",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "boards.front": "StartDebugging",
+        "boards.posts": "StartDebugging",
+        "boards.boards": "StartDebugging",
+        "boards.files": "StartDebugging",
+        "boards.users": "StartDebugging",
+        "rabbitmq": "StartWithoutDebugging"
+      }
+    }
+  }
 }

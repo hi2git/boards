@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 using Board.Domain.DTO.Users;
-using Board.Domain.Repos;
-using Board.Domain.Services;
+
+using Boards.Commons.Application;
+using Boards.Commons.Application.Services;
+using Boards.Domain.Contracts.Users;
 
 using FluentValidation;
 
 using MediatR;
 
 namespace Boards.Application.Commands.Users {
-	public class UserUpdateCommand : IRequest {
+	public record UserUpdateCommand : IRequest {
 
 		public UserUpdateCommand(UserSettingsDTO item) => this.Item = item;
 
@@ -32,34 +32,11 @@ namespace Boards.Application.Commands.Users {
 
 	}
 
-	internal class UserUpdateCommandHandler : IRequestHandler<UserUpdateCommand> {
+	internal class UserUpdateCommandHandler : AbstractHandler<UserUpdateCommand, UserUpdateMsg, UserUpdateResponse> {
 		private readonly IUserManager _userMgr;
-		private readonly IPasswordService _pwdService;
-		private readonly IUnitOfWork _unitOfWork;
-		private readonly IUserRepo _userRepo;
 
-		public UserUpdateCommandHandler(IUserManager userMgr, IPasswordService pwdService, IUnitOfWork unitOfWork, IUserRepo userRepo) {
-			_userMgr = userMgr;
-			_pwdService = pwdService;
-			_unitOfWork = unitOfWork;
-			_userRepo = userRepo;
-		}
+		public UserUpdateCommandHandler(IClient<UserUpdateMsg, UserUpdateResponse> client, IUserManager userMgr) : base(client) => _userMgr = userMgr;
 
-		public async Task<Unit> Handle(UserUpdateCommand request, CancellationToken token) {
-			var item = request?.Item ?? throw new ArgumentNullException(nameof(request));
-			//if (!item.IsPasswordChanged)
-			//	return;
-
-			var user = await _userRepo.Get(_userMgr.CurrentUserId, token);
-			var isOldRight = _pwdService.IsEqual(item.OldPassword, user.Password);
-			if (!isOldRight)
-				throw new ArgumentException("Старый пароль введен неверно");
-
-			user.Password = _pwdService.Hash(item.NewPassword);
-			await _userRepo.Update(user);
-			await _unitOfWork.Commit();
-
-			return Unit.Value;
-		}
+		protected override UserUpdateMsg GetMsg(UserUpdateCommand request) => new(_userMgr.CurrentUserId, request.Item);
 	}
 }

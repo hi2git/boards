@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Board.Application\Board.Application.csproj" />
     <ProjectReference Include="..\Boards.Commons.Application\Boards.Commons.Application.csproj" />
     <ProjectReference Include="..\Boards.Domain.Contracts\Boards.Domain.Contracts.csproj" />
   </ItemGroup>

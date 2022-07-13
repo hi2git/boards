@@ -23,3 +23,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Docker
     ports:
       - "8083:80"
+  boards.users:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    ports:
+      - "8084:80"

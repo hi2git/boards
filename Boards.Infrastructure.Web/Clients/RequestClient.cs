@@ -14,11 +14,12 @@ namespace Boards.Infrastructure.Web.Clients {
 		public RequestClient(IRequestClient<TMsg> client) => _client = client;
 
 		/// <inheritdoc/>
-		public async Task Send(TMsg msg, CancellationToken token) {
+		public async Task<TResponse> Send(TMsg msg, CancellationToken token) {
 			var response = await _client.GetResponse<TResponse>(msg, token);
 			var item = response.Message;
 			if (item.IsError)
 				throw new CommandException(item.Message);
+			return item;
 		}
 
 	}

@@ -5,26 +5,29 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Board.Domain.DTO;
-using Board.Domain.Models;
-using Board.Domain.Repos;
+
+using Boards.Domain.Contracts.Users;
 
 using FluentValidation;
+
+using MassTransit;
 
 using MediatR;
 
 namespace Boards.Application.Queries.Users {
-	public class UserGetAllQuery : IRequest<IEnumerable<IdNameDTO>> { }
+	public record UserGetAllQuery : UserGetAllMsg, IRequest<IEnumerable<IdNameDTO>> { }
 
 	public class UserGetAllQueryValidator : AbstractValidator<UserGetAllQuery> { }
 
 	internal class UserGetAllQueryHandler : IRequestHandler<UserGetAllQuery, IEnumerable<IdNameDTO>> {
-		private readonly IUserRepo _repo;
+		private readonly IRequestClient<UserGetAllMsg> _client;
 
-		public UserGetAllQueryHandler(IUserRepo repo) => _repo = repo;
+		public UserGetAllQueryHandler(IRequestClient<UserGetAllMsg> client) => _client = client;
 
-		public async Task<IEnumerable<IdNameDTO>> Handle(UserGetAllQuery request, CancellationToken token) =>
-			(await _repo.GetAll(token)).Select(this.Map);
+		public async Task<IEnumerable<IdNameDTO>> Handle(UserGetAllQuery request, CancellationToken token) {
+			var response = await _client.GetResponse<UserGetAllResponse>(request, token);
+			return response.Message.Items;
+		}
 
-		private IdNameDTO Map(User user) => new() { Id = user.Id, Name = user.Name };
 	}
 }

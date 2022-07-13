@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using Board.Infrastructure.Repository.Implementation;
+using Board.Infrastructure.Repository;
 
 namespace Boards.Posts.Infrastructure.Repos {
 	internal class UnitOfWork : AbstractUnitOfWork {

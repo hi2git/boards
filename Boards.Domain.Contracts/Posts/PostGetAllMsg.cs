@@ -14,6 +14,6 @@ namespace Boards.Domain.Contracts.Posts {
 	}
 
 	public record PostGetAllResponse : AbstractResponse {
-		public IEnumerable<PostDTO> Items { get; set; }
+		public IEnumerable<PostDTO> Items { get; set; } = Enumerable.Empty<PostDTO>();
 	}
 }

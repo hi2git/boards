@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Text;
 
-using Board.Application.Services;
-using Board.Domain.Services;
+using Board.Domain.DTO.Jwt;
+
 using Board.Infrastructure.Jwt.Implementation;
-using Board.Infrastructure.Jwt.Interfaces;
-using Board.Infrastructure.Jwt.Models;
+using Board.Infrastructure.Jwt.Middlewares;
+
+using Boards.Commons.Application.Services;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -17,21 +20,17 @@ namespace Board.Infrastructure.Jwt {
 			if (configuration == null)
 				return;
 
-			services.AddScoped();
 
-			var section = configuration.GetSection("authSettings");
-			var options = section.Get<AuthSettings>();
-			var jwtOptions = new JwtOptions(options.Audience, options.Issuer, options.Secret, options.Lifetime);
-			services.AddApiJwtAuthentication(jwtOptions);
-			services.Configure<AuthSettings>(section);
+			services.AddTransient<ICookieService, CookieService>();
+			services.AddTransient<IUserManager, UserManager>();
+
+			var authOptions = configuration.GetSection("authSettings").Get<AuthSettings>();
+
+			services.AddApiJwtAuthentication(authOptions);
+			services.Configure<AuthSettings>(configuration.GetSection("authSettings"));
 		}
 
-		private static IServiceCollection AddApiJwtAuthentication(this IServiceCollection services, JwtOptions tokenOptions) {
-			if (tokenOptions == null)
-				throw new ArgumentNullException($"{nameof(tokenOptions)} is a required parameter. Please make sure you've provided a valid instance with the appropriate values configured.");
-
-			services.AddScoped<ITokenService, TokenService>(_ => new TokenService(tokenOptions));
-
+		private static IServiceCollection AddApiJwtAuthentication(this IServiceCollection services, AuthSettings auth) {
 			services.AddAuthentication(options => {
 				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
 				options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -43,27 +42,20 @@ namespace Board.Infrastructure.Jwt {
 				options.TokenValidationParameters = new TokenValidationParameters {
 					ClockSkew = TimeSpan.Zero,
 					ValidateAudience = false,
-					ValidAudience = tokenOptions.Audience,
 					ValidateIssuer = false,
-					ValidIssuer = tokenOptions.Issuer,
-					IssuerSigningKey = tokenOptions.SigningKey,
 					ValidateIssuerSigningKey = true,
 					RequireExpirationTime = true,
-					ValidateLifetime = true
+					ValidateLifetime = true,
+					ValidAudience = auth.Audience,
+					ValidIssuer = auth.Issuer,
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(auth.Secret))
 				};
 			});
 
 			return services;
 		}
 
-		private static IServiceCollection AddScoped(this IServiceCollection services) {
-			services.AddTransient<ICookieService, CookieService>();
-			services.AddTransient<IAuthService, AuthService>();
-			services.AddTransient<IPasswordService, PasswordService>();
-			services.AddTransient<IUserManager, UserManager>();
-
-			return services;
-		}
+		public static IApplicationBuilder UseSecureJwt(this IApplicationBuilder builder) => builder.UseMiddleware<JwtMiddleware>();
 
 	}
 }

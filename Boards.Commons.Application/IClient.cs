@@ -8,7 +8,7 @@ namespace Boards.Commons.Application {
 
 		//Task<TResponse> Get(TMsg msg, CancellationToken token);
 
-		Task Send(TMsg msg, CancellationToken token);
+		Task<TResponse> Send(TMsg msg, CancellationToken token);
 
 	}
 }

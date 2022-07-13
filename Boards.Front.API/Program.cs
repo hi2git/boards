@@ -1,13 +1,11 @@
 using System;
 
 using Board.Infrastructure.Jwt;
-using Board.Infrastructure.Repository;
 
 using Boards.Application.Commands.Boards;
 using Boards.Application.Queries.Boards;
 using Boards.Infrastructure.Web;
 
-using BotDetect.Web;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,18 +26,11 @@ var config = builder.Configuration;
 var env = builder.Environment;
 
 services.AddHttpContextAccessor();
-//services.Configure<KestrelServerOptions>(options =>
-//{
-//	options.AllowSynchronousIO = true;
-//});
-
-services
-	.AddInfrastructureRepos(config)
-	.AddInfrastructureWeb(assemblies: assemblies);
+services.AddInfrastructureWeb(assemblies: assemblies);
 
 services.AddJwtAuth(config);
 services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/build");
-services.AddMvc(); // opts => opts.EnableEndpointRouting = false
+//services.AddMvc(); 
 
 
 var app = builder.Build();
@@ -59,8 +50,6 @@ app.UseCookiePolicy(new CookiePolicyOptions {
 });
 app.UseSecureJwt();
 app.UseAuthentication();
-
-//app.UseSimpleCaptcha(config.GetSection("BotDetect"));
 
 app.UseAuthorization();
 

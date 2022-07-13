@@ -19,7 +19,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Boards.Boards.Application\Boards.Boards.Application.csproj" />
     <ProjectReference Include="..\Boards.Boards.Infrastructure\Boards.Boards.Infrastructure.csproj" />
-    <ProjectReference Include="..\Boards.Commons.Application\Boards.Commons.Application.csproj" />
     <ProjectReference Include="..\Boards.Infrastructure.Web\Boards.Infrastructure.Web.csproj" />
   </ItemGroup>
 

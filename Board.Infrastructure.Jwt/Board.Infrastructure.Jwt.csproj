@@ -11,9 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Board.Application\Board.Application.csproj" />
     <ProjectReference Include="..\Board.Domain.DTO\Board.Domain.DTO.csproj" />
     <ProjectReference Include="..\Board.Domain\Board.Domain.csproj" />
+    <ProjectReference Include="..\Boards.Commons.Application\Boards.Commons.Application.csproj" />
   </ItemGroup>
 
 </Project>

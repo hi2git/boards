@@ -5,8 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Board.Domain.DTO;
-using Board.Domain.Services;
 
+using Boards.Commons.Application.Services;
 using Boards.Domain.Contracts.Boards;
 
 using FluentValidation;
