@@ -10,7 +10,7 @@ namespace Boards.Domain.Contracts.Users {
 
 		public UserCreateMsg(LoginDTO item) => this.Item = item;
 
-		public LoginDTO Item { get; }
+		public LoginDTO Item { get; set;  }
 	}
 
 	public record UserCreateResponse : AbstractResponse { }

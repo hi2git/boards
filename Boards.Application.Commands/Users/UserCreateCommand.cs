@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Board.Domain.DTO.Users;
 
+using Boards.Application.Commands.Auths;
 using Boards.Commons.Application;
 using Boards.Domain.Contracts.Users;
 
@@ -29,8 +32,11 @@ namespace Boards.Application.Commands.Users {
 	}
 
 	internal class UserCreateCommandHandler : AbstractHandler<UserCreateCommand, UserCreateMsg, UserCreateResponse> {
+		private readonly IMediator _mediator;
 
-		public UserCreateCommandHandler(IClient<UserCreateMsg, UserCreateResponse> client) : base(client) { }
+		public UserCreateCommandHandler(IClient<UserCreateMsg, UserCreateResponse> client, IMediator mediator) : base(client) => _mediator = mediator;
+
+		protected override Task HandleResponse(UserCreateResponse response, UserCreateCommand request, CancellationToken token) => _mediator.Send(new LoginCommand(request.Item), token);
 
 	}
 }

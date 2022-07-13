@@ -21,9 +21,12 @@ namespace Boards.Application.Commands {
 
 		public async Task<Unit> Handle(TRequest request, CancellationToken token) {
 			var msg = this.GetMsg(request);
-			await _client.Send(msg, token);// GetResponse<TResponse>(request, token);
+			var response = await _client.Send(msg, token);
+			await this.HandleResponse(response, request, token);
 			return Unit.Value;
 		}
+
+		protected virtual Task HandleResponse(TResponse response, TRequest request, CancellationToken token) => Task.CompletedTask;
 
 		protected virtual TMsg GetMsg(TRequest request) => request is TMsg msg 
 			? msg 

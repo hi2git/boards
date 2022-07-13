@@ -30,7 +30,6 @@ namespace Boards.Application.Commands.Auths {
 			RuleFor(n => n.Item).NotEmpty();
 			RuleFor(n => n.Item.Login).NotEmpty();
 			RuleFor(n => n.Item.Password).NotEmpty();
-			RuleFor(n => n.Item.Email).Empty();
 		}
 
 	}
