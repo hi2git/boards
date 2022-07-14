@@ -32,10 +32,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Board.Domain.DTO\Boards.Commons.Domain.DTOs.csproj" />
-    <ProjectReference Include="..\Board.Infrastructure.Jwt\Board.Infrastructure.Jwt.csproj" />
     <ProjectReference Include="..\Board.Infrastructure.Repository\Boards.Commons.Infrastructure.Repos.csproj" />
-    <ProjectReference Include="..\Boards.Application.Commands\Boards.Application.Commands.csproj" />
-    <ProjectReference Include="..\Boards.Application.Queries\Boards.Application.Queries.csproj" />
+    <ProjectReference Include="..\Boards.Front.Application.Commands\Boards.Front.Application.Commands.csproj" />
+    <ProjectReference Include="..\Boards.Front.Application.Queries\Boards.Front.Application.Queries.csproj" />
+    <ProjectReference Include="..\Boards.Front.Infrastructure.Jwt\Boards.Front.Infrastructure.Jwt.csproj" />
     <ProjectReference Include="..\Boards.Infrastructure.Web\Boards.Commons.Infrastructure.Web.csproj" />
   </ItemGroup>
 

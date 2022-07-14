@@ -1,9 +1,8 @@
 using System;
 
-using Board.Infrastructure.Jwt;
-
-using Boards.Application.Commands.Boards;
-using Boards.Application.Queries.Boards;
+using Boards.Front.Application.Commands.Boards;
+using Boards.Front.Application.Queries.Boards;
+using Boards.Front.Infrastructure.Jwt;
 using Boards.Infrastructure.Web;
 
 
