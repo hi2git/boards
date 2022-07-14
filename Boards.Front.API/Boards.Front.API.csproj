@@ -31,12 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Board.Domain.DTO\Boards.Commons.Domain.DTOs.csproj" />
-    <ProjectReference Include="..\Board.Infrastructure.Repository\Boards.Commons.Infrastructure.Repos.csproj" />
+    <ProjectReference Include="..\Boards.Commons.Infrastructure.Web\Boards.Commons.Infrastructure.Web.csproj" />
     <ProjectReference Include="..\Boards.Front.Application.Commands\Boards.Front.Application.Commands.csproj" />
     <ProjectReference Include="..\Boards.Front.Application.Queries\Boards.Front.Application.Queries.csproj" />
     <ProjectReference Include="..\Boards.Front.Infrastructure.Jwt\Boards.Front.Infrastructure.Jwt.csproj" />
-    <ProjectReference Include="..\Boards.Infrastructure.Web\Boards.Commons.Infrastructure.Web.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

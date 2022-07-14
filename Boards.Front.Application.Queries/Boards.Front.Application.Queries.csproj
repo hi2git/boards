@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Boards.Commons.Application\Boards.Commons.Application.csproj" />
-    <ProjectReference Include="..\Boards.Domain.Contracts\Boards.Commons.Domain.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

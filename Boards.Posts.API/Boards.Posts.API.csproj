@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Boards.Infrastructure.Web\Boards.Commons.Infrastructure.Web.csproj" />
+    <ProjectReference Include="..\Boards.Commons.Infrastructure.Web\Boards.Commons.Infrastructure.Web.csproj" />
     <ProjectReference Include="..\Boards.Posts.Application\Boards.Posts.Application.csproj" />
     <ProjectReference Include="..\Boards.Posts.Infrastructure\Boards.Posts.Infrastructure.csproj" />
   </ItemGroup>

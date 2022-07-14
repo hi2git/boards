@@ -11,8 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Board.Domain.DTO\Boards.Commons.Domain.DTOs.csproj" />
-    <ProjectReference Include="..\Board.Domain\Boards.Commons.Domain.csproj" />
     <ProjectReference Include="..\Boards.Commons.Application\Boards.Commons.Application.csproj" />
   </ItemGroup>
 
