@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Boards.Application.Queries.Boards;
+using Boards.Front.Application.Queries.Boards;
 using Boards.Commons.Domain.DTOs;
 
 using MediatR;

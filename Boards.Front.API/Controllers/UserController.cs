@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using Boards.Application.Commands.Users;
+using Boards.Front.Application.Commands.Users;
 using Boards.Commons.Domain.DTOs.Users;
 
 using MediatR;

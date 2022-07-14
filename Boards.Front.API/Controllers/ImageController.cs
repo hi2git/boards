@@ -2,8 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-using Boards.Application.Commands.Images;
-using Boards.Application.Queries.Images;
+using Boards.Front.Application.Commands.Images;
+using Boards.Front.Application.Queries.Images;
 using Boards.Commons.Domain.DTOs.Images;
 
 using MediatR;

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using Board.Domain.Constants;
 
-using Boards.Application.Queries.Users;
+using Boards.Front.Application.Queries.Users;
 using Boards.Commons.Domain.DTOs;
 
 using MediatR;
