@@ -13,7 +13,7 @@ var assemblies = new[] { typeof(BoardGetAllQuery).Assembly };
 
 services
 	.AddRepos(builder.Configuration)
-	.AddInfrastructureWeb(assemblies: assemblies, n => n.AddConsumers(typeof(BoardGetAllConsumer).Assembly))
+	.AddWeb(builder.Logging, assemblies, n => n.AddConsumers(typeof(BoardGetAllConsumer).Assembly))
 ;
 
 var app = builder.Build();

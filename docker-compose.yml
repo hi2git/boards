@@ -23,6 +23,7 @@ services:
     mem_limit: 3000m
     environment:
         - KIBANA_PASSWORD=12345678!
+        - LOGSTASH_PASSWORD=12345678!
         - xpack.security.transport.ssl.enabled=false
         - xpack.security.http.ssl.enabled=false
         - xpack.security.enabled=false
@@ -31,13 +32,23 @@ services:
   kibana:
     image: kibana:8.3.2
     container_name: kibana
+    depends_on:
+      - elastic
     environment:
         - server.host="localhost"
         - elasticsearch.username=kibana_system
         - ELASTICSEARCH_PASSWORD=12345678!
         - ELASTICSEARCH_HOSTS=http://elastic:9200
+
+  logstash:
+    image: logstash:8.3.2
+    container_name: logstash
     depends_on:
       - elastic
+    environment:
+        - server.host="localhost"
+    volumes:
+        - ./logstash/:/usr/share/logstash/pipeline/
 
   boards.front:
     image: ${DOCKER_REGISTRY-}boardsfront
@@ -46,6 +57,7 @@ services:
       dockerfile: Boards.Front.API\Dockerfile
     depends_on:
       - rabbitmq
+      - logstash
       - boards.users
       - boards.boards
       - boards.posts

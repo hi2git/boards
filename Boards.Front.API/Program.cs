@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-
 var  assemblies = new[] {
 	typeof(BoardCreateCommand).Assembly,
 	typeof(BoardGetAllQuery).Assembly,
@@ -21,20 +20,16 @@ var  assemblies = new[] {
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
-var config = builder.Configuration;
-var env = builder.Environment;
 
 services.AddHttpContextAccessor();
-services.AddInfrastructureWeb(assemblies: assemblies);
+services.AddWeb(builder.Logging, assemblies: assemblies);
 
-services.AddJwtAuth(config);
+services.AddJwtAuth(builder.Configuration);
 services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/build");
-//services.AddMvc(); 
-
 
 var app = builder.Build();
 
-if (env.IsDevelopment()) {
+if (builder.Environment.IsDevelopment()) {
 	app.UseDeveloperExceptionPage();
 }
 
@@ -56,7 +51,7 @@ app.UseAuthorization();
 app.UseSpa(spa => {
 	spa.Options.SourcePath = "ClientApp";
 
-	if (env.IsDevelopment()) {
+	if (builder.Environment.IsDevelopment()) {
 		spa.UseReactDevelopmentServer(npmScript: "start");
 	}
 });

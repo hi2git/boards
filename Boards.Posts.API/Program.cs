@@ -14,7 +14,7 @@ var assemblies = new[] { typeof(PostGetAllQuery).Assembly };
 
 services
 	.AddRepos(config)
-	.AddInfrastructureWeb(assemblies: assemblies, n => n.AddConsumers(typeof(PostGetAllConsumer).Assembly))
+	.AddWeb(builder.Logging, assemblies, n => n.AddConsumers(typeof(PostGetAllConsumer).Assembly))
 ;
 
 var app = builder.Build();

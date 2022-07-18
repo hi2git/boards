@@ -17,11 +17,9 @@ services.Configure<AppSettings>(config.GetSection("appSettings"));
 var assemblies = new[] { typeof(ImageGetQuery).Assembly };
 services
 	.AddInfrastructureFiles()
-	.AddInfrastructureWeb(assemblies: assemblies, n => n.AddConsumers(typeof(ImageGetConsumer).Assembly));
-
+	.AddWeb(builder.Logging, assemblies, n => n.AddConsumers(typeof(ImageGetConsumer).Assembly));
 
 services.AddControllers();
-
 
 
 var app = builder.Build();

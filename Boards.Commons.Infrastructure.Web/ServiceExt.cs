@@ -15,11 +15,21 @@ using MediatR;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+
+using Serilog;
+
 
 namespace Boards.Infrastructure.Web {
 	public static  class ServiceExt {
 
-		public static IServiceCollection AddInfrastructureWeb(this IServiceCollection services, Assembly[] assemblies, Action<IBusRegistrationConfigurator>? register = null) {
+		public static IServiceCollection AddWeb(this IServiceCollection services, ILoggingBuilder logging, Assembly[] assemblies, Action<IBusRegistrationConfigurator>? register = null) {
+			var log = new LoggerConfiguration()
+				 .WriteTo.Http("http://logstash:28080", null)
+				 .CreateLogger();
+
+			logging.AddSerilog(log);
+
 			services.AddMediatR(assemblies);
 			services.AddValidatorsFromAssemblies(assemblies);
 			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
