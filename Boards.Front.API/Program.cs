@@ -13,19 +13,20 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-var  assemblies = new[] {
-	typeof(BoardCreateCommand).Assembly,
-	typeof(BoardGetAllQuery).Assembly,
+var  handlers = new[] {
+	typeof(BoardCreateCommand),
+	typeof(BoardGetAllQuery),
 };
 
 var builder = WebApplication.CreateBuilder(args);
-var services = builder.Services;
-builder.AddWeb(assemblies: assemblies, "Front");
+builder.Configure("Front", handlers);
 
+var services = builder.Services;
 services.AddHttpContextAccessor();
 
 services.AddJwtAuth(builder.Configuration);
 services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/build");
+
 
 var app = builder.Build();
 

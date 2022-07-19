@@ -2,22 +2,13 @@ using Boards.Infrastructure.Web;
 using Boards.Users.API.Consumers;
 using Boards.Users.Application.Queries;
 
-using MassTransit;
 using Boards.Posts.Infrastructure;
 
+var handlers = new[] { typeof(UserGetAllQuery) };
+
 var builder = WebApplication.CreateBuilder(args);
-
-
-var services = builder.Services;
-var config = builder.Configuration;
-var assemblies = new[] { typeof(UserGetAllQuery).Assembly };
-
-builder.AddWeb(assemblies, "Users", n => n.AddConsumers(typeof(UserGetAllConsumer).Assembly));
-
-services
-	.AddRepos(config)
-	//.AddWeb(builder.Logging, assemblies, "Users", n => n.AddConsumers(typeof(UserGetAllConsumer).Assembly))
-;
+builder.Configure("Users", handlers, typeof(UserGetAllConsumer));
+builder.Services.AddRepos(builder.Configuration);
 
 var app = builder.Build();
 

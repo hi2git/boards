@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 
 using Boards.Commons.Application;
 using Boards.Infrastructure.Web.Clients;
@@ -14,7 +13,6 @@ using MediatR;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 using Serilog;
 using Serilog.Exceptions;
@@ -22,8 +20,7 @@ using Serilog.Exceptions;
 namespace Boards.Infrastructure.Web {
 	public static  class ServiceExt {
 
-		//public static IServiceCollection AddWeb(this IServiceCollection services, ILoggingBuilder logging, Assembly[] assemblies, string name,  Action<IBusRegistrationConfigurator>? register = null) {
-		public static WebApplicationBuilder AddWeb(this WebApplicationBuilder builder, Assembly[] assemblies, string name, Action<IBusRegistrationConfigurator>? register = null) {
+		public static WebApplicationBuilder Configure(this WebApplicationBuilder builder, string name, Type[] handlers, params Type[] consumers) {
 			var services = builder.Services;
 			var logging = builder.Logging;
 			
@@ -38,6 +35,7 @@ namespace Boards.Infrastructure.Web {
 
 			logging.AddSerilog(log);
 
+			var assemblies = handlers.Select(n => n.Assembly).ToArray();
 			services.AddMediatR(assemblies);
 			services.AddValidatorsFromAssemblies(assemblies);
 			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
@@ -48,7 +46,10 @@ namespace Boards.Infrastructure.Web {
 			services.AddHealthChecks();
 
 			services.AddMassTransit(n => {
-				register?.Invoke(n);
+				//register?.Invoke(n);
+				if (consumers?.Any() == true) {
+					n.AddConsumers(consumers.Select(n => n.Assembly).ToArray());
+				}
 
 				n.UsingRabbitMq((context, cfg) => {
 					cfg.Host("rabbitmq", "/", x => { x.Username("rabbitmq"); x.Password("rabbitmq"); });
