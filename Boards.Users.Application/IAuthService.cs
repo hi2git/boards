@@ -7,9 +7,9 @@ using Boards.Users.Domain.Models;
 namespace Boards.Users.Application {
 	public interface IAuthService {
 
-		Task<JwtTokenDTO> Login(LoginDTO dto, AuthSettings auth, CancellationToken token);
+		Task<JwtTokenDTO> GetToken(LoginDTO dto, AuthSettings auth, CancellationToken token);
 
-		Task<JwtTokenDTO> Login(User user, AuthSettings auth);
+		Task<JwtTokenDTO> GetToken(User user, AuthSettings auth);
 
 	}
 }

@@ -36,6 +36,6 @@ namespace Boards.Users.Application.Queries {
 
 		public TokenGetQueryHandler(IAuthService authSvc) => _authSvc = authSvc;
 
-		public Task<JwtTokenDTO> Handle(TokenGetQuery request, CancellationToken token) => _authSvc.Login(request.Item, request.Auth, token);
+		public Task<JwtTokenDTO> Handle(TokenGetQuery request, CancellationToken token) => _authSvc.GetToken(request.Item, request.Auth, token);
 	}
 }

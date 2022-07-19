@@ -7,8 +7,8 @@ using Boards.Domain.Contracts.Boards;
 using MediatR;
 
 namespace Boards.Boards.API.Consumers {
-	public class BoardCreateConsumer : AbstractConsumer<BoardCreateMsg, BoardCreateResponse> {
-		public BoardCreateConsumer(IMediator mediator, IEventRepo repo) : base(mediator, repo) { }
+	public class BoardCreateConsumer : AbstractCommandConsumer<BoardCreateMsg, BoardCreateResponse> {
+		public BoardCreateConsumer(IMediator mediator, IEventRepo repo, ILogger<BoardCreateConsumer> log) : base(mediator, repo, log) { }
 
 		protected override Task Handle(BoardCreateMsg item, CancellationToken token) => this.Mediator.Send(new BoardCreateCommand(item), token);
 	}

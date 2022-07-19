@@ -34,36 +34,42 @@ namespace Boards.Infrastructure.Web.Middlewares {
 				_logger.LogDebug($"Cancelled operation: {e.Message}");
 			}
 			catch (Exception ex) {
-				_logger.LogError($"Something went wrong: {ex}");
+				//_logger.LogError(ex, $"Something went wrong:");
 				await HandleExceptionAsync(httpContext, ex);
 				throw;
 			}
 		}
 
-		private static Task HandleExceptionAsync(HttpContext context, Exception exception) {
+		private Task HandleExceptionAsync(HttpContext context, Exception ex) {
 			context.Response.ContentType = "application/json";
 
 			context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-			var message = $"Внутренняя ошибка сервера: {exception.Message}";
+			var message = $"Внутренняя ошибка сервера: {ex.Message}";
 
-			switch (exception) {
+			switch (ex) {
 				case ValidationException ve:
+					_logger.LogInformation(ex, "Validation message");
 					context.Response.StatusCode = (int)HttpStatusCode.NotAcceptable;
 					message = ve.Message;
 					break;
 				case ArgumentException ae:
+					_logger.LogInformation(ex, "Argument message");
 					context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 					message = ae.Message;
 					break;
 				case MassTransit.RequestTimeoutException:
+					_logger.LogError(ex, $"Request error");
 					context.Response.StatusCode = (int)HttpStatusCode.RequestTimeout;
 					message = $"Сервис временно недоступен. Попробуйте повторить попытку позже";
 					break;
 				case MassTransit.MassTransitException ce:
+					_logger.LogError(ex, $"MassTransit error");
 					context.Response.StatusCode = (int)HttpStatusCode.ServiceUnavailable;
 					message = $"Невозможно выполнить запрос: {ce.Message}";
 					break;
-
+				default:
+					_logger.LogError(ex, $"Something went wrong:");
+					break;
 			}
 
 			var result = JsonSerializer.Serialize(new { message }); //.SerializeObject(new { message });

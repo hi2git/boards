@@ -12,12 +12,15 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var config = builder.Configuration;
 
-services.Configure<AppSettings>(config.GetSection("appSettings"));
+//services.Configure<AppSettings>(config.GetSection("appSettings"));
 
 var assemblies = new[] { typeof(ImageGetQuery).Assembly };
+
+builder.AddWeb(assemblies, "Files", n => n.AddConsumers(typeof(ImageGetConsumer).Assembly));
+
 services
-	.AddInfrastructureFiles()
-	.AddWeb(builder.Logging, assemblies, n => n.AddConsumers(typeof(ImageGetConsumer).Assembly));
+	.AddInfrastructureFiles();
+	//.AddWeb(builder.Logging, assemblies, "Files", n => n.AddConsumers(typeof(ImageGetConsumer).Assembly));
 
 services.AddControllers();
 

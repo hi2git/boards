@@ -7,9 +7,9 @@ using Boards.Posts.Application.Commands;
 using MediatR;
 
 namespace Boards.Posts.API.Consumers {
-	public class PostSortAllConsumer : AbstractConsumer<PostSortAllMsg, PostSortedResponse> {
+	public class PostSortAllConsumer : AbstractCommandConsumer<PostSortAllMsg, PostSortedResponse> {
 
-		public PostSortAllConsumer(IMediator mediator, IEventRepo repo) : base(mediator, repo) { }
+		public PostSortAllConsumer(IMediator mediator, IEventRepo repo, ILogger<PostSortAllConsumer> log) : base(mediator, repo, log) { }
 
 		protected override Task Handle(PostSortAllMsg item, CancellationToken token) => this.Mediator.Send(new PostSortAllCommand(item), token);  //TODO: drop cache // TODO: skip doubles
 

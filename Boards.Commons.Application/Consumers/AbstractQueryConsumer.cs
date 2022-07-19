@@ -8,13 +8,19 @@ using MassTransit;
 
 using MediatR;
 
+using Microsoft.Extensions.Logging;
+
 namespace Boards.Commons.Application.Consumers {
-	public abstract class AbstractGetConsumer<TMsg, TResponse> : IConsumer<TMsg> where TMsg : class where TResponse : IResponse, new() {
+	public abstract class AbstractQueryConsumer<TMsg, TResponse> : IConsumer<TMsg> where TMsg : class where TResponse : IResponse, new() {
+		private readonly ILogger _log;
 
-		public AbstractGetConsumer(IMediator mediator) => this.Mediator = mediator;
-
+		public AbstractQueryConsumer(IMediator mediator, ILogger log) {
+			this.Mediator = mediator;
+			_log = log;
+		}
 
 		public async Task Consume(ConsumeContext<TMsg> context) {
+			_log.LogDebug($"Consuming query {typeof(TMsg).Name} - {context.MessageId}...");
 			var response = await this.TryConsume(context.Message, context.CancellationToken);
 			await context.RespondAsync(response);
 		}
@@ -29,6 +35,7 @@ namespace Boards.Commons.Application.Consumers {
 				return await this.Handle(item, token);
 			}
 			catch (Exception e) {
+				_log.LogError(e, "Unhandled error");
 				return new TResponse() { Message = e.Message };
 			}
 		}

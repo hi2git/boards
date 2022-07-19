@@ -20,9 +20,9 @@ var  assemblies = new[] {
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
+builder.AddWeb(assemblies: assemblies, "Front");
 
 services.AddHttpContextAccessor();
-services.AddWeb(builder.Logging, assemblies: assemblies);
 
 services.AddJwtAuth(builder.Configuration);
 services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/build");

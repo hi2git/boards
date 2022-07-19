@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -18,15 +17,24 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using Serilog;
-
+using Serilog.Exceptions;
 
 namespace Boards.Infrastructure.Web {
 	public static  class ServiceExt {
 
-		public static IServiceCollection AddWeb(this IServiceCollection services, ILoggingBuilder logging, Assembly[] assemblies, Action<IBusRegistrationConfigurator>? register = null) {
+		//public static IServiceCollection AddWeb(this IServiceCollection services, ILoggingBuilder logging, Assembly[] assemblies, string name,  Action<IBusRegistrationConfigurator>? register = null) {
+		public static WebApplicationBuilder AddWeb(this WebApplicationBuilder builder, Assembly[] assemblies, string name, Action<IBusRegistrationConfigurator>? register = null) {
+			var services = builder.Services;
+			var logging = builder.Logging;
+			
 			var log = new LoggerConfiguration()
-				 .WriteTo.Http("http://logstash:28080", null)
-				 .CreateLogger();
+				.ReadFrom.Configuration(builder.Configuration)
+				.WriteTo.Http("http://logstash:28080", null)   // TODO: configure logger
+				.Enrich.FromLogContext()
+				.Enrich.WithExceptionDetails()
+				.Enrich.WithProperty("CorellationId", Guid.NewGuid())
+				.Enrich.WithProperty("Service", name)
+				.CreateLogger();
 
 			logging.AddSerilog(log);
 
@@ -40,7 +48,6 @@ namespace Boards.Infrastructure.Web {
 			services.AddHealthChecks();
 
 			services.AddMassTransit(n => {
-				//if (consumers.Any() == true) n.AddConsumers(consumers);
 				register?.Invoke(n);
 
 				n.UsingRabbitMq((context, cfg) => {
@@ -55,7 +62,7 @@ namespace Boards.Infrastructure.Web {
 
 			services.AddTransient(typeof(IClient<,>), typeof(RequestClient<,>));
 
-			return services;
+			return builder;
 		}
 
 		public static WebApplication UseInfrastructureWeb(this WebApplication app) {

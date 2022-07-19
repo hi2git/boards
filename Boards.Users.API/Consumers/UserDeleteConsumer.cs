@@ -7,8 +7,8 @@ using Boards.Users.Application.Commands;
 using MediatR;
 
 namespace Boards.Users.API.Consumers {
-	public class UserDeleteConsumer : AbstractConsumer<UserDeleteMsg, UserDeleteResponse> {
-		public UserDeleteConsumer(IMediator mediator, IEventRepo eventRepo) : base(mediator, eventRepo) { }
+	public class UserDeleteConsumer : AbstractCommandConsumer<UserDeleteMsg, UserDeleteResponse> {
+		public UserDeleteConsumer(IMediator mediator, IEventRepo eventRepo, ILogger<UserDeleteConsumer> log) : base(mediator, eventRepo, log) { }
 
 		protected override Task Handle(UserDeleteMsg item, CancellationToken token) => this.Mediator.Send(new UserDeleteCommand(item), token);
 	}

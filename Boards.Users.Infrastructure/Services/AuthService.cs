@@ -18,16 +18,16 @@ namespace Boards.Users.Infrastructure.Services {
 			_tokenService = tokenService;
 		}
 
-		public async Task<JwtTokenDTO> Login(LoginDTO dto, AuthSettings auth, CancellationToken token) {
+		public async Task<JwtTokenDTO> GetToken(LoginDTO dto, AuthSettings auth, CancellationToken token) {
 			var entity = await _userRepo.Get(dto.Login, token) ?? throw new ArgumentException("Некорректное имя пользователя или пароль");
 
 			if (!_userService.IsEqual(dto.Password, entity.Password))
 				throw new ArgumentException($"Некорректное имя пользователя или пароль");
 
-			return await this.Login(entity, auth);
+			return await this.GetToken(entity, auth);
 		}
 
-		public Task<JwtTokenDTO> Login(User user, AuthSettings auth) {
+		public Task<JwtTokenDTO> GetToken(User user, AuthSettings auth) {
 			var dto = Map(user);
 			return _tokenService.Generate(dto, auth);
 		}

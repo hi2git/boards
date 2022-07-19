@@ -7,9 +7,9 @@ using Boards.Posts.Application.Commands;
 using MediatR;
 
 namespace Boards.Posts.API.Consumers {
-	public class PostUpdateConsumer : AbstractConsumer<PostUpdateMsg, PostUpdateResponse> {
+	public class PostUpdateConsumer : AbstractCommandConsumer<PostUpdateMsg, PostUpdateResponse> {
 
-		public PostUpdateConsumer(IMediator mediator, IEventRepo repo) : base(mediator, repo) { }
+		public PostUpdateConsumer(IMediator mediator, IEventRepo repo, ILogger<PostUpdateConsumer> log) : base(mediator, repo, log) { }
 
 		protected override Task Handle(PostUpdateMsg item, CancellationToken token) => this.Mediator.Send(new PostUpdateCommand(item), token);    //TODO: drop cache
 

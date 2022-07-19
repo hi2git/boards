@@ -12,9 +12,11 @@ var services = builder.Services;
 var config = builder.Configuration;
 var assemblies = new[] { typeof(UserGetAllQuery).Assembly };
 
+builder.AddWeb(assemblies, "Users", n => n.AddConsumers(typeof(UserGetAllConsumer).Assembly));
+
 services
 	.AddRepos(config)
-	.AddWeb(builder.Logging, assemblies, n => n.AddConsumers(typeof(UserGetAllConsumer).Assembly))
+	//.AddWeb(builder.Logging, assemblies, "Users", n => n.AddConsumers(typeof(UserGetAllConsumer).Assembly))
 ;
 
 var app = builder.Build();

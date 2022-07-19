@@ -1,19 +1,17 @@
-﻿using Boards.Domain.Contracts.Images;
+﻿using Boards.Commons.Application.Consumers;
+using Boards.Domain.Contracts.Images;
 using Boards.Files.Application.Commands;
-
-using MassTransit;
 
 using MediatR;
 
 namespace Boards.Files.API.Consumers {
-	public class ImageGetConsumer : IConsumer<ImageGetMsg> {
-		private readonly IMediator _mediator;
+	public class ImageGetConsumer : AbstractQueryConsumer<ImageGetMsg, ImageGetResponse> {
 
-		public ImageGetConsumer(IMediator mediator) => _mediator = mediator;
+		public ImageGetConsumer(IMediator mediator, ILogger<ImageGetConsumer> log) : base(mediator, log) { }
 
-		public async Task Consume(ConsumeContext<ImageGetMsg> context) {
-			var content = await _mediator.Send(new ImageGetQuery(context.Message), context.CancellationToken);
-			await context.RespondAsync(new ImageGetResponse { Content = content });
+		protected override async Task<ImageGetResponse> Handle(ImageGetMsg item, CancellationToken token) {
+			var content = await this.Mediator.Send(new ImageGetQuery(item), token);
+			return new ImageGetResponse() { Content = content };
 		}
 
 	}
