@@ -2,11 +2,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 
+using Boards.Commons.Application;
 using Boards.Domain.Contracts.Images;
 
 using FluentValidation;
-
-using MassTransit;
 
 using MediatR;
 
@@ -27,13 +26,13 @@ namespace Boards.Front.Application.Queries.Images {
 	}
 
 	internal class ImageGetQueryHandler : IRequestHandler<ImageGetQuery, string> {
-		private readonly IRequestClient<ImageGetMsg> _client;
+		private readonly IClient<ImageGetMsg, ImageGetResponse> _client;
 
-		public ImageGetQueryHandler(IRequestClient<ImageGetMsg> client) => _client = client;
+		public ImageGetQueryHandler(IClient<ImageGetMsg, ImageGetResponse> client) => _client = client;
 
 		public async Task<string> Handle(ImageGetQuery request, CancellationToken token) {
-			var response = await _client.GetResponse<ImageGetResponse>(new(request.Id), token);
-			return response.Message.Content;
+			var response = await _client.Send(new(request.Id), token);
+			return response.Content;
 		}
 	}
 }

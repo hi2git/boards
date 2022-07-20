@@ -4,13 +4,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Boards.Commons.Application;
 using Boards.Commons.Application.Services;
 using Boards.Commons.Domain.DTOs;
 using Boards.Domain.Contracts.Boards;
 
 using FluentValidation;
-
-using MassTransit;
 
 using MediatR;
 
@@ -20,24 +19,19 @@ namespace Boards.Front.Application.Queries.Boards {
 	public class BoardGetAllQueryValidator : AbstractValidator<BoardGetAllQuery> { }
 
 	internal class BoardGetAllQueryHandler : IRequestHandler<BoardGetAllQuery, IEnumerable<IdNameDTO>> {
-		private readonly IRequestClient<BoardGetAllMsg> _client;
+		private readonly IClient<BoardGetAllMsg, BoardGetAllResponse> _client;
 		private readonly IUserManager _userMgr;
-		//private readonly IBoardRepo _repo;
 
-		public BoardGetAllQueryHandler(IRequestClient<BoardGetAllMsg> client, IUserManager userMgr) {
+		public BoardGetAllQueryHandler(IClient<BoardGetAllMsg, BoardGetAllResponse> client, IUserManager userMgr) {
 			_client = client;
 			_userMgr = userMgr;
-			//_repo = repo;
 		}
 
 		public async Task<IEnumerable<IdNameDTO>> Handle(BoardGetAllQuery request, CancellationToken token) {
-			//var boards = await _repo.GetAll(_userMgr.CurrentUserId);
-			//return boards.Select(this.Map);
 			var msg = new BoardGetAllMsg(_userMgr.CurrentUserId);
-			var response = await _client.GetResponse<BoardGetAllResponse>(msg, token);
-			return response.Message.Items;
+			var response = await _client.Send(msg, token);
+			return response.Items;
 		}
 
-		//private IdNameDTO Map(Board.Domain.Models.Board entity) => new() { Id = entity.Id, Name = entity.Name };
 	}
 }

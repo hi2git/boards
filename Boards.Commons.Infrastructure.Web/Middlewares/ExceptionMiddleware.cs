@@ -12,10 +12,10 @@ using System.Text.Json;
 
 namespace Boards.Infrastructure.Web.Middlewares {
 
-	public static class ExceptionMiddlewareExtensions {
+	//public static class ExceptionMiddlewareExtensions {
 
-		public static void UseExceptionMiddleware(this IApplicationBuilder app) => app.UseMiddleware<ExceptionMiddleware>();
-	}
+	//	public static void UseExceptionMiddleware(this IApplicationBuilder app) => app.UseMiddleware<ExceptionMiddleware>();
+	//}
 
 	internal class ExceptionMiddleware {
 		private readonly RequestDelegate _next;

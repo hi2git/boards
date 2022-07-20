@@ -4,12 +4,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Boards.Commons.Application;
 using Boards.Commons.Domain.DTOs.Posts;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
-
-using MassTransit;
 
 using MediatR;
 
@@ -27,13 +26,13 @@ namespace Boards.Front.Application.Queries.Posts {
 	}
 
 	internal class PostGetAllQueryHandler : IRequestHandler<PostGetAllQuery, IEnumerable<PostDTO>> {
-		private readonly IRequestClient<PostGetAllMsg> _client;
+		private readonly IClient<PostGetAllMsg, PostGetAllResponse> _client;
 
-		public PostGetAllQueryHandler(IRequestClient<PostGetAllMsg> client) => _client = client;
+		public PostGetAllQueryHandler(IClient<PostGetAllMsg, PostGetAllResponse> client) => _client = client;
 
 		public async Task<IEnumerable<PostDTO>> Handle(PostGetAllQuery request, CancellationToken token) {
-			var response = await _client.GetResponse<PostGetAllResponse>(request, token);
-			return response.Message.Items;
+			var response = await _client.Send(request, token);
+			return response.Items;
 		}
 	}
 }

@@ -29,7 +29,6 @@ namespace Boards.Infrastructure.Web {
 				.WriteTo.Http("http://logstash:28080", null)   // TODO: configure logger
 				.Enrich.FromLogContext()
 				.Enrich.WithExceptionDetails()
-				.Enrich.WithProperty("CorellationId", Guid.NewGuid())
 				.Enrich.WithProperty("Service", name)
 				.CreateLogger();
 
@@ -67,7 +66,8 @@ namespace Boards.Infrastructure.Web {
 		}
 
 		public static WebApplication UseInfrastructureWeb(this WebApplication app) {
-			app.UseExceptionMiddleware();
+			app.UseMiddleware<CorellationMiddleware>();
+			app.UseMiddleware<ExceptionMiddleware>();
 
 			app.UseSwagger();
 			app.UseSwaggerUI();
