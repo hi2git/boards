@@ -1,10 +1,12 @@
 using System;
 
+using Boards.Front.API.Filters;
 using Boards.Front.Application.Commands.Boards;
 using Boards.Front.Application.Queries.Boards;
 using Boards.Front.Infrastructure.Jwt;
 using Boards.Infrastructure.Web;
 
+using MassTransit;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,12 +19,14 @@ var  handlers = new[] {
 	typeof(BoardCreateCommand),
 	typeof(BoardGetAllQuery),
 };
+var filters = new[] { typeof(SendFilter<>) };
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configure("Front", handlers);
+builder.Configure("Front", handlers, filters);
 
 var services = builder.Services;
 services.AddHttpContextAccessor();
+//services.AddScoped(typeof(SendFilter<>));
 
 services.AddJwtAuth(builder.Configuration);
 services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/build");

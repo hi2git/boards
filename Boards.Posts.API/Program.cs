@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 var assemblies = new[] { typeof(PostGetAllQuery) };
 
-builder.Configure("Posts", assemblies, typeof(PostGetAllConsumer));
+builder.Configure("Posts", assemblies, filters: null, typeof(PostGetAllConsumer));
 
 builder.Services.AddRepos(config);
 

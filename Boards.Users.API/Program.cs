@@ -7,7 +7,7 @@ using Boards.Posts.Infrastructure;
 var handlers = new[] { typeof(UserGetAllQuery) };
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configure("Users", handlers, typeof(UserGetAllConsumer));
+builder.Configure("Users", handlers, filters: null, typeof(UserGetAllConsumer));
 builder.Services.AddRepos(builder.Configuration);
 
 var app = builder.Build();

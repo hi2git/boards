@@ -10,7 +10,7 @@ using Boards.Infrastructure.Web;
 var builder = WebApplication.CreateBuilder(args);
 
 var handlers = new[] { typeof(ImageGetQuery) };
-builder.Configure("Files", handlers, typeof(ImageGetConsumer));
+builder.Configure("Files", handlers, filters: null, typeof(ImageGetConsumer));
 
 builder.Services
 	.Configure<AppSettings>(builder.Configuration.GetSection("appSettings"))

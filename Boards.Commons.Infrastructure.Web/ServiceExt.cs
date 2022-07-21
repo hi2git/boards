@@ -2,6 +2,7 @@
 using System.Linq;
 
 using Boards.Commons.Application;
+using Boards.Commons.Infrastructure.Web.Filters;
 using Boards.Infrastructure.Web.Clients;
 using Boards.Infrastructure.Web.Middlewares;
 
@@ -20,7 +21,13 @@ using Serilog.Exceptions;
 namespace Boards.Infrastructure.Web {
 	public static  class ServiceExt {
 
-		public static WebApplicationBuilder Configure(this WebApplicationBuilder builder, string name, Type[] handlers, params Type[] consumers) {
+		public static WebApplicationBuilder Configure(
+			this WebApplicationBuilder builder, 
+			string name, 
+			Type[] handlers,
+			Type[]? filters = null,
+			params Type[] consumers
+		) {
 			var services = builder.Services;
 			var logging = builder.Logging;
 			
@@ -45,7 +52,6 @@ namespace Boards.Infrastructure.Web {
 			services.AddHealthChecks();
 
 			services.AddMassTransit(n => {
-				//register?.Invoke(n);
 				if (consumers?.Any() == true) {
 					n.AddConsumers(consumers.Select(n => n.Assembly).ToArray());
 				}
@@ -53,6 +59,15 @@ namespace Boards.Infrastructure.Web {
 				n.UsingRabbitMq((context, cfg) => {
 					cfg.Host("rabbitmq", "/", x => { x.Username("rabbitmq"); x.Password("rabbitmq"); });
 					//cfg.UseMessageRetry(x => x.None());
+
+					cfg.UseConsumeFilter(typeof(AddCorrelationConsumeFilter<>), context);
+					//filters?.ToList().ForEach(n => cfg.UseSendFilter(n, context));
+					foreach (var filter in filters ?? Enumerable.Empty<Type>()) {
+						cfg.UsePublishFilter(filter, context);
+					}
+
+					//cfg.ConfigureSend(x => x.UseSendExecute(c => c.Headers.Set("CorrId", "123")));
+
 					cfg.ConfigureEndpoints(context);
 				});
 			});

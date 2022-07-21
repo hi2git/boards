@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Net;
 
-using FluentValidation;
-
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-using System.Text.Json;
 using Serilog.Context;
 
 namespace Boards.Infrastructure.Web.Middlewares {
-
-	//public static class ExceptionMiddlewareExtensions {
-
-	//	public static void UseExceptionMiddleware(this IApplicationBuilder app) => app.UseMiddleware<ExceptionMiddleware>();
-	//}
 
 	internal class CorellationMiddleware {
 		private readonly RequestDelegate _next;
@@ -28,7 +18,7 @@ namespace Boards.Infrastructure.Web.Middlewares {
 
 		public async Task InvokeAsync(HttpContext httpContext) {
 			var id = httpContext.TraceIdentifier;
-			using (LogContext.PushProperty("CorellationId", id))  { 
+			using (LogContext.PushProperty("CorrelationId", id))  { 
 				_log.LogDebug($"Starting request: {id}");
 				await _next(httpContext);
 			}

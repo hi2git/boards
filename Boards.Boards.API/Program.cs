@@ -6,7 +6,7 @@ using Boards.Infrastructure.Web;
 var builder = WebApplication.CreateBuilder(args);
 
 var handlers = new[] { typeof(BoardGetAllQuery) };
-builder.Configure("Boards", handlers, typeof(BoardGetAllConsumer));
+builder.Configure("Boards", handlers, filters: null, typeof(BoardGetAllConsumer));
 
 builder.Services.AddRepos(builder.Configuration);
 
