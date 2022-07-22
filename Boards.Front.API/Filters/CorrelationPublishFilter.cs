@@ -18,8 +18,7 @@ namespace Boards.Front.API.Filters {
 		public async Task Send(PublishContext<T> context, IPipe<PublishContext<T>> next) {
 			var id = _http.HttpContext?.TraceIdentifier ?? throw new InvalidOperationException($"Couldn't get HttpContext");    // TODO: move to userMgr
 			context.Headers.Set("CorrId", id);
-
-				await next.Send(context);
+			await next.Send(context);
 		}
 	}
 }

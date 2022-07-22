@@ -17,8 +17,7 @@ namespace Boards.Commons.Infrastructure.Web.Filters {
 
 		public async Task Send(PublishContext<T> context, IPipe<PublishContext<T>> next) {
 			var type = typeof(T).Name;
-			var shouldLog = type != typeof(AbstractMsg).Name;
-			if (shouldLog) _log.LogDebug("{Action:l} {Type:l} ...", "Publishing", type);
+			if (type != typeof(AbstractMsg).Name) _log.LogDebug("{Action:l} {Type:l} ...", "Publishing", type);
 			
 			await next.Send(context);
 		}
