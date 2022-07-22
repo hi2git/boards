@@ -60,13 +60,12 @@ namespace Boards.Infrastructure.Web {
 					cfg.Host("rabbitmq", "/", x => { x.Username("rabbitmq"); x.Password("rabbitmq"); });
 					//cfg.UseMessageRetry(x => x.None());
 
-					cfg.UseConsumeFilter(typeof(AddCorrelationConsumeFilter<>), context);
-					//filters?.ToList().ForEach(n => cfg.UseSendFilter(n, context));
+					cfg.UseConsumeFilter(typeof(CorrelationConsumeFilter<>), context);
+					cfg.UsePublishFilter(typeof(LogPublishFilter<>), context);
+
 					foreach (var filter in filters ?? Enumerable.Empty<Type>()) {
 						cfg.UsePublishFilter(filter, context);
 					}
-
-					//cfg.ConfigureSend(x => x.UseSendExecute(c => c.Headers.Set("CorrId", "123")));
 
 					cfg.ConfigureEndpoints(context);
 				});

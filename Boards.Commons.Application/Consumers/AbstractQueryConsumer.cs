@@ -20,7 +20,7 @@ namespace Boards.Commons.Application.Consumers {
 		}
 
 		public async Task Consume(ConsumeContext<TMsg> context) {
-			_log.LogDebug($"Consuming query {typeof(TMsg).Name} - {context.MessageId}...");
+			//_log.LogDebug($"Consuming query {typeof(TMsg).Name} - {context.MessageId}...");
 			var response = await this.TryConsume(context.Message, context.CancellationToken);
 			await context.RespondAsync(response);
 		}

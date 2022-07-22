@@ -6,17 +6,20 @@ using MassTransit;
 using Microsoft.AspNetCore.Http;
 
 namespace Boards.Front.API.Filters {
-	public class SendFilter<T> : IFilter<PublishContext<T>> where T: class {
+	internal class CorrelationPublishFilter<T> : IFilter<PublishContext<T>> where T: class {
 		private readonly IHttpContextAccessor _http;
 
-		public SendFilter(IHttpContextAccessor http) => _http = http;
+		public CorrelationPublishFilter(IHttpContextAccessor http) {
+			_http = http;
+		}
 
 		public void Probe(ProbeContext context) {}
 
-		public Task Send(PublishContext<T> context, IPipe<PublishContext<T>> next) {
+		public async Task Send(PublishContext<T> context, IPipe<PublishContext<T>> next) {
 			var id = _http.HttpContext?.TraceIdentifier ?? throw new InvalidOperationException($"Couldn't get HttpContext");    // TODO: move to userMgr
 			context.Headers.Set("CorrId", id);
-			return next.Send(context);
+
+				await next.Send(context);
 		}
 	}
 }

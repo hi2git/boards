@@ -21,7 +21,7 @@ namespace Boards.Commons.Application.Consumers {
 		}
 
 		public async Task Consume(ConsumeContext<TMsg> context) {
-			_log.LogDebug($"Consuming command {typeof(TMsg).Name} - {context.MessageId}...");
+			//_log.LogDebug($"Consuming command {typeof(TMsg).Name} - {context.MessageId}...");
 			await this.HandleEvent(context.MessageId);
 			var msg = await this.TryConsume(context.Message, context.CancellationToken);
 			var response = new TResponse() { Message = msg ?? string.Empty };

@@ -20,16 +20,13 @@ namespace Boards.Infrastructure.Web.Clients {
 
 		/// <inheritdoc/>
 		public async Task<TResponse> Send(TMsg msg, CancellationToken token) {
-			var type = typeof(TMsg).Name;
-			_log.LogDebug("Requesting {Type} ...", type);
-
 			var response = await _client.GetResponse<TResponse>(msg, token);
 			var item = response.Message;
 			if (item.IsError)
 				throw new CommandException(item.Message);
-			
-			_log.LogDebug("Requesting {Type} ... OK, response: {@Item}", type, item);
-			
+
+			_log.LogDebug("{Action:l} {Type:l} ... {Result:l}", "Publishing", typeof(TMsg).Name, "OK");
+
 			return item;
 		}
 

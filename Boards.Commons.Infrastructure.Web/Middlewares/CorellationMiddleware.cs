@@ -19,7 +19,6 @@ namespace Boards.Infrastructure.Web.Middlewares {
 		public async Task InvokeAsync(HttpContext httpContext) {
 			var id = httpContext.TraceIdentifier;
 			using (LogContext.PushProperty("CorrelationId", id))  { 
-				_log.LogDebug($"Starting request: {id}");
 				await _next(httpContext);
 			}
 		}

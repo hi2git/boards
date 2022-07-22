@@ -19,7 +19,7 @@ var  handlers = new[] {
 	typeof(BoardCreateCommand),
 	typeof(BoardGetAllQuery),
 };
-var filters = new[] { typeof(SendFilter<>) };
+var filters = new[] { typeof(CorrelationPublishFilter<>) };
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configure("Front", handlers, filters);

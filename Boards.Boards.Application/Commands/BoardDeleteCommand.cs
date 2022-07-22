@@ -44,6 +44,7 @@ namespace Boards.Boards.Application.Commands {
 			await _repo.Delete(board);
 			await _unitOfWork.Commit(() => _publish.Publish<BoardDeletedEvent>(new(id)));
 
+
 			return Unit.Value;
 		}
 	}
