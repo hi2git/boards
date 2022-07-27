@@ -26,7 +26,9 @@ builder.Configure("Front", handlers, filters);
 
 var services = builder.Services;
 services.AddHttpContextAccessor();
-//services.AddScoped(typeof(SendFilter<>));
+services.AddHttpClient("Captcha", n => {
+	n.BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify");
+});
 
 services.AddJwtAuth(builder.Configuration);
 services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/build");

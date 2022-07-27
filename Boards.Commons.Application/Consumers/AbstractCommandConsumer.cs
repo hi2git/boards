@@ -12,16 +12,13 @@ using Microsoft.Extensions.Logging;
 namespace Boards.Commons.Application.Consumers {
 	public abstract class AbstractCommandConsumer<TMsg, TResponse> : IConsumer<TMsg> where TMsg : class where TResponse : IResponse, new() {
 		private readonly IEventRepo _eventRepo;
-		private readonly ILogger _log;
 
 		public AbstractCommandConsumer(IMediator mediator, IEventRepo eventRepo, ILogger log) {
 			this.Mediator = mediator;
 			_eventRepo = eventRepo;
-			_log = log;
 		}
 
 		public async Task Consume(ConsumeContext<TMsg> context) {
-			//_log.LogDebug($"Consuming command {typeof(TMsg).Name} - {context.MessageId}...");
 			await this.HandleEvent(context.MessageId);
 			var msg = await this.TryConsume(context.Message, context.CancellationToken);
 			var response = new TResponse() { Message = msg ?? string.Empty };

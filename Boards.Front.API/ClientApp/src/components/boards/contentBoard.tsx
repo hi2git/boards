@@ -2,7 +2,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { useResizeDetector } from "react-resize-detector";
 
-import { LoadablePanelFull, FileSelect } from "../common";
+import { LoadablePanelFull } from "../common";
 
 import posts from "../../reducers/posts";
 

@@ -29,6 +29,7 @@ class SignUp {
 	};
 
 	@action set = (key: string, value?: string) => {
+		console.log(key, value);
 		this.item[key as keyof IUserLogin] = value;
 		this.error = undefined;
 	};

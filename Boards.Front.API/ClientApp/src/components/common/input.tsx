@@ -7,6 +7,10 @@ import { InputProps } from "antd/lib/input";
 export interface IInputProps extends InputProps {}
 
 const Input: React.FC<IInputProps> = props =>
-	props.type === "password" ? <Inpt.Password {...props} /> : <Inpt {...props} />;
+	props.type === "password" ? (
+		<Inpt.Password autoComplete="new-password" {...props} />
+	) : (
+		<Inpt autoComplete="new-password" {...props} />
+	);
 
 export default Input;

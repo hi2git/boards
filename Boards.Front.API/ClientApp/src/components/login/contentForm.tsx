@@ -52,14 +52,12 @@ const ContentForm: React.FC<IProps> = ({ onOk }) => {
 				onChange={(_, n) => setPassword(n)}
 				isRequired
 			/>
-			<FormItem>
-				<Button type="primary" htmlType="submit" className="float-right ml-2" title="Войти">
+			<FormItem wrapperCol={{ offset: 4 }}>
+				<Button type="primary" htmlType="submit" title="Войти">
 					Войти
 				</Button>
-				<Button type="link" className="float-right" title="Регистрация">
-					<Link className="float-right" to={urls.SIGNUP}>
-						Регистрация
-					</Link>
+				<Button type="link" title="Регистрация">
+					<Link to={urls.SIGNUP}>Регистрация</Link>
 				</Button>
 			</FormItem>
 		</Form>

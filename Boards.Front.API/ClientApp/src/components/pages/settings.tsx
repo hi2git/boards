@@ -4,7 +4,7 @@ import Content from "../settings/content";
 
 interface IProps {}
 
-const Page: React.FC<IProps> = ({}) => {
+const Page: React.FC<IProps> = () => {
 	return <Content />;
 };
 

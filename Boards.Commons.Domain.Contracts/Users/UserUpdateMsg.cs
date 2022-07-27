@@ -9,7 +9,7 @@ namespace Boards.Domain.Contracts.Users {
 
 		public UserUpdateMsg(Guid id, UserSettingsDTO item) : base(id) => this.Item = item;
 
-		public UserSettingsDTO Item { get; }
+		public UserSettingsDTO Item { get; set;  }
 
 	}
 

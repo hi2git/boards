@@ -17,3 +17,4 @@ export { default as Tooltip } from "./tooltip";
 export { default as RadioGroup } from "./radioGroup";
 export { default as Slider } from "./slider";
 export { default as Drawer } from "./drawer";
+export { default as Captcha } from "./captcha";

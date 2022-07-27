@@ -19,20 +19,13 @@ const ContentForm: React.FC<IProps> = () => {
 
 	const { item, isPasswordChanged, isPasswordError, isAllowSend, set, send } = store;
 
-	const validatePasswordConfirm = (rule: any, _: string, callback: (msg?: string) => void) => {
-		const msg = isPasswordChanged && isPasswordError ? rule.message : undefined;
-		callback(msg);
-	};
+	const validator = (rule: any, _: string) =>
+		isPasswordChanged && isPasswordError ? Promise.reject(new Error(rule.message)) : Promise.resolve();
 
 	const del = () => confirm({ title: "Подтвердите удаление своей учетной записи", onOk: store.del });
 
 	return (
 		<Form ref={ref} item={item} keys={keys} labelCol={{ span: 7 }} onFinish={send}>
-			<FormItem label="Удалить свою учетную запись">
-				<Button title="Удалить свою учетную запись" danger onClick={del}>
-					<i className="fas fa-times" />
-				</Button>
-			</FormItem>
 			<ValidatedInput
 				title="Старый пароль"
 				keyName={OLD_PASSWORD}
@@ -57,12 +50,19 @@ const ContentForm: React.FC<IProps> = () => {
 				type="password"
 				max={50}
 				isRequired
-				rules={[{ validator: validatePasswordConfirm, message: "Пароли не совпадают" }]}
+				rules={[{ validator: validator, message: "Пароли не совпадают" }]}
 				onChange={set}
 			/>
-			<Button type="primary" className="float-right" htmlType="submit" title="OK" disabled={!isAllowSend}>
-				OK
-			</Button>
+			<FormItem label="Удалить свою учетную запись">
+				<Button title="Удалить свою учетную запись" danger onClick={del}>
+					<i className="fas fa-times" />
+				</Button>
+			</FormItem>
+			<FormItem wrapperCol={{ offset: 7 }}>
+				<Button type="primary" htmlType="submit" title="OK" disabled={!isAllowSend}>
+					Сохранить
+				</Button>
+			</FormItem>
 		</Form>
 	);
 };

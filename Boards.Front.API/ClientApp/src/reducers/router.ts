@@ -1,4 +1,4 @@
-import { action, autorun, computed, makeAutoObservable } from "mobx";
+import { action, computed, makeAutoObservable } from "mobx";
 import { RouterStore } from "mobx-react-router";
 import qs from "query-string";
 

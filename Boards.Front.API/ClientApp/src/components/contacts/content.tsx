@@ -2,7 +2,7 @@ import React from "react";
 
 interface IProps {}
 
-const Content: React.FC<IProps> = ({}) => {
+const Content: React.FC<IProps> = () => {
 	return (
 		<div className="contacts">
 			<div className="row mt-2">
