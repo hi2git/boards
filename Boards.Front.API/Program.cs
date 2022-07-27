@@ -1,12 +1,11 @@
 using System;
 
 using Boards.Front.API.Filters;
+using Boards.Front.Application.Commands;
 using Boards.Front.Application.Commands.Boards;
 using Boards.Front.Application.Queries.Boards;
 using Boards.Front.Infrastructure.Jwt;
 using Boards.Infrastructure.Web;
-
-using MassTransit;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,7 +24,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configure("Front", handlers, filters);
 
 var services = builder.Services;
+
 services.AddHttpContextAccessor();
+services.Configure<AppSettings>(builder.Configuration.GetSection("appSettings"));
 services.AddHttpClient("Captcha", n => {
 	n.BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify");
 });

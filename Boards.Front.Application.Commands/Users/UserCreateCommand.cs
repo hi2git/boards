@@ -16,6 +16,7 @@ using FluentValidation;
 
 using MediatR;
 using System.Collections.Generic;
+using Microsoft.Extensions.Options;
 
 namespace Boards.Front.Application.Commands.Users {
 	public record UserCreateCommand : UserCreateMsg, IRequest {
@@ -26,7 +27,7 @@ namespace Boards.Front.Application.Commands.Users {
 
 	public class UserCreateCommandValidator : AbstractValidator<UserCreateCommand> {
 
-		public UserCreateCommandValidator(IHttpClientFactory http) {
+		public UserCreateCommandValidator(IHttpClientFactory http, IOptions<AppSettings> app) {
 			RuleFor(n => n.Item).NotEmpty();
 			RuleFor(n => n.Item.Password).NotEmpty().MaximumLength(50);
 			RuleFor(n => n.Item.Email).NotEmpty().MaximumLength(50).EmailAddress();
@@ -34,7 +35,7 @@ namespace Boards.Front.Application.Commands.Users {
 
 			var client = http.CreateClient("Captcha");
 			RuleFor(n => n.Item.Captcha).MustAsync(async (n, token) => {
-				var path = $"?secret={"6LdYXh8hAAAAACvg3ZxoiUnxWPlQcTLgHrx1ssuh"}&response={n}";
+				var path = $"?secret={app.Value.GooglePrivateKey}&response={n}";
 				var response = await client.PostAsync(path, null, token);
 				if (!response.IsSuccessStatusCode) {
 					return false;
