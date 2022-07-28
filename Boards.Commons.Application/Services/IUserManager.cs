@@ -14,5 +14,7 @@ namespace Boards.Commons.Application.Services {
 
 		bool IsExist { get; }
 
+		string UserKey { get; }
+
 	}
 }

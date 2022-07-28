@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Boards.Commons.Application;
+using Boards.Commons.Application.Services;
 using Boards.Commons.Domain.DTOs.Posts;
 using Boards.Domain.Contracts.Posts;
 
@@ -26,7 +27,8 @@ namespace Boards.Front.Application.Commands.Posts {
 
 	internal class PostUpdateCommandHandler : AbstractHandler<PostUpdateCommand, PostUpdateMsg, PostUpdateResponse> {
 
-		public PostUpdateCommandHandler(IClient<PostUpdateMsg, PostUpdateResponse> client) : base(client) { }
+		public PostUpdateCommandHandler(IClient<PostUpdateMsg, PostUpdateResponse> client, ICacheService cache) : base(client, cache) { }
 
+		protected override string CacheKey => $"board_{111}";
 	}
 }

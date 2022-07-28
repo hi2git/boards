@@ -8,7 +8,6 @@ services:
         RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-rabbitmq}
         RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-rabbitmq}
     ports:
-        - 5672:5672
         - 15672:15672
     restart: on-failure
     healthcheck:
@@ -50,6 +49,11 @@ services:
         - server.host="localhost"
     volumes:
         - ./logstash/:/usr/share/logstash/pipeline/
+
+  redis:
+    image: redis/redis-stack
+    container_name: redis
+    restart: on-failure
 
   boards.front:
     image: ${DOCKER_REGISTRY-}boardsfront

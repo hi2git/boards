@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Boards.Commons.Application;
+using Boards.Commons.Application.Services;
 using Boards.Commons.Domain.DTOs.Images;
 using Boards.Domain.Contracts.Images;
 
@@ -26,7 +27,8 @@ namespace Boards.Front.Application.Commands.Images {
 
 	internal class ImageUpdateCommandHandler : AbstractHandler<ImageUpdateCommand, ImageUpdateMsg, ImageUpdateResponse> {
 
-		public ImageUpdateCommandHandler(IClient<ImageUpdateMsg, ImageUpdateResponse> client) : base(client) { }
+		public ImageUpdateCommandHandler(IClient<ImageUpdateMsg, ImageUpdateResponse> client, ICacheService cache) : base(client, cache) { }
 
+		protected override string CacheKey => $"post_{111}";
 	}
 }

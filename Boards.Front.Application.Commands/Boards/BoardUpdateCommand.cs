@@ -30,7 +30,9 @@ namespace Boards.Front.Application.Commands.Boards {
 	internal class BoardUpdateCommandHandler : AbstractHandler<BoardUpdateCommand, BoardUpdateMsg, BoardUpdateResponse> {
 		private readonly IUserManager _userMgr;
 
-		public BoardUpdateCommandHandler(IClient<BoardUpdateMsg, BoardUpdateResponse> client, IUserManager userMgr) : base(client) => _userMgr = userMgr;
+		public BoardUpdateCommandHandler(IClient<BoardUpdateMsg, BoardUpdateResponse> client, ICacheService cache, IUserManager usrMgr) : base(client, cache) => _userMgr = usrMgr;
+
+		protected override string CacheKey => _userMgr.UserKey;
 
 		protected override BoardUpdateMsg GetMsg(BoardUpdateCommand request) => new(request.Item, _userMgr.CurrentUserId);
 

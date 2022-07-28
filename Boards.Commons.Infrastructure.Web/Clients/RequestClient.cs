@@ -19,7 +19,7 @@ namespace Boards.Infrastructure.Web.Clients {
 		}
 
 		/// <inheritdoc/>
-		public async Task<TResponse> Send(TMsg msg, CancellationToken token) {
+		public async Task<TResponse> Send(TMsg msg, CancellationToken token) {	// TODO: use PublishFilter instead
 			var response = await _client.GetResponse<TResponse>(msg, token);
 			var item = response.Message;
 			if (item.IsError)

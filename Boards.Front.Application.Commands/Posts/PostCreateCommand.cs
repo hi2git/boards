@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Boards.Commons.Application;
+using Boards.Commons.Application.Services;
 using Boards.Commons.Domain.DTOs.Posts;
 using Boards.Domain.Contracts.Posts;
 
@@ -33,7 +34,8 @@ namespace Boards.Front.Application.Commands.Posts {
 
 	internal class PostCreateCommandHandler : AbstractHandler<PostCreateCommand, PostCreateMsg, PostCreateResponse> {
 
-		public PostCreateCommandHandler(IClient<PostCreateMsg, PostCreateResponse> client) : base(client) { }
+		public PostCreateCommandHandler(IClient<PostCreateMsg, PostCreateResponse> client, ICacheService cache) : base(client, cache) { }
 
+		protected override string CacheKey => $"board_{111}";
 	}
 }

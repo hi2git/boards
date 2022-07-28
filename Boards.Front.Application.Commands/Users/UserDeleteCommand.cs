@@ -21,16 +21,15 @@ namespace Boards.Front.Application.Commands.Users {
 		private readonly IUserManager _userMgr;
 		private readonly IMediator _mediator;
 
-		//private readonly IBoardRepo _boardRepo;
-		//private readonly IBoardItemRepo _itemRepo;
-
-		public UserDeleteCommandHandler(IClient<UserDeleteMsg, UserDeleteResponse> client, IUserManager userMgr, IMediator mediator) : base(client) {
+		public UserDeleteCommandHandler(IClient<UserDeleteMsg, UserDeleteResponse> client, IUserManager userMgr, IMediator mediator, ICacheService cache) : base(client, cache) {
 			_userMgr = userMgr;
 			_mediator = mediator;
 		}
 
-		protected override UserDeleteMsg GetMsg(UserDeleteCommand request) => new(_userMgr.CurrentUserId);  // TODO: logout
+		protected override UserDeleteMsg GetMsg(UserDeleteCommand request) => new(_userMgr.CurrentUserId);
 
 		protected override Task HandleResponse(UserDeleteResponse response, UserDeleteCommand request, CancellationToken token) => _mediator.Send(new LogoutCommand(), token);
+		
+		protected override string CacheKey => "all_users";
 	}
 }

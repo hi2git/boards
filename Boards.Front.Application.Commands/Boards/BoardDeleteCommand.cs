@@ -2,6 +2,7 @@
 using System.Linq;
 
 using Boards.Commons.Application;
+using Boards.Commons.Application.Services;
 using Boards.Domain.Contracts.Boards;
 
 using FluentValidation;
@@ -26,8 +27,10 @@ namespace Boards.Front.Application.Commands.Boards {
 	}
 
 	internal class BoardDeleteCommandHandler : AbstractHandler<BoardDeleteCommand, BoardDeleteMsg, BoardDeleteResponse> {
+		private readonly IUserManager _userMgr;
 
-		public BoardDeleteCommandHandler(IClient<BoardDeleteMsg, BoardDeleteResponse> client) : base(client) { }
+		public BoardDeleteCommandHandler(IClient<BoardDeleteMsg, BoardDeleteResponse> client, ICacheService cache, IUserManager usrMgr) : base(client, cache) => _userMgr = usrMgr;
 
+		protected override string CacheKey => _userMgr.UserKey;
 	}
 }

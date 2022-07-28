@@ -2,7 +2,9 @@
 using System.Linq;
 
 using Boards.Commons.Application;
+using Boards.Commons.Application.Services;
 using Boards.Commons.Infrastructure.Web.Filters;
+using Boards.Commons.Infrastructure.Web.Services;
 using Boards.Infrastructure.Web.Clients;
 using Boards.Infrastructure.Web.Middlewares;
 
@@ -18,6 +20,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Exceptions;
 
+using StackExchange.Redis;
+
 namespace Boards.Infrastructure.Web {
 	public static  class ServiceExt {
 
@@ -30,9 +34,10 @@ namespace Boards.Infrastructure.Web {
 		) {
 			var services = builder.Services;
 			var logging = builder.Logging;
-			
+			var config = builder.Configuration;
+
 			var log = new LoggerConfiguration()
-				.ReadFrom.Configuration(builder.Configuration)
+				.ReadFrom.Configuration(config)
 				.WriteTo.Http("http://logstash:28080", null)   // TODO: configure logger
 				.Enrich.FromLogContext()
 				.Enrich.WithExceptionDetails()
@@ -50,6 +55,11 @@ namespace Boards.Infrastructure.Web {
 
 			services.AddEndpointsApiExplorer().AddSwaggerGen();
 			services.AddHealthChecks();
+
+			services.AddStackExchangeRedisCache(n => { 
+				n.ConfigurationOptions = new ConfigurationOptions(); 
+				n.ConfigurationOptions.EndPoints.Add("redis");
+			});
 
 			services.AddMassTransit(n => {
 				if (consumers?.Any() == true) {
@@ -75,6 +85,8 @@ namespace Boards.Infrastructure.Web {
 				.Configure(options => options.WaitUntilStarted = true);
 
 			services.AddTransient(typeof(IClient<,>), typeof(RequestClient<,>));
+			services.AddTransient<IJsonService, JsonService>();
+			services.AddTransient<ICacheService, CacheService>();
 
 			return builder;
 		}

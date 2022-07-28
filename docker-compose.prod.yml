@@ -1,6 +1,15 @@
 version: '3.4'
 
 services:
+
+  kibana:
+    ports:
+      - "5601:5601"
+
+  redis:
+    ports:
+      - 8001:8001
+
   boards.front:
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker

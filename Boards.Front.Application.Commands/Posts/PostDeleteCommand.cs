@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Boards.Commons.Application;
+using Boards.Commons.Application.Services;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
@@ -26,7 +27,8 @@ namespace Boards.Front.Application.Commands.Posts {
 	}
 
 	internal class PostDeleteCommandHandler : AbstractHandler<PostDeleteCommand, PostDeleteMsg, PostDeleteResponse> {
-		public PostDeleteCommandHandler(IClient<PostDeleteMsg, PostDeleteResponse> client) : base(client) { }
+		public PostDeleteCommandHandler(IClient<PostDeleteMsg, PostDeleteResponse> client, ICacheService cache) : base(client, cache) { }
 
+		protected override string CacheKey => $"board_{111}";
 	}
 }

@@ -26,6 +26,10 @@ namespace Boards.Front.Infrastructure.Jwt.Implementation {
 		/// <inheritdoc/>
 		public bool IsExist => this.NameIdentifier != null;
 
+		/// <inheritdoc/>
+		public string UserKey => $"user_{this.CurrentUserId}";
+
+
 		#region Private
 
 		private string NameIdentifier => this.ValueOf(ClaimTypes.NameIdentifier);

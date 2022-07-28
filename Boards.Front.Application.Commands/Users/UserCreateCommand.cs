@@ -10,13 +10,13 @@ using Boards.Domain.Contracts.Users;
 using Boards.Front.Application.Commands.Auths;
 
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 using FluentValidation;
 
 using MediatR;
 using System.Collections.Generic;
 using Microsoft.Extensions.Options;
+using Boards.Commons.Application.Services;
 
 namespace Boards.Front.Application.Commands.Users {
 	public record UserCreateCommand : UserCreateMsg, IRequest {
@@ -41,7 +41,7 @@ namespace Boards.Front.Application.Commands.Users {
 					return false;
 				}
 
-				var result = await JsonSerializer.DeserializeAsync<CaptchaResponse>(response.Content.ReadAsStream(token), cancellationToken: token);
+				var result = await JsonSerializer.DeserializeAsync<CaptchaResponse>(response.Content.ReadAsStream(token), cancellationToken: token);	// TODO: use IJsonService
 				return result.success;
 			});
 
@@ -53,17 +53,16 @@ namespace Boards.Front.Application.Commands.Users {
 
 			public bool success { get; set; }
 
-			//public IEnumerable<string> errorCodes { get; set; }
 		}
 
 	}
 
-	
-
 	internal class UserCreateCommandHandler : AbstractHandler<UserCreateCommand, UserCreateMsg, UserCreateResponse> {
 		private readonly IMediator _mediator;
 
-		public UserCreateCommandHandler(IClient<UserCreateMsg, UserCreateResponse> client, IMediator mediator) : base(client) => _mediator = mediator;
+		public UserCreateCommandHandler(IClient<UserCreateMsg, UserCreateResponse> client, IMediator mediator, ICacheService cache) : base(client, cache) => _mediator = mediator;
+
+		protected override string CacheKey => "all_users";
 
 		protected override Task HandleResponse(UserCreateResponse response, UserCreateCommand request, CancellationToken token) => _mediator.Send(new LoginCommand(request.Item), token);
 

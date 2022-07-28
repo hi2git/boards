@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Boards.Commons.Application;
+using Boards.Commons.Application.Services;
 using Boards.Commons.Domain.DTOs.Posts;
 using Boards.Domain.Contracts.Posts;
 
@@ -32,7 +33,8 @@ namespace Boards.Front.Application.Commands.Posts {
 
 	internal class PostSortAllCommandHandler : AbstractHandler<PostSortAllCommand, PostSortAllMsg, PostSortedResponse> {
 
-		public PostSortAllCommandHandler(IClient<PostSortAllMsg, PostSortedResponse> client) : base(client) { }
+		public PostSortAllCommandHandler(IClient<PostSortAllMsg, PostSortedResponse> client, ICacheService cache) : base(client, cache) { }
 
+		protected override string CacheKey => $"board_{111}";
 	}
 }
