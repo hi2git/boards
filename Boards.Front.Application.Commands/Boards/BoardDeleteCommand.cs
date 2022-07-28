@@ -26,11 +26,8 @@ namespace Boards.Front.Application.Commands.Boards {
 
 	}
 
-	internal class BoardDeleteCommandHandler : AbstractHandler<BoardDeleteCommand, BoardDeleteMsg, BoardDeleteResponse> {
-		private readonly IUserManager _userMgr;
+	internal class BoardDeleteCommandHandler : AbstractBoardCommandHandler<BoardDeleteCommand, BoardDeleteMsg, BoardDeleteResponse> {
 
-		public BoardDeleteCommandHandler(IClient<BoardDeleteMsg, BoardDeleteResponse> client, ICacheService cache, IUserManager usrMgr) : base(client, cache) => _userMgr = usrMgr;
-
-		protected override string CacheKey(BoardDeleteCommand _) => _userMgr.UserKey;
+		public BoardDeleteCommandHandler(IClient<BoardDeleteMsg, BoardDeleteResponse> client, ICacheService cache, IUserManager usrMgr) : base(client, cache, usrMgr) { }
 	}
 }

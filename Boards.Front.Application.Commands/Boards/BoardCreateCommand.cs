@@ -24,14 +24,12 @@ namespace Boards.Front.Application.Commands.Boards {
 		}
 	}
 
-	internal class BoardCreateCommandHandler : AbstractHandler<BoardCreateCommand, BoardCreateMsg, BoardCreateResponse> {
-		private readonly IUserManager _userMgr;
+	internal class BoardCreateCommandHandler : AbstractBoardCommandHandler<BoardCreateCommand, BoardCreateMsg, BoardCreateResponse> {
 
-		public BoardCreateCommandHandler(IClient<BoardCreateMsg, BoardCreateResponse> client, ICacheService cache, IUserManager usrMgr) : base(client, cache) => _userMgr = usrMgr;
+		public BoardCreateCommandHandler(IClient<BoardCreateMsg, BoardCreateResponse> client, ICacheService cache, IUserManager usrMgr) : base(client, cache, usrMgr) { }
 
-		protected override string CacheKey(BoardCreateCommand _) => _userMgr.UserKey;
 
-		protected override BoardCreateMsg GetMsg(BoardCreateCommand request) => new(_userMgr.CurrentUserId, request.Name);
+		protected override BoardCreateMsg GetMsg(BoardCreateCommand request) => new(this.UserId, request.Name);
 
 	}
 }

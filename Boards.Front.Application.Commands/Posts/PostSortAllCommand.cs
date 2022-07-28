@@ -31,10 +31,8 @@ namespace Boards.Front.Application.Commands.Posts {
 
 	}
 
-	internal class PostSortAllCommandHandler : AbstractHandler<PostSortAllCommand, PostSortAllMsg, PostSortedResponse> {
+	internal class PostSortAllCommandHandler : AbstractPostCommandHandler<PostSortAllCommand, PostSortAllMsg, PostSortedResponse> {
 
 		public PostSortAllCommandHandler(IClient<PostSortAllMsg, PostSortedResponse> client, ICacheService cache) : base(client, cache) { }
-
-		protected override string CacheKey(PostSortAllCommand request) => $"board_{request.Id}";
 	}
 }

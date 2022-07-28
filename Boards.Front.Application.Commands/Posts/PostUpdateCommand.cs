@@ -25,10 +25,8 @@ namespace Boards.Front.Application.Commands.Posts {
 		}
 	}
 
-	internal class PostUpdateCommandHandler : AbstractHandler<PostUpdateCommand, PostUpdateMsg, PostUpdateResponse> {
+	internal class PostUpdateCommandHandler : AbstractPostCommandHandler<PostUpdateCommand, PostUpdateMsg, PostUpdateResponse> {
 
 		public PostUpdateCommandHandler(IClient<PostUpdateMsg, PostUpdateResponse> client, ICacheService cache) : base(client, cache) { }
-
-		protected override string CacheKey(PostUpdateCommand request) => $"board_{request.Id}";
 	}
 }

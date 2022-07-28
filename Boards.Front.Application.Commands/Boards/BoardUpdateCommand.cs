@@ -27,13 +27,11 @@ namespace Boards.Front.Application.Commands.Boards {
 		}
 	}
 
-	internal class BoardUpdateCommandHandler : AbstractHandler<BoardUpdateCommand, BoardUpdateMsg, BoardUpdateResponse> {
-		private readonly IUserManager _userMgr;
+	internal class BoardUpdateCommandHandler : AbstractBoardCommandHandler<BoardUpdateCommand, BoardUpdateMsg, BoardUpdateResponse> {
 
-		public BoardUpdateCommandHandler(IClient<BoardUpdateMsg, BoardUpdateResponse> client, ICacheService cache, IUserManager usrMgr) : base(client, cache) => _userMgr = usrMgr;
+		public BoardUpdateCommandHandler(IClient<BoardUpdateMsg, BoardUpdateResponse> client, ICacheService cache, IUserManager usrMgr) : base(client, cache, usrMgr) { }
 
-		protected override BoardUpdateMsg GetMsg(BoardUpdateCommand request) => new(request.Item, _userMgr.CurrentUserId);
+		protected override BoardUpdateMsg GetMsg(BoardUpdateCommand request) => new(request.Item, this.UserId);
 
-		protected override string CacheKey(BoardUpdateCommand _) => _userMgr.UserKey;
 	}
 }

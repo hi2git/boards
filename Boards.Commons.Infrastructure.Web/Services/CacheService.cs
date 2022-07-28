@@ -33,7 +33,7 @@ namespace Boards.Commons.Infrastructure.Web.Services {
 			return value;
 		}
 
-		private async Task<T> Request<T>(string key, Func<Task<T>> request) => await this.Set(key, await request());
+		private async Task<T> Request<T>(string key, Func<Task<T>> request) => await this.Set(key, await request());	// TODO: count cache misses
 
 		#endregion
 	}

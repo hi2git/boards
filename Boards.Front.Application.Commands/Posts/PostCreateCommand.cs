@@ -33,10 +33,9 @@ namespace Boards.Front.Application.Commands.Posts {
 
 	}
 
-	internal class PostCreateCommandHandler : AbstractHandler<PostCreateCommand, PostCreateMsg, PostCreateResponse> {
+	internal class PostCreateCommandHandler : AbstractPostCommandHandler<PostCreateCommand, PostCreateMsg, PostCreateResponse> {
 
 		public PostCreateCommandHandler(IClient<PostCreateMsg, PostCreateResponse> client, ICacheService cache) : base(client, cache) { }
 
-		protected override string CacheKey(PostCreateCommand request) => $"board_{request.Id}";
 	}
 }
