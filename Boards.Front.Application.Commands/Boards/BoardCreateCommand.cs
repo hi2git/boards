@@ -29,7 +29,7 @@ namespace Boards.Front.Application.Commands.Boards {
 
 		public BoardCreateCommandHandler(IClient<BoardCreateMsg, BoardCreateResponse> client, ICacheService cache, IUserManager usrMgr) : base(client, cache) => _userMgr = usrMgr;
 
-		protected override string CacheKey => _userMgr.UserKey;
+		protected override string CacheKey(BoardCreateCommand _) => _userMgr.UserKey;
 
 		protected override BoardCreateMsg GetMsg(BoardCreateCommand request) => new(_userMgr.CurrentUserId, request.Name);
 

@@ -8,7 +8,7 @@ namespace Boards.Commons.Application.Services {
 
 		//Task<T> Set<T>(string key, T value);
 
-		Task<T> GetOrRequest<T>(string key, Func<CancellationToken, Task<T>> request, CancellationToken token);
+		Task<T> GetOrRequest<T>(string key, Func<Task<T>> request, CancellationToken token);
 
 		Task Remove(string key);
 

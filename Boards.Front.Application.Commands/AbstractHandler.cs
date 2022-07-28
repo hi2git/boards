@@ -26,7 +26,7 @@ namespace Boards.Front.Application.Commands {
 		public async Task<Unit> Handle(TRequest request, CancellationToken token) {
 			var msg = this.GetMsg(request);
 			var response = await _client.Send(msg, token);
-			await this.InvalidateCache();
+			await this.InvalidateCache(request);
 			await this.HandleResponse(response, request, token);
 			return Unit.Value;
 		}
@@ -37,9 +37,9 @@ namespace Boards.Front.Application.Commands {
 			? msg
 			: throw new InvalidOperationException($"Couldn't get msg for {request.GetType().Name}");
 
-		protected abstract string CacheKey { get; }
+		protected abstract string CacheKey(TRequest request);
 
-		private Task InvalidateCache() => _cache.Remove(this.CacheKey);
+		private Task InvalidateCache(TRequest request) => _cache.Remove(this.CacheKey(request));
 
 	}
 

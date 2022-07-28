@@ -29,6 +29,6 @@ namespace Boards.Front.Application.Commands.Images {
 
 		public ImageUpdateCommandHandler(IClient<ImageUpdateMsg, ImageUpdateResponse> client, ICacheService cache) : base(client, cache) { }
 
-		protected override string CacheKey => $"post_{111}";
+		protected override string CacheKey(ImageUpdateCommand request) => $"post_{request.Id}";
 	}
 }

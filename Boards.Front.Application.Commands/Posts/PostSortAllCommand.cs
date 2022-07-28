@@ -35,6 +35,6 @@ namespace Boards.Front.Application.Commands.Posts {
 
 		public PostSortAllCommandHandler(IClient<PostSortAllMsg, PostSortedResponse> client, ICacheService cache) : base(client, cache) { }
 
-		protected override string CacheKey => $"board_{111}";
+		protected override string CacheKey(PostSortAllCommand request) => $"board_{request.Id}";
 	}
 }

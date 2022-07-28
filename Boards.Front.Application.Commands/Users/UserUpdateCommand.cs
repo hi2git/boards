@@ -36,6 +36,6 @@ namespace Boards.Front.Application.Commands.Users {
 
 		protected override UserUpdateMsg GetMsg(UserUpdateCommand request) => new(_userMgr.CurrentUserId, request.Item);
 
-		protected override string CacheKey => "all_users";
+		protected override string CacheKey(UserUpdateCommand _) => "all_users";
 	}
 }

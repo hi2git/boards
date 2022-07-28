@@ -32,9 +32,8 @@ namespace Boards.Front.Application.Commands.Boards {
 
 		public BoardUpdateCommandHandler(IClient<BoardUpdateMsg, BoardUpdateResponse> client, ICacheService cache, IUserManager usrMgr) : base(client, cache) => _userMgr = usrMgr;
 
-		protected override string CacheKey => _userMgr.UserKey;
-
 		protected override BoardUpdateMsg GetMsg(BoardUpdateCommand request) => new(request.Item, _userMgr.CurrentUserId);
 
+		protected override string CacheKey(BoardUpdateCommand _) => _userMgr.UserKey;
 	}
 }

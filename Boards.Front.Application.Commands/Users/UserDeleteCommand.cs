@@ -30,6 +30,6 @@ namespace Boards.Front.Application.Commands.Users {
 
 		protected override Task HandleResponse(UserDeleteResponse response, UserDeleteCommand request, CancellationToken token) => _mediator.Send(new LogoutCommand(), token);
 		
-		protected override string CacheKey => "all_users";
+		protected override string CacheKey(UserDeleteCommand _) => "all_users";
 	}
 }

@@ -29,7 +29,7 @@ namespace Boards.Front.Application.Queries.Boards {
 			_cache = cache;
 		}
 
-		public  Task<IEnumerable<IdNameDTO>> Handle(BoardGetAllQuery request, CancellationToken token) => _cache.GetOrRequest(_userMgr.UserKey, this.Request, token);
+		public  Task<IEnumerable<IdNameDTO>> Handle(BoardGetAllQuery request, CancellationToken token) => _cache.GetOrRequest(_userMgr.UserKey, () => this.Request(token), token);
 
 		private async Task<IEnumerable<IdNameDTO>> Request(CancellationToken token) {
 			var msg = new BoardGetAllMsg(_userMgr.CurrentUserId);

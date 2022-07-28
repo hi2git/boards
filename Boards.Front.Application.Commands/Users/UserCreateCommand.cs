@@ -62,9 +62,9 @@ namespace Boards.Front.Application.Commands.Users {
 
 		public UserCreateCommandHandler(IClient<UserCreateMsg, UserCreateResponse> client, IMediator mediator, ICacheService cache) : base(client, cache) => _mediator = mediator;
 
-		protected override string CacheKey => "all_users";
-
 		protected override Task HandleResponse(UserCreateResponse response, UserCreateCommand request, CancellationToken token) => _mediator.Send(new LoginCommand(request.Item), token);
+
+		protected override string CacheKey(UserCreateCommand _) => "all_users";
 
 	}
 }

@@ -3,6 +3,7 @@
 using Boards.Commons.Application;
 using Boards.Commons.Application.Services;
 using Boards.Commons.Domain.DTOs.Posts;
+using Boards.Domain.Contracts;
 using Boards.Domain.Contracts.Posts;
 
 using FluentValidation;
@@ -36,6 +37,6 @@ namespace Boards.Front.Application.Commands.Posts {
 
 		public PostCreateCommandHandler(IClient<PostCreateMsg, PostCreateResponse> client, ICacheService cache) : base(client, cache) { }
 
-		protected override string CacheKey => $"board_{111}";
+		protected override string CacheKey(PostCreateCommand request) => $"board_{request.Id}";
 	}
 }

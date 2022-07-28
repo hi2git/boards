@@ -31,6 +31,6 @@ namespace Boards.Front.Application.Commands.Boards {
 
 		public BoardDeleteCommandHandler(IClient<BoardDeleteMsg, BoardDeleteResponse> client, ICacheService cache, IUserManager usrMgr) : base(client, cache) => _userMgr = usrMgr;
 
-		protected override string CacheKey => _userMgr.UserKey;
+		protected override string CacheKey(BoardDeleteCommand _) => _userMgr.UserKey;
 	}
 }

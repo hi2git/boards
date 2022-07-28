@@ -29,6 +29,6 @@ namespace Boards.Front.Application.Commands.Posts {
 
 		public PostUpdateCommandHandler(IClient<PostUpdateMsg, PostUpdateResponse> client, ICacheService cache) : base(client, cache) { }
 
-		protected override string CacheKey => $"board_{111}";
+		protected override string CacheKey(PostUpdateCommand request) => $"board_{request.Id}";
 	}
 }
