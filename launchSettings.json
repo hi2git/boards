@@ -10,7 +10,7 @@
             "boards.front": "StartDebugging",
             "boards.posts": "StartDebugging",
             "boards.boards": "StartDebugging",
-            "boards.files": "StartDebugging",
+            "boards.files": "StartWithoutDebugging",
             "boards.users": "StartDebugging",
 
             "rabbitmq": "StartWithoutDebugging",

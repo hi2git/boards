@@ -17,9 +17,12 @@ namespace Boards.Commons.Infrastructure.Web.Filters {
 
 		public async Task Send(PublishContext<T> context, IPipe<PublishContext<T>> next) {
 			var type = typeof(T).Name;
-			if (type != typeof(AbstractMsg).Name) _log.LogDebug("{Action:l} {Type:l} ...", "Publishing", type);
-			
-			await next.Send(context);
+			using (Serilog.Context.LogContext.PushProperty("MessageId", context.MessageId)) {
+				if (type != typeof(AbstractMsg).Name)
+					_log.LogDebug("{Action:l} {Type:l} ...", "Publishing", type);
+				await next.Send(context);
+			}
+
 		}
 	}
 }

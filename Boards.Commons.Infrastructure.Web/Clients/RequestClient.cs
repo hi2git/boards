@@ -19,13 +19,14 @@ namespace Boards.Infrastructure.Web.Clients {
 		}
 
 		/// <inheritdoc/>
-		public async Task<TResponse> Send(TMsg msg, CancellationToken token) {	// TODO: use PublishFilter instead
-			var response = await _client.GetResponse<TResponse>(msg, token);
+		public async Task<TResponse> Send(TMsg msg, CancellationToken token) {  // TODO: use PublishFilter to catch error
+			Guid? msgId = null;
+			var response = await _client.GetResponse<TResponse>(msg, n => n.UseExecute(m => msgId = m.MessageId), token);
 			var item = response.Message;
 			if (item.IsError)
 				throw new CommandException(item.Message);
 
-			_log.LogDebug("{Action:l} {Type:l} ... {Result:l}", "Publishing", typeof(TMsg).Name, "OK");
+			_log.LogDebug("{Action:l} {Type:l} ... {Result:l}, {MessageId}", "Publishing", typeof(TMsg).Name, "OK", msgId);
 
 			return item;
 		}

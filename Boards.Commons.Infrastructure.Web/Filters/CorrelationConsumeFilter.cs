@@ -18,7 +18,8 @@ namespace Boards.Commons.Infrastructure.Web.Filters {
 			var action = "Consuming";
 
 			var id = context.Headers.Get<string>("CorrId");
-			using (Serilog.Context.LogContext.PushProperty("CorrelationId", id)) { 
+			using (Serilog.Context.LogContext.PushProperty("CorrelationId", id))  
+			using (Serilog.Context.LogContext.PushProperty("MessageId", context.MessageId)) {
 					_log.LogDebug("{Action:l} {Type:l} ...", action, type);
 					await next.Send(context);
 					_log.LogDebug("{Action:l} {Type:l} ... {Result:l}", action, type, "OK");
