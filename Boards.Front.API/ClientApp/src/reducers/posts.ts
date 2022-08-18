@@ -1,16 +1,20 @@
 import { action, makeAutoObservable, observable } from "mobx";
-import { IPost } from "../interfaces/components";
+import { IPageable, IPost, IPostFilter } from "../interfaces/components";
 
 import board from "./board";
 
 import service from "../services/posts";
+import router from "./router";
 
+const DEFAULT_FILTER: IPostFilter = { boardId: "", index: 1, size: 6 };
 class Posts {
 	constructor() {
 		makeAutoObservable(this);
 	}
 
 	@observable items: Array<IPost> = [];
+	@observable total: number = 50;
+	@observable filter: IPostFilter = { ...DEFAULT_FILTER };
 	@observable isLoading: boolean = false;
 	@observable error: string | undefined = undefined;
 
@@ -18,10 +22,27 @@ class Posts {
 
 	@action clear = () => this.request();
 
+	@action initFilter = (boardId: string) => {
+		this.filter = {
+			boardId, //router.getSearch("board") as string,
+			index: (router.getSearch("index") as number) ?? DEFAULT_FILTER.index,
+			size: (router.getSearch("size") as number) ?? DEFAULT_FILTER.size,
+		};
+	};
+
+	@action updateFilter = (key: keyof IPostFilter, value?: string | number) => {
+		console.log("updateFilter", key, value);
+		this.filter = { ...(this.filter as IPostFilter), [key]: value };
+		router.setSearch(key, value);
+	};
+
 	@action fetchAll = async () => {
 		this.request();
 		try {
-			this.receive(await service.getAll(board.value?.id)); // TODO use cookie to store board.id
+			// const filter = { boardId, index: 0, size: 12 };
+			if (!this.filter) throw new Error("Filter is undefined");
+			const page = await service.getAll(this.filter);
+			this.receive(page); // TODO use cookie to store board.id
 		} catch (e) {
 			this.receive(undefined, e);
 		}
@@ -59,9 +80,11 @@ class Posts {
 		this.isLoading = true;
 		this.error = undefined;
 	};
-	private receive = (items?: Array<IPost>, error?: any) => {
+
+	private receive = (page?: IPageable<IPost>, error?: any) => {
 		this.isLoading = false;
-		this.items = items ?? this.items;
+		this.items = page?.items ?? this.items;
+		this.total = page?.total ?? this.total;
 		this.error = error as string;
 	};
 }

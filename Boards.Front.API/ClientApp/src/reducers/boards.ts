@@ -39,7 +39,6 @@ class Store {
 			const id = await service.post(name);
 			await this.fetchAll();
 			const item = this.get(id);
-			console.log("item", item);
 			await board.setValue(item);
 		} catch (e) {
 			this.receive(undefined, e);
@@ -67,11 +66,10 @@ class Store {
 
 	@action private request = () => {
 		this.isLoading = true;
-		// this.items = [];
 		this.error = undefined;
 	};
 
-	@action private receive = (items?: Array<IIdName>, error?: string) => {
+	@action private receive = (items?: Array<IIdName>, error?: any) => {
 		this.isLoading = false;
 		this.items = items ?? this.items;
 		this.error = error;

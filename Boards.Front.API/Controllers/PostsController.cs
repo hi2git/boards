@@ -10,6 +10,7 @@ using Boards.Commons.Domain.DTOs.Posts;
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
+using Boards.Commons.Domain.DTOs;
 
 namespace Boards.Front.API.Controllers {
 	public class PostsController : AbstractApiController {
@@ -18,7 +19,7 @@ namespace Boards.Front.API.Controllers {
 		public PostsController(IMediator mediator) => _mediator = mediator;
 
 		[HttpGet]
-		public Task<IEnumerable<PostDTO>> GetAll([FromQuery] Guid id, CancellationToken token) => _mediator.Send(new PostGetAllQuery(id), token);
+		public Task<Pageable<PostDTO>> GetAll([FromQuery] PostFilter filter, CancellationToken token) => _mediator.Send(new PostGetAllQuery(filter), token);
 
 		[HttpPut]
 		public Task Sort([FromBody] SortDTO dto) => _mediator.Send(new PostSortAllCommand(dto.Id, dto.Items));

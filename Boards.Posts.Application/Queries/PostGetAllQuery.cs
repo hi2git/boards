@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using Boards.Commons.Domain.DTOs;
 using Boards.Commons.Domain.DTOs.Posts;
 using Boards.Domain.Contracts.Posts;
 using Boards.Posts.Domain.Models;
@@ -11,9 +12,9 @@ using FluentValidation;
 using MediatR;
 
 namespace Boards.Posts.Application.Queries {
-	public record PostGetAllQuery : PostGetAllMsg, IRequest<IEnumerable<PostDTO>> {
+	public record PostGetAllQuery : PostGetAllMsg, IRequest<Pageable<PostDTO>> {
 
-		public PostGetAllQuery(Guid id) => this.Id = id;
+		public PostGetAllQuery(PostFilter filter) : base(filter) { }
 
 	}
 
@@ -22,21 +23,30 @@ namespace Boards.Posts.Application.Queries {
 
 		public PostGetAllQueryValidator() {
 			RuleFor(n => n.Id).NotEmpty();
+			RuleFor(n => n.Filter).NotEmpty();
+			RuleFor(n => n.Filter.Index).GreaterThan(0);
+			RuleFor(n => n.Filter.BoardId).NotEmpty();
+			RuleFor(n => n.Filter.Size).NotEmpty();
 		}
 	}
 
-	internal class PostGetAllQueryHandler : IRequestHandler<PostGetAllQuery, IEnumerable<PostDTO>> {
+	internal class PostGetAllQueryHandler : IRequestHandler<PostGetAllQuery, Pageable<PostDTO>> {
 		private readonly IPostRepo _repo;
 
 		public PostGetAllQueryHandler(IPostRepo repo) => _repo = repo;
 
-		public async Task<IEnumerable<PostDTO>> Handle(PostGetAllQuery request, CancellationToken token) {// TODO add user check
+		public async Task<Pageable<PostDTO>> Handle(PostGetAllQuery request, CancellationToken token) {// TODO add user check
 			var id = request?.Id ?? throw new ArgumentNullException(nameof(request));
-			var items = await _repo.GetAll(id, token);
-			return items.Select(this.Map);
+			var filter = request.Filter;
+			//var items = await _repo.GetAll(id, token);
+			var query = _repo.Query(id);
+			var total = query.Count(); // TODO: replace to async call
+
+			var items = total > 0 ? query.Skip(filter.RealIndex * filter.SizeInt).Take(filter.SizeInt).ToList() : Enumerable.Empty<Post>();	// TODO: replace to async call
+			return new Pageable<PostDTO>(items.Select(Map), total);
 		}
 
-		private PostDTO Map(Post n) => new() {
+		private static PostDTO Map(Post n) => new() {
 			Id = n.Id,
 			OrderNumber = n.OrderNumber,
 			Description = n.Description,

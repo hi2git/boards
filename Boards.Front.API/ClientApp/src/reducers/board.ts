@@ -2,7 +2,7 @@ import { action, makeAutoObservable, observable } from "mobx";
 
 import router from "./router";
 import boards from "./boards";
-import posts from "./posts";
+// import posts from "./posts";
 import { IIdName } from "../interfaces/components";
 
 const DEFAULT_VALUE = undefined;
@@ -18,7 +18,7 @@ class Store {
 	@action setValue = async (value?: IIdName) => {
 		this.value = value;
 		router.setSearch(PARAM, value?.id, DEFAULT_VALUE);
-		if (!!value) await posts.fetchAll();
+		// if (!!value) await posts.fetchAll();
 	};
 
 	@action clear = () => this.setValue();

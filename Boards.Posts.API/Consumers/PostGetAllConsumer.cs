@@ -10,8 +10,8 @@ namespace Boards.Posts.API.Consumers {
 		public PostGetAllConsumer(IMediator mediator, ILogger<PostGetAllConsumer> log) : base(mediator, log) { }
 
 		protected override async Task<PostGetAllResponse> Handle(PostGetAllMsg item, CancellationToken token) {
-			var items = await this.Mediator.Send(new PostGetAllQuery(item.Id), token);   //TODO: use cache
-			return new() { Items = items };
+			var page = await this.Mediator.Send(new PostGetAllQuery(item.Filter), token);
+			return new() { Page = page };
 		}
 
 	}

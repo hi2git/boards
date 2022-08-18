@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
+using Boards.Commons.Domain.DTOs;
 using Boards.Commons.Domain.DTOs.Posts;
 
 namespace Boards.Domain.Contracts.Posts {
@@ -9,11 +9,14 @@ namespace Boards.Domain.Contracts.Posts {
 
 		public PostGetAllMsg() { }
 
-		public PostGetAllMsg(Guid id) : base(id) { }
+		public PostGetAllMsg(PostFilter filter) : base(filter.BoardId) => this.Filter = filter;
+
+		public PostFilter Filter { get; set; }
+
 
 	}
 
 	public record PostGetAllResponse : AbstractResponse {
-		public IEnumerable<PostDTO> Items { get; set; } = Enumerable.Empty<PostDTO>();
+		public Pageable<PostDTO> Page { get; set; }
 	}
 }

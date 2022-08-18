@@ -1,16 +1,17 @@
 import qs from "query-string";
 
-import { IPost } from "../interfaces/components";
+import { IPost, IPageable, IPostFilter } from "../interfaces/components";
 import axios from "./api.axios";
 
 class Service {
-	getAll = async (boardId?: string) => {
-		if (!boardId) {
-			console.error("boardId is undefined");
-			return [];
-		}
-		const url = `/api/posts?id=${boardId}`;
-		const result = await axios.get<Array<IPost>>(url);
+	getAll = async (filter: IPostFilter) => {
+		// if (!boardId) {
+		// 	console.error("boardId is undefined");
+		// 	throw new Error("Board is undefined");
+		// }
+		const paramStr = qs.stringify(filter);
+		const url = `/api/posts?${paramStr}`;
+		const result = await axios.get<IPageable<IPost>>(url);
 		return result.data;
 	};
 

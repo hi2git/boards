@@ -10,5 +10,7 @@ namespace Boards.Posts.Domain.Repos {
 
 		Task<List<Post>> GetAll(Guid boardId, CancellationToken token);
 
+		IQueryable<Post> Query(Guid boardId);
+
 	}
 }

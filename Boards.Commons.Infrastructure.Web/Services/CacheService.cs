@@ -15,7 +15,7 @@ namespace Boards.Commons.Infrastructure.Web.Services {
 			_json = json;
 		}
 
-		public async Task<T> GetOrRequest<T>(string key, Func<Task<T>> request, CancellationToken token) => 
+		public async Task<T> GetOrRequest<T>(string key, Func<Task<T>> request, CancellationToken token) =>
 			await this.Get<T>(key, token) ?? await this.Request(key, request);
 
 		public Task Remove(string key) => _cache.RemoveAsync(key);
@@ -29,7 +29,7 @@ namespace Boards.Commons.Infrastructure.Web.Services {
 
 		private async Task<T> Set<T>(string key, T value) {
 			var content = await _json.Serialize(value);
-			await _cache.SetStringAsync(key, content);
+			//await _cache.SetStringAsync(key, content);
 			return value;
 		}
 

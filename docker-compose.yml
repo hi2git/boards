@@ -63,6 +63,7 @@ services:
     depends_on:
       - rabbitmq
       - logstash
+      - redis
       - boards.users
       - boards.boards
       - boards.posts
