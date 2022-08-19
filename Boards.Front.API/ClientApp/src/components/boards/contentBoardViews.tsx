@@ -23,7 +23,7 @@ const Views: React.FC<IProps> = () => {
 			label: <i className={`fas fa-${n.icon}`} />,
 		})) ?? [];
 
-	return <RadioGroup value={value} className="float-right" opts={opts} onChange={e => setValue(e.target.value)} />;
+	return <RadioGroup value={value} opts={opts} onChange={e => setValue(e.target.value)} />;
 };
 
 export default observer(Views);

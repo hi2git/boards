@@ -12,7 +12,7 @@ const Toggler: React.FC<IProps> = () => {
 
 	return (
 		<Tooltip title="Масштаб">
-			<div className="border float-right w-50 mr-2 px-2">
+			<div className="border w-50 mr-2 px-2">
 				<Slider value={value} tipFormatter={n => `${n}%`} onChange={setValue} />
 			</div>
 		</Tooltip>

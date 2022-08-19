@@ -36,36 +36,34 @@ const Board: React.FC<IProps> = () => {
 	};
 
 	return !value ? null : (
-		<>
-			<LoadablePanelFull isLoading={isLoading} error={error}>
-				<div className="row mt-2">
-					<div className="col-12 col-md-4">
-						<Sidebar />
-						<Add />
-						<Control />
-						<Palette />
-					</div>
-					<div className="col-12 col-md-4">
-						<Paging
-							defaultCurrent={filter.index}
-							pageSize={filter.size}
-							total={total}
-							onShowSizeChange={(index, size) => search({ index, size })}
-							onChange={index => search({ index })}
-						/>
-					</div>
-					<div className="col-12 col-md-4">
-						<ViewBtns />
-						<Scale />
-					</div>
+		<LoadablePanelFull isLoading={isLoading} error={error}>
+			<div className="row">
+				<div className="col-md-4 col-lg-3 mt-2">
+					<Sidebar />
+					<Add />
+					<Control />
+					<Palette />
 				</div>
-				<div className="row mt-1">
-					<div ref={ref} className="col-12">
-						<ContentTable width={width} />
-					</div>
+				<div className="col-md-8 col-lg-5 mt-2">
+					<Paging
+						defaultCurrent={filter.index}
+						pageSize={filter.size}
+						total={total}
+						onShowSizeChange={(index, size) => search({ index, size })}
+						onChange={index => search({ index })}
+					/>
 				</div>
-			</LoadablePanelFull>
-		</>
+				<div className="col-md-8 col-lg-4 mt-2 d-flex row-flex">
+					<Scale />
+					<ViewBtns />
+				</div>
+			</div>
+			<div className="row mt-2">
+				<div ref={ref} className="col-12">
+					<ContentTable width={width} />
+				</div>
+			</div>
+		</LoadablePanelFull>
 	);
 };
 
