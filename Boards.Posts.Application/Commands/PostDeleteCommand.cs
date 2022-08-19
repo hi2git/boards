@@ -2,8 +2,6 @@
 
 using Board.Domain.Repos;
 
-using Boards.Commons.Application;
-using Boards.Domain.Contracts.Images;
 using Boards.Domain.Contracts.Posts;
 using Boards.Posts.Domain.Repos;
 
@@ -17,16 +15,16 @@ namespace Boards.Posts.Application.Commands {
 	public record PostDeleteCommand : PostDeleteMsg, IRequest {
 
 		public PostDeleteCommand(PostDeleteMsg msg) {
-			this.BoardId = msg.BoardId;
 			this.Id = msg.Id;
+			this.PostId = msg.PostId;
 		}
 	}
 
 	public class PostDeleteCommandValidator : AbstractValidator<PostDeleteCommand> {
 
 		public PostDeleteCommandValidator() {
-			RuleFor(n => n.BoardId).NotEmpty();
 			RuleFor(n => n.Id).NotEmpty();
+			RuleFor(n => n.PostId).NotEmpty();
 		}
 
 	}
@@ -42,17 +40,16 @@ namespace Boards.Posts.Application.Commands {
 			_unitOfWork = unitOfWork;
 			_repo = repo;
 			_publish = publish;
-			//_client = client;
 		}
 
 		public async Task<Unit> Handle(PostDeleteCommand request, CancellationToken token) {// TODO: check user before modify
-			var id = request?.Id ?? throw new ArgumentNullException(nameof(request));
+			var id = request?.PostId ?? throw new ArgumentNullException(nameof(request));
 			var entity = await _repo.Get(id, token);
 			await _repo.Delete(entity);
 
 			await _unitOfWork.Commit(() => _publish.Publish<PostDeletedEvent>(new(id)));
 
-			await _mediator.Send(new PostSortAllCommand(request.BoardId));
+			await _mediator.Send(new PostSortAllCommand(request.Id));	// TODO: replace by request
 
 			return Unit.Value;
 		}

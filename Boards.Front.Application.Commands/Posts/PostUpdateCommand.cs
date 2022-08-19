@@ -12,8 +12,10 @@ using MediatR;
 namespace Boards.Front.Application.Commands.Posts {
 	public record PostUpdateCommand : PostUpdateMsg, IRequest {
 
-		public PostUpdateCommand(PostDTO item) => this.Item = item;
-
+		public PostUpdateCommand(Guid id, PostDTO item) {
+			this.Id = id;
+			this.Item = item;
+		}
 	}
 
 	public class PostUpdateCommandValidator : AbstractValidator<PostUpdateCommand> {

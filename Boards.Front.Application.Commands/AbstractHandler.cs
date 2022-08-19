@@ -16,11 +16,10 @@ namespace Boards.Front.Application.Commands {
 		where TMsg : AbstractMsg
 		where TResponse : AbstractResponse {
 		private readonly IClient<TMsg, TResponse> _client;
-		private readonly ICacheService _cache;
 
 		public AbstractHandler(IClient<TMsg, TResponse> client, ICacheService cache) {
 			_client = client;
-			_cache = cache;
+			Cache = cache;
 		}
 
 		public async Task<Unit> Handle(TRequest request, CancellationToken token) {
@@ -31,6 +30,11 @@ namespace Boards.Front.Application.Commands {
 			return Unit.Value;
 		}
 
+		#region Protected
+
+		protected ICacheService Cache { get; }
+
+
 		protected virtual Task HandleResponse(TResponse response, TRequest request, CancellationToken token) => Task.CompletedTask;	// TODO: use event instead
 
 		protected virtual TMsg GetMsg(TRequest request) => request is TMsg msg
@@ -39,7 +43,9 @@ namespace Boards.Front.Application.Commands {
 
 		protected abstract string CacheKey(TRequest request);
 
-		private Task InvalidateCache(TRequest request) => _cache.Remove(this.CacheKey(request));
+		protected virtual Task InvalidateCache(TRequest request) => this.Cache.Remove(this.CacheKey(request));
+
+		#endregion
 
 	}
 

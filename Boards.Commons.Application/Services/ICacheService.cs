@@ -12,5 +12,13 @@ namespace Boards.Commons.Application.Services {
 
 		Task Remove(string key);
 
+		#region Boards
+
+		Task<T> GetOrRequestBoard<T>(Guid id, int filterHash, Func<Task<T>> request, CancellationToken token);
+
+		Task RemoveBoard(Guid id);
+
+		#endregion
+
 	}
 }

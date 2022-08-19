@@ -40,7 +40,9 @@ namespace Boards.Front.Application.Queries.Posts {
 			_cache = cache;
 		}
 
-		public Task<Pageable<PostDTO>> Handle(PostGetAllQuery request, CancellationToken token) => _cache.GetOrRequest($"board_{request.Id}", () => this.Request(request, token), token);
+		public Task<Pageable<PostDTO>> Handle(PostGetAllQuery request, CancellationToken token) =>
+			//_cache.GetOrRequest($"board_{request.GetHashCode()}", () => this.Request(request, token), token);
+			_cache.GetOrRequestBoard(request.Id, request.GetHashCode(), () => this.Request(request, token), token);
 
 		private async Task<Pageable<PostDTO>> Request(PostGetAllQuery request, CancellationToken token) {
 			var response = await _client.Send(request, token);

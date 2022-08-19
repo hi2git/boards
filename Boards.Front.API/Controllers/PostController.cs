@@ -21,7 +21,7 @@ namespace Boards.Front.API.Controllers {
 		//public Task UpdateContent([FromBody] IdItemDTO dto) => _mediator.Send(new PostContentUpdateCommand(dto.Item));
 
 		[HttpPut]
-		public Task Update([FromBody] IdItemDTO dto) => _mediator.Send(new PostUpdateCommand(dto.Item));
+		public Task Update([FromBody] IdItemDTO dto) => _mediator.Send(new PostUpdateCommand(dto.Id, dto.Item));
 
 		[HttpDelete]
 		public Task Delete([FromQuery] IdItemDTO<Guid> dto) => _mediator.Send(new PostDeleteCommand(dto.Id, dto.Item));
