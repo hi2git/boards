@@ -41,6 +41,14 @@ class CustomRouter {
 		this.router.push(`?${paramStr}`);
 	};
 
+	@computed get boardName() {
+		return this.router.location.pathname.split("/")[1]?.toLowerCase();
+	}
+
+	set boardName(value: string) {
+		this.router.push(value);
+	}
+
 	@action push = (value: string) => this.router.push(value);
 }
 

@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import { AlertDanger, Button } from ".";
 import { IPost } from "../../interfaces/components";
 
-interface ISelectProps {
+interface IProps {
 	item: IPost;
 	onChange: (item: IPost) => void;
+	className?: string;
 	filter?: string;
 	title: string;
 	isDisabled?: boolean;
@@ -13,7 +14,7 @@ interface ISelectProps {
 	isAdd?: boolean;
 }
 
-const Selector: React.FC<ISelectProps> = ({ item, isDisabled, title, onChange, filter = "image/*", isAdd }) => {
+const Selector: React.FC<IProps> = ({ item, isDisabled, className, title, onChange, filter = "image/*", isAdd }) => {
 	const [error, setError] = useState<string>();
 
 	const changeFile = async (files: FileList) => {
@@ -46,7 +47,7 @@ const Selector: React.FC<ISelectProps> = ({ item, isDisabled, title, onChange, f
 	return (
 		<>
 			<AlertDanger value={error} />
-			<Button title={title} disabled={isDisabled} onClick={() => ref.current?.click()}>
+			<Button title={title} className={className} disabled={isDisabled} onClick={() => ref.current?.click()}>
 				<i className={`fas fa-${icon}`} />
 			</Button>
 			<input

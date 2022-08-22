@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import { syncHistoryWithStore } from "mobx-react-router";
 import { Router } from "react-router";
 import { createBrowserHistory } from "history";
+import { ConfigProvider } from "antd";
+import ru_RU from "antd/es/locale-provider/ru_RU";
 
 import App from "./components/apps/app";
 
@@ -18,7 +20,9 @@ const history = syncHistoryWithStore(browserHistory, store.router);
 
 ReactDOM.render(
 	<Router history={history}>
-		<App />
+		<ConfigProvider locale={ru_RU}>
+			<App />
+		</ConfigProvider>
 	</Router>,
 	document.getElementById("root")
 );

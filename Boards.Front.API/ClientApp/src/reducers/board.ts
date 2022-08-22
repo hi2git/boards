@@ -2,11 +2,10 @@ import { action, makeAutoObservable, observable } from "mobx";
 
 import router from "./router";
 import boards from "./boards";
-// import posts from "./posts";
 import { IIdName } from "../interfaces/components";
 
 const DEFAULT_VALUE = undefined;
-const PARAM = "board";
+// const PARAM = "board";
 
 class Store {
 	constructor() {
@@ -17,14 +16,15 @@ class Store {
 
 	@action setValue = async (value?: IIdName) => {
 		this.value = value;
-		router.setSearch(PARAM, value?.id, DEFAULT_VALUE);
+		// router.setBoard(PARAM, value?.id, DEFAULT_VALUE);
+		router.boardName = value?.name ?? "";
 	};
 
 	@action clear = () => this.setValue();
 
 	@action mount = async (defValue?: IIdName) => {
-		const value = router.getSearch(PARAM) as string;
-		await this.setValue(boards.get(value) ?? defValue ?? DEFAULT_VALUE);
+		const value = router.boardName;
+		await this.setValue(boards.getByName(value) ?? defValue ?? DEFAULT_VALUE);
 	};
 }
 

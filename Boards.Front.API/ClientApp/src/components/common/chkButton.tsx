@@ -15,7 +15,7 @@ const Button: React.FC<IButtonProps> = ({ title, style, children, skipFocus, sto
 	return (
 		<Tooltip title={title}>
 			<Btn
-				style={{ opacity: "80%", ...st, ...style }}
+				style={{ ...st, ...style }}
 				type="default"
 				onMouseDown={e => {
 					if (stopPropagation) e.stopPropagation();

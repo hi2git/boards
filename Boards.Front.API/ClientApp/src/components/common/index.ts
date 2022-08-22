@@ -20,3 +20,4 @@ export { default as Slider } from "./slider";
 export { default as Drawer } from "./drawer";
 export { default as Captcha } from "./captcha";
 export { default as Paging } from "./paging";
+export { default as Empty } from "./empty";
