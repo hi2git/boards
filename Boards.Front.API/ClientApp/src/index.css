@@ -9,3 +9,24 @@ body {
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+.hidden {
+	display: none;
+}
+
+.slidedown {
+	animation-name: slidedown;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+	animation-duration: 2s;
+}
+
+@keyframes slidedown {
+	0% {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+	100% {
+		transform: translateY(0px);
+	}
+}

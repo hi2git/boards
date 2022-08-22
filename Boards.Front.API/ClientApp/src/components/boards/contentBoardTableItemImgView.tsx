@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react";
 
 import { IPost } from "../../interfaces/components";
@@ -24,6 +24,7 @@ interface IProps {
 
 const View: React.FC<IProps> = props => {
 	const { item, className, size, data, onChange, onDelete } = props;
+	const [animClass, setAnimClass] = useState("hidden");
 
 	const doneIcon = item.isDone ? "-check" : "";
 
@@ -33,10 +34,11 @@ const View: React.FC<IProps> = props => {
 		<div className="d-flex expander">
 			<Tooltip title={item.description ?? ""}>
 				<img
-					className={className}
+					className={`${animClass} ${className}`}
 					src={data}
 					alt="Загрузка..."
 					style={{ width: size, height: size, objectFit: view.value }}
+					onLoad={() => setAnimClass("slidedown")}
 				/>
 			</Tooltip>
 			<div className="absolute w-100">

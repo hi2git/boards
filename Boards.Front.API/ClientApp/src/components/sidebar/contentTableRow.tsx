@@ -33,7 +33,7 @@ const Row: React.FC<IProps> = ({ item }) => {
 	const borderCls = board.value?.id === item.id ? "background-blue-light" : "";
 
 	return (
-		<tr className={`row ${borderCls}`}>
+		<tr className={`row slidedown ${borderCls}`}>
 			<td className="col-8">
 				<ValueCell isEdit={isEdit} item={newItem} onChange={setName} onSubmit={submit} />
 			</td>

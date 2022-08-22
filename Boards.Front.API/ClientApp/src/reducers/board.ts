@@ -17,7 +17,6 @@ class Store {
 
 	@action setValue = async (value?: IIdName) => {
 		this.value = value;
-		console.log("setValue", value?.id, value?.name);
 		router.setSearch(PARAM, value?.id, DEFAULT_VALUE);
 	};
 

@@ -83,7 +83,7 @@ class Store {
 	}
 
 	public get = (id: string) => this.items?.find(n => n.id === id);
-	private getByName = (name: string) => this.items?.find(n => n.name === name);
+	public getByName = (name: string) => this.items?.find(n => n.name === name);
 }
 
 export default new Store();
