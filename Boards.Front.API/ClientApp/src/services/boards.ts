@@ -12,19 +12,19 @@ class Service {
 
 	post = async (value: string) => {
 		const url = "/api/board";
-		const result = await axios.post<string>(url, { value });
+		const result = await axios.post<void>(url, { value });
 		return result.data;
 	};
 
 	put = async (item: IIdName) => {
 		const url = "/api/board";
-		await axios.put(url, { ...item, content: undefined });
+		await axios.put<void>(url, { ...item, content: undefined });
 	};
 
 	del = async (id: string) => {
 		const paramStr = qs.stringify({ id });
 		const url = `/api/board?${paramStr}`;
-		await axios.delete(url);
+		await axios.delete<void>(url);
 	};
 }
 

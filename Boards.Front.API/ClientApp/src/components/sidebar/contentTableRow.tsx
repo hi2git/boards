@@ -28,9 +28,9 @@ const Row: React.FC<IProps> = ({ item }) => {
 		await setName(item.name);
 	};
 
-	const del = async () => confirm({ title: "Подтвердите удаление", onOk: () => boards.del(newItem.id) });
+	const del = () => confirm({ title: "Подтвердите удаление", onOk: () => boards.del(newItem.id) });
 
-	const borderCls = board.value?.id === item.id ? "background-blue-light" : undefined;
+	const borderCls = board.value?.id === item.id ? "background-blue-light" : "";
 
 	return (
 		<tr className={`row ${borderCls}`}>

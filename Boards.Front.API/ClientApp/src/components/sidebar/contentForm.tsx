@@ -15,31 +15,33 @@ const ContentForm: React.FC<IProps> = () => {
 
 	return (
 		<div className="row">
-			<Form
-				form={form}
-				keys={[NAME]}
-				item={{ name }}
-				onFinish={() => boards.post(name)}
-				layout="inline"
-				className=" w-100"
-			>
-				<div className="w-90">
-					<ValidatedInput
-						title="Название новой доски"
-						keyName={NAME}
-						max={50}
-						isInline
-						onChange={(_, v) => setName(v)}
-					/>
-				</div>
-				<div className="w-10">
-					<FormItem>
-						<Button title="Добавить" htmlType="submit" type="link" disabled={!name}>
-							<i className="fas fa-check" />
-						</Button>
-					</FormItem>
-				</div>
-			</Form>
+			<div className="col-12 px-0">
+				<Form
+					form={form}
+					keys={[NAME]}
+					item={{ name }}
+					onFinish={() => boards.post(name)}
+					layout="inline"
+					className=" w-100"
+				>
+					<div className="w-90">
+						<ValidatedInput
+							title="Название новой доски"
+							keyName={NAME}
+							max={50}
+							isInline
+							onChange={(_, v) => setName(v)}
+						/>
+					</div>
+					<div className="w-10">
+						<FormItem>
+							<Button title="Добавить" htmlType="submit" type="link" disabled={!name}>
+								<i className="fas fa-check" />
+							</Button>
+						</FormItem>
+					</div>
+				</Form>
+			</div>
 		</div>
 	);
 };

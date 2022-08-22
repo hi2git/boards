@@ -39,9 +39,9 @@ class Store {
 	@action post = async (name: string) => {
 		this.request();
 		try {
-			const id = await service.post(name);
+			await service.post(name);
 			await this.fetchAll();
-			const item = this.get(id);
+			const item = this.getByName(name);
 			await board.setValue(item);
 		} catch (e) {
 			this.receive(undefined, e);
@@ -82,7 +82,8 @@ class Store {
 		return this.items[0];
 	}
 
-	get = (id: string) => this.items?.find(n => n.id === id);
+	public get = (id: string) => this.items?.find(n => n.id === id);
+	private getByName = (name: string) => this.items?.find(n => n.name === name);
 }
 
 export default new Store();

@@ -10,7 +10,7 @@ interface IProps {}
 const Table: React.FC<IProps> = () => {
 	const rows = boards.items.map(n => <Row key={n.id} item={n} />);
 	return (
-		<table className="table mt-2">
+		<table className="table table-hover mt-2">
 			<tbody>{rows}</tbody>
 		</table>
 	);
