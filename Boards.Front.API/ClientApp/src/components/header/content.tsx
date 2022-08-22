@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 
 import * as urls from "../../constants/urls";
 import router from "../../reducers/router";
+import { Header } from "../common/layouts";
 import { Menu } from "../common";
 
 import Home from "./contentHome";
@@ -23,7 +24,7 @@ const Content: React.FC<IProps> = () => {
 	};
 
 	return (
-		<div className="header">
+		<header className="header">
 			<Menu
 				className="text-center"
 				defaultOpenKeys={[urls.HOME]}
@@ -39,7 +40,7 @@ const Content: React.FC<IProps> = () => {
 				<Contacts key={urls.CONTACTS} />
 				<Settings key={urls.SETTINGS} />
 			</Menu>
-		</div>
+		</header>
 	);
 };
 

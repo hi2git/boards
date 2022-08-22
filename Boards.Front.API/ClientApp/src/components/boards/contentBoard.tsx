@@ -38,13 +38,13 @@ const Board: React.FC<IProps> = () => {
 	return !value ? null : (
 		<LoadablePanelFull isLoading={isLoading} error={error}>
 			<div className="row">
-				<div className="col-xl-3 mt-2">
+				<div className="col-lg-3 mt-2">
 					<Sidebar />
 					<Add />
 					<Control />
 					<Palette />
 				</div>
-				<div className="col mt-2 d-flex justify-xl-content-center">
+				<div className="col mt-2 d-flex justify-content-xl-center">
 					<Paging
 						defaultCurrent={filter.index}
 						pageSize={filter.size}
@@ -53,7 +53,7 @@ const Board: React.FC<IProps> = () => {
 						onChange={index => search({ index })}
 					/>
 				</div>
-				<div className="col-lg-4 mt-2 d-flex justify-xl-content-end">
+				<div className="col-xl-4 mt-2 d-flex justify-content-xl-end">
 					<Scale />
 					<ViewBtns />
 				</div>
