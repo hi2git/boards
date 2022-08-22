@@ -21,17 +21,18 @@ namespace Boards.Front.Application.Queries.Boards {
 	internal class BoardGetAllQueryHandler : IRequestHandler<BoardGetAllQuery, IEnumerable<IdNameDTO>> {
 		private readonly IClient<BoardGetAllMsg, BoardGetAllResponse> _client;
 		private readonly IUserManager _userMgr;
-		private readonly ICacheService _cache;
+		//private readonly ICacheService _cache;
 
-		public BoardGetAllQueryHandler(IClient<BoardGetAllMsg, BoardGetAllResponse> client, IUserManager userMgr, ICacheService cache) {
+		public BoardGetAllQueryHandler(IClient<BoardGetAllMsg, BoardGetAllResponse> client, IUserManager userMgr/*, ICacheService cache*/) {
 			_client = client;
 			_userMgr = userMgr;
-			_cache = cache;
+			//_cache = cache;
 		}
 
-		public  Task<IEnumerable<IdNameDTO>> Handle(BoardGetAllQuery request, CancellationToken token) => _cache.GetOrRequest(_userMgr.UserKey, () => this.Request(token), token);
+		//public  Task<IEnumerable<IdNameDTO>> Handle(BoardGetAllQuery request, CancellationToken token) => _cache.GetOrRequest(_userMgr.UserKey, () => this.Request(token), token);
 
-		private async Task<IEnumerable<IdNameDTO>> Request(CancellationToken token) {
+		//private async Task<IEnumerable<IdNameDTO>> Request(CancellationToken token) {
+		public async Task<IEnumerable<IdNameDTO>> Handle(BoardGetAllQuery request, CancellationToken token) { 
 			var msg = new BoardGetAllMsg(_userMgr.CurrentUserId);
 			var response = await _client.Send(msg, token);
 			return response.Items;

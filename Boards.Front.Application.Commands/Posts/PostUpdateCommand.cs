@@ -29,6 +29,6 @@ namespace Boards.Front.Application.Commands.Posts {
 
 	internal class PostUpdateCommandHandler : AbstractPostCommandHandler<PostUpdateCommand, PostUpdateMsg, PostUpdateResponse> {
 
-		public PostUpdateCommandHandler(IClient<PostUpdateMsg, PostUpdateResponse> client, ICacheService cache) : base(client, cache) { }
+		public PostUpdateCommandHandler(IClient<PostUpdateMsg, PostUpdateResponse> client/*, ICacheService cache*/) : base(client/*, cache*/) { }
 	}
 }

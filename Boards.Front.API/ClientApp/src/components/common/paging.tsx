@@ -7,6 +7,7 @@ export const defaultPageSizes = ["6", "12", "24", "51"];
 
 interface IProps extends PaginationProps {}
 
-const Paging: React.FC<IProps> = props => <Pagination pageSizeOptions={defaultPageSizes} showSizeChanger {...props} />;
+const Paging: React.FC<IProps> = ({ total, ...props }) =>
+	total === 0 ? null : <Pagination total={total} pageSizeOptions={defaultPageSizes} showSizeChanger {...props} />;
 
 export default Paging;

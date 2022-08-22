@@ -32,10 +32,10 @@ namespace Boards.Front.Application.Commands.Users {
 	internal class UserUpdateCommandHandler : AbstractHandler<UserUpdateCommand, UserUpdateMsg, UserUpdateResponse> {
 		private readonly IUserManager _userMgr;
 
-		public UserUpdateCommandHandler(IClient<UserUpdateMsg, UserUpdateResponse> client, IUserManager userMgr, ICacheService cache) : base(client, cache) => _userMgr = userMgr;
+		public UserUpdateCommandHandler(IClient<UserUpdateMsg, UserUpdateResponse> client, IUserManager userMgr/*, ICacheService cache*/) : base(client/*, cache*/) => _userMgr = userMgr;
 
 		protected override UserUpdateMsg GetMsg(UserUpdateCommand request) => new(_userMgr.CurrentUserId, request.Item);
 
-		protected override string CacheKey(UserUpdateCommand _) => "all_users";
+		//protected override string CacheKey(UserUpdateCommand _) => "all_users";
 	}
 }

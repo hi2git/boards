@@ -18,7 +18,6 @@ class Store {
 	@action setValue = async (value?: IIdName) => {
 		this.value = value;
 		router.setSearch(PARAM, value?.id, DEFAULT_VALUE);
-		// if (!!value) await posts.fetchAll();
 	};
 
 	@action clear = () => this.setValue();

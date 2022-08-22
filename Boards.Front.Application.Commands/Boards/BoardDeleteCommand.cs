@@ -28,6 +28,6 @@ namespace Boards.Front.Application.Commands.Boards {
 
 	internal class BoardDeleteCommandHandler : AbstractBoardCommandHandler<BoardDeleteCommand, BoardDeleteMsg, BoardDeleteResponse> {
 
-		public BoardDeleteCommandHandler(IClient<BoardDeleteMsg, BoardDeleteResponse> client, ICacheService cache, IUserManager usrMgr) : base(client, cache, usrMgr) { }
+		public BoardDeleteCommandHandler(IClient<BoardDeleteMsg, BoardDeleteResponse> client/*, ICacheService cache*/, IUserManager usrMgr) : base(client/*, cache*/, usrMgr) { }
 	}
 }

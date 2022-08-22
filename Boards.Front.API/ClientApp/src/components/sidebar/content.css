@@ -1,0 +1,15 @@
+.sidebar .background-blue-light {
+	background-color: aliceblue;
+}
+
+.sidebar .ant-form-item-with-help {
+	margin-bottom: 0;
+}
+
+.sidebar .w-90 {
+	width: 90%;
+}
+
+.sidebar .w-10 {
+	width: 10%;
+}

@@ -21,7 +21,7 @@ namespace Boards.Front.Application.Commands.Users {
 		private readonly IUserManager _userMgr;
 		private readonly IMediator _mediator;
 
-		public UserDeleteCommandHandler(IClient<UserDeleteMsg, UserDeleteResponse> client, IUserManager userMgr, IMediator mediator, ICacheService cache) : base(client, cache) {
+		public UserDeleteCommandHandler(IClient<UserDeleteMsg, UserDeleteResponse> client, IUserManager userMgr, IMediator mediator/*, ICacheService cache*/) : base(client/*, cache*/) {
 			_userMgr = userMgr;
 			_mediator = mediator;
 		}
@@ -30,6 +30,6 @@ namespace Boards.Front.Application.Commands.Users {
 
 		protected override Task HandleResponse(UserDeleteResponse response, UserDeleteCommand request, CancellationToken token) => _mediator.Send(new LogoutCommand(), token);
 		
-		protected override string CacheKey(UserDeleteCommand _) => "all_users";
+		//protected override string CacheKey(UserDeleteCommand _) => "all_users";
 	}
 }

@@ -2,6 +2,7 @@
 
 using Board.Domain.Repos;
 
+using Boards.Commons.Application.Services;
 using Boards.Commons.Domain.DTOs.Posts;
 using Boards.Domain.Contracts.Posts;
 using Boards.Posts.Domain.Models;
@@ -14,7 +15,7 @@ using MediatR;
 namespace Boards.Posts.Application.Commands {
 	public record PostUpdateCommand : PostUpdateMsg, IRequest {
 
-		public PostUpdateCommand(PostUpdateMsg msg) => this.Item = msg.Item;
+		public PostUpdateCommand(PostUpdateMsg msg) : base(msg.Id) => this.Item = msg.Item;
 
 	}
 
@@ -30,10 +31,12 @@ namespace Boards.Posts.Application.Commands {
 	internal class PostUpdateCommandHandler : IRequestHandler<PostUpdateCommand> {
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IPostRepo _repo;
+		private readonly ICacheService _cache;
 
-		public PostUpdateCommandHandler(IUnitOfWork unitOfWork, IPostRepo repo) {
+		public PostUpdateCommandHandler(IUnitOfWork unitOfWork, IPostRepo repo, ICacheService cache) {
 			_unitOfWork = unitOfWork;
 			_repo = repo;
+			_cache = cache;
 		}
 
 		public async Task<Unit> Handle(PostUpdateCommand request, CancellationToken token) {// TODO: check user before modify
@@ -41,7 +44,9 @@ namespace Boards.Posts.Application.Commands {
 			var entity = await _repo.Get(item.Id.Value, token);
 			entity = this.Map(item, entity);
 			await _repo.Update(entity);
-			await _unitOfWork.Commit();	// TODO: save Intergration event
+			await _unitOfWork.Commit(); // TODO: save Intergration event
+
+			await _cache.RemoveBoard(request.Id);
 
 			return Unit.Value;
 		}

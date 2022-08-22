@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 
 using Boards.Commons.Application;
-using Boards.Commons.Application.Services;
+//using Boards.Commons.Application.Services;
 using Boards.Domain.Contracts;
 
 using MediatR;
@@ -14,11 +14,11 @@ namespace Boards.Front.Application.Commands.Posts {
 		where TMsg : AbstractMsg
 		where TResponse : AbstractResponse {
 
-		protected AbstractPostCommandHandler(IClient<TMsg, TResponse> client, ICacheService cache) : base(client, cache) { }
+		protected AbstractPostCommandHandler(IClient<TMsg, TResponse> client/*, ICacheService cache*/) : base(client/*, cache*/) { }
 
-		protected override string CacheKey(TRequest request) => $"board_{request.Id}"; //TODO: remove as unnecessary
+		//protected override string CacheKey(TRequest request) => $"board_{request.Id}"; //TODO: remove as unnecessary
 
-		protected override Task InvalidateCache(TRequest request) => Cache.RemoveBoard(request.Id);
+		//protected override Task InvalidateCache(TRequest request) => Cache.RemoveBoard(request.Id);
 
 	}
 }

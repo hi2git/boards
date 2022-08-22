@@ -33,6 +33,6 @@ namespace Boards.Front.Application.Commands.Posts {
 
 	internal class PostSortAllCommandHandler : AbstractPostCommandHandler<PostSortAllCommand, PostSortAllMsg, PostSortedResponse> {
 
-		public PostSortAllCommandHandler(IClient<PostSortAllMsg, PostSortedResponse> client, ICacheService cache) : base(client, cache) { }
+		public PostSortAllCommandHandler(IClient<PostSortAllMsg, PostSortedResponse> client/*, ICacheService cache*/) : base(client/*, cache*/) { }
 	}
 }

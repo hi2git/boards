@@ -10,7 +10,7 @@ namespace Boards.Posts.API.Consumers {
 		public PostGetAllConsumer(IMediator mediator, ILogger<PostGetAllConsumer> log) : base(mediator, log) { }
 
 		protected override async Task<PostGetAllResponse> Handle(PostGetAllMsg item, CancellationToken token) {
-			var page = await this.Mediator.Send(new PostGetAllQuery(item.Filter), token);
+			var page = await this.Mediator.Send(new PostGetAllQuery(item), token);
 			return new() { Page = page };
 		}
 

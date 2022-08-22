@@ -8,6 +8,8 @@ import boards from "../../reducers/boards";
 import AddForm from "./contentForm";
 import Table from "./contentTable";
 
+import "./content.css";
+
 interface IProps {}
 
 const SideContent: React.FC<IProps> = () => {
@@ -15,7 +17,7 @@ const SideContent: React.FC<IProps> = () => {
 	const { isLoading, error } = boards;
 
 	return (
-		<Drawer visible={value} onClose={toggle}>
+		<Drawer className="sidebar" visible={value} onClose={toggle}>
 			<h2>Доски</h2>
 			<LoadablePanel isLoading={isLoading}>
 				<AlertDanger value={error} />

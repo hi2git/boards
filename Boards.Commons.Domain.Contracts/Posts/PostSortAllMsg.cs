@@ -6,6 +6,9 @@ using Boards.Commons.Domain.DTOs.Posts;
 
 namespace Boards.Domain.Contracts.Posts {
 	public record PostSortAllMsg : AbstractMsg {
+		public PostSortAllMsg() { }
+
+		public PostSortAllMsg(Guid boardId) : base(boardId) { }
 
 		public IEnumerable<PostDTO>? Items { get; set;  }
 

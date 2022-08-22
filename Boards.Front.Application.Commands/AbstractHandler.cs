@@ -17,22 +17,24 @@ namespace Boards.Front.Application.Commands {
 		where TResponse : AbstractResponse {
 		private readonly IClient<TMsg, TResponse> _client;
 
-		public AbstractHandler(IClient<TMsg, TResponse> client, ICacheService cache) {
+		public AbstractHandler(IClient<TMsg, TResponse> client/*, ICacheService cache*/) {
 			_client = client;
-			Cache = cache;
+			//Cache = cache;
 		}
 
 		public async Task<Unit> Handle(TRequest request, CancellationToken token) {
 			var msg = this.GetMsg(request);
 			var response = await _client.Send(msg, token);
-			await this.InvalidateCache(request);
+			//await this.InvalidateCache(request);
 			await this.HandleResponse(response, request, token);
 			return Unit.Value;
 		}
 
 		#region Protected
 
-		protected ICacheService Cache { get; }
+		#endregion
+
+		//protected ICacheService Cache { get; }
 
 
 		protected virtual Task HandleResponse(TResponse response, TRequest request, CancellationToken token) => Task.CompletedTask;	// TODO: use event instead
@@ -41,11 +43,9 @@ namespace Boards.Front.Application.Commands {
 			? msg
 			: throw new InvalidOperationException($"Couldn't get msg for {request.GetType().Name}");
 
-		protected abstract string CacheKey(TRequest request);
+		//protected abstract string CacheKey(TRequest request);
 
-		protected virtual Task InvalidateCache(TRequest request) => this.Cache.Remove(this.CacheKey(request));
-
-		#endregion
+		//protected virtual Task InvalidateCache(TRequest request) => this.Cache.Remove(this.CacheKey(request));
 
 	}
 

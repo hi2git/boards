@@ -27,7 +27,7 @@ namespace Boards.Front.Application.Commands.Posts {
 	}
 
 	internal class PostDeleteCommandHandler : AbstractPostCommandHandler<PostDeleteCommand, PostDeleteMsg, PostDeleteResponse> {
-		public PostDeleteCommandHandler(IClient<PostDeleteMsg, PostDeleteResponse> client, ICacheService cache) : base(client, cache) { }
+		public PostDeleteCommandHandler(IClient<PostDeleteMsg, PostDeleteResponse> client/*, ICacheService cache*/) : base(client/*, cache*/) { }
 
 	}
 }

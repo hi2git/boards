@@ -9,6 +9,8 @@ namespace Boards.Domain.Contracts.Posts {
 
 		public PostGetAllMsg() { }
 
+		public PostGetAllMsg(Guid boardId) : base(boardId) { }
+
 		public PostGetAllMsg(PostFilter filter) : base(filter.BoardId) => this.Filter = filter;
 
 		public PostFilter Filter { get; set; }

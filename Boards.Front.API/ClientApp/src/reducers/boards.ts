@@ -21,7 +21,10 @@ class Store {
 		return this.canDelete ? "Удалить" : "Нельзя удалить последнюю доску";
 	}
 
-	@action clear = () => this.request();
+	@action clear = () => {
+		this.items = [];
+		this.request();
+	};
 
 	@action fetchAll = async () => {
 		this.request();

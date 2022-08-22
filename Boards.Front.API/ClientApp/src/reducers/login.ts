@@ -36,6 +36,7 @@ class Login {
 		this.request();
 		try {
 			await service.delete();
+			await boards.clear();
 			this.redirect();
 		} catch (e) {
 			this.receive(e);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "../common";
+import { Button, InputGroup } from "../common";
 import { Form, FormItem, useForm, ValidatedInput } from "../common/forms";
 
 import boards from "../../reducers/boards";
@@ -14,21 +14,33 @@ const ContentForm: React.FC<IProps> = () => {
 	const [name, setName] = React.useState("");
 
 	return (
-		<Form form={form} keys={[NAME]} item={{ name }} onFinish={() => boards.post(name)} layout="inline">
-			<ValidatedInput
-				className="mx-0"
-				title="Название"
-				keyName={NAME}
-				max={50}
-				isInline
-				onChange={(_, v) => setName(v)}
-			/>
-			<FormItem className="mx-0">
-				<Button title="Добавить" htmlType="submit" disabled={!name}>
-					<i className="fas fa-plus" />
-				</Button>
-			</FormItem>
-		</Form>
+		<div className="row">
+			<Form
+				form={form}
+				keys={[NAME]}
+				item={{ name }}
+				onFinish={() => boards.post(name)}
+				layout="inline"
+				className=" w-100"
+			>
+				<div className="w-90">
+					<ValidatedInput
+						title="Название новой доски"
+						keyName={NAME}
+						max={50}
+						isInline
+						onChange={(_, v) => setName(v)}
+					/>
+				</div>
+				<div className="w-10">
+					<FormItem>
+						<Button title="Добавить" htmlType="submit" type="link" disabled={!name}>
+							<i className="fas fa-check" />
+						</Button>
+					</FormItem>
+				</div>
+			</Form>
+		</div>
 	);
 };
 

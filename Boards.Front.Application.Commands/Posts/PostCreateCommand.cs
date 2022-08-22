@@ -35,7 +35,7 @@ namespace Boards.Front.Application.Commands.Posts {
 
 	internal class PostCreateCommandHandler : AbstractPostCommandHandler<PostCreateCommand, PostCreateMsg, PostCreateResponse> {
 
-		public PostCreateCommandHandler(IClient<PostCreateMsg, PostCreateResponse> client, ICacheService cache) : base(client, cache) { }
+		public PostCreateCommandHandler(IClient<PostCreateMsg, PostCreateResponse> client/*, ICacheService cache*/) : base(client/*, cache*/) { }
 
 	}
 }

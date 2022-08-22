@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using Boards.Commons.Application.Services;
 using Boards.Commons.Domain.DTOs;
 using Boards.Commons.Domain.DTOs.Posts;
 using Boards.Domain.Contracts.Posts;
@@ -14,7 +15,7 @@ using MediatR;
 namespace Boards.Posts.Application.Queries {
 	public record PostGetAllQuery : PostGetAllMsg, IRequest<Pageable<PostDTO>> {
 
-		public PostGetAllQuery(PostFilter filter) : base(filter) { }
+		public PostGetAllQuery(PostGetAllMsg msg) : base(msg.Filter) { }
 
 	}
 
@@ -32,17 +33,33 @@ namespace Boards.Posts.Application.Queries {
 
 	internal class PostGetAllQueryHandler : IRequestHandler<PostGetAllQuery, Pageable<PostDTO>> {
 		private readonly IPostRepo _repo;
+		private readonly ICacheService _cache;
 
-		public PostGetAllQueryHandler(IPostRepo repo) => _repo = repo;
+		public PostGetAllQueryHandler(IPostRepo repo, ICacheService cache) {
+			_repo = repo;
+			_cache = cache;
+		}
 
-		public async Task<Pageable<PostDTO>> Handle(PostGetAllQuery request, CancellationToken token) {// TODO add user check
+		public Task<Pageable<PostDTO>> Handle(PostGetAllQuery request, CancellationToken token) {// TODO add user check
 			var id = request?.Id ?? throw new ArgumentNullException(nameof(request));
-			var filter = request.Filter;
+			//var filter = request.Filter;
 			//var items = await _repo.GetAll(id, token);
-			var query = _repo.Query(id);
+
+			return _cache.GetOrRequestBoard(id, request.Filter.GetHashCode(), () => this.GetFromDb(request, token), token);
+
+			//var query = _repo.Query(id);
+			//var total = query.Count(); // TODO: replace to async call
+
+			//var items = total > 0 ? query.Skip(filter.RealIndex * filter.SizeInt).Take(filter.SizeInt).ToList() : Enumerable.Empty<Post>();	// TODO: replace to async call
+			//return new Pageable<PostDTO>(items.Select(Map), total);
+		}
+
+		private async Task<Pageable<PostDTO>> GetFromDb(PostGetAllQuery request, CancellationToken token) {
+			var filter = request.Filter;
+			var query = _repo.Query(request.Id);
 			var total = query.Count(); // TODO: replace to async call
 
-			var items = total > 0 ? query.Skip(filter.RealIndex * filter.SizeInt).Take(filter.SizeInt).ToList() : Enumerable.Empty<Post>();	// TODO: replace to async call
+			var items = total > 0 ? query.Skip(filter.RealIndex * filter.SizeInt).Take(filter.SizeInt).ToList() : Enumerable.Empty<Post>(); // TODO: replace to async call
 			return new Pageable<PostDTO>(items.Select(Map), total);
 		}
 

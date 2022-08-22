@@ -14,9 +14,9 @@ namespace Boards.Front.Application.Commands.Boards {
 		where TResponse : AbstractResponse {
 		private readonly IUserManager _userMgr;
 
-		protected AbstractBoardCommandHandler(IClient<TMsg, TResponse> client, ICacheService cache, IUserManager userMgr) : base(client, cache) => _userMgr = userMgr;
+		protected AbstractBoardCommandHandler(IClient<TMsg, TResponse> client/*, ICacheService cache*/, IUserManager userMgr) : base(client/*, cache*/) => _userMgr = userMgr;
 
-		protected override string CacheKey(TRequest _) => _userMgr.UserKey;
+		//protected override string CacheKey(TRequest _) => _userMgr.UserKey;
 
 		protected Guid UserId => _userMgr.CurrentUserId;
 

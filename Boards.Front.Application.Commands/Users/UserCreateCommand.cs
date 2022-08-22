@@ -60,11 +60,11 @@ namespace Boards.Front.Application.Commands.Users {
 	internal class UserCreateCommandHandler : AbstractHandler<UserCreateCommand, UserCreateMsg, UserCreateResponse> {
 		private readonly IMediator _mediator;
 
-		public UserCreateCommandHandler(IClient<UserCreateMsg, UserCreateResponse> client, IMediator mediator, ICacheService cache) : base(client, cache) => _mediator = mediator;
+		public UserCreateCommandHandler(IClient<UserCreateMsg, UserCreateResponse> client, IMediator mediator/*, ICacheService cache*/) : base(client/*, cache*/) => _mediator = mediator;
 
 		protected override Task HandleResponse(UserCreateResponse response, UserCreateCommand request, CancellationToken token) => _mediator.Send(new LoginCommand(request.Item), token);
 
-		protected override string CacheKey(UserCreateCommand _) => "all_users";
+		//protected override string CacheKey(UserCreateCommand _) => "all_users";
 
 	}
 }
