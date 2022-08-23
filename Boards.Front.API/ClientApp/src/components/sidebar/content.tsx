@@ -17,7 +17,7 @@ const SideContent: React.FC<IProps> = () => {
 	const { isLoading, error } = boards;
 
 	return (
-		<Drawer title="Доски" className="sidebar" visible={value} onClose={toggle}>
+		<Drawer width="auto" title="Доски" className="sidebar" visible={value} onClose={toggle}>
 			<LoadablePanel isLoading={isLoading}>
 				<AlertDanger value={error} />
 				<AddForm />

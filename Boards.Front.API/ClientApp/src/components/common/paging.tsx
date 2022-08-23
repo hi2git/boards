@@ -9,14 +9,7 @@ interface IProps extends PaginationProps {}
 
 const Paging: React.FC<IProps> = ({ total, ...props }) =>
 	total === 0 ? null : (
-		<Pagination
-			total={total}
-			pageSizeOptions={defaultPageSizes}
-			showSizeChanger
-			showLessItems
-			responsive
-			{...props}
-		/>
+		<Pagination total={total} pageSizeOptions={defaultPageSizes} showSizeChanger showLessItems {...props} />
 	);
 
 export default Paging;
