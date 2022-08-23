@@ -29,7 +29,7 @@ namespace Boards.Front.Application.Commands.Boards {
 
 	internal class BoardUpdateCommandHandler : AbstractBoardCommandHandler<BoardUpdateCommand, BoardUpdateMsg, BoardUpdateResponse> {
 
-		public BoardUpdateCommandHandler(IClient<BoardUpdateMsg, BoardUpdateResponse> client/*, ICacheService cache*/, IUserManager usrMgr) : base(client/*, cache*/, usrMgr) { }
+		public BoardUpdateCommandHandler(IClient<BoardUpdateMsg, BoardUpdateResponse> client, IUserManager usrMgr) : base(client, usrMgr) { }
 
 		protected override BoardUpdateMsg GetMsg(BoardUpdateCommand request) => new(request.Item, this.UserId);
 

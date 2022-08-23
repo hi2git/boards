@@ -4,6 +4,7 @@ using System.Linq;
 using Board.Domain.Repos;
 
 using Boards.Boards.Domain.Repos;
+using Boards.Commons.Application.Services;
 using Boards.Domain.Contracts.Boards;
 
 using FluentValidation;
@@ -32,10 +33,12 @@ namespace Boards.Boards.Application.Commands {
 	internal class BoardUpdateCommandHandler : IRequestHandler<BoardUpdateCommand> {
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IBoardRepo _repo;
+		private readonly ICacheService _cache;
 
-		public BoardUpdateCommandHandler(IUnitOfWork unitOfWork, IBoardRepo repo) {
+		public BoardUpdateCommandHandler(IUnitOfWork unitOfWork, IBoardRepo repo, ICacheService cache) {
 			_unitOfWork = unitOfWork;
 			_repo = repo;
+			_cache = cache;
 		}
 
 		public async Task<Unit> Handle(BoardUpdateCommand request, CancellationToken token) {
@@ -46,6 +49,8 @@ namespace Boards.Boards.Application.Commands {
 			
 			await _repo.Update(board);
 			await _unitOfWork.Commit();
+
+			await _cache.Remove($"user_{request.UserId}");
 
 			return Unit.Value;
 		}

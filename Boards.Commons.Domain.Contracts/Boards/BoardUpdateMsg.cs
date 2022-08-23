@@ -15,7 +15,7 @@ namespace Boards.Domain.Contracts.Boards {
 		}
 
 		public string Name { get; set; } = string.Empty;
-		public Guid UserId { get; }
+		public Guid UserId { get; set;  }
 	}
 
 	public record BoardUpdateResponse : AbstractResponse { }

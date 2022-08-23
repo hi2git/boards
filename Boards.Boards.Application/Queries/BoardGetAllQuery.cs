@@ -2,6 +2,7 @@
 using System.Linq;
 
 using Boards.Boards.Domain.Repos;
+using Boards.Commons.Application.Services;
 using Boards.Commons.Domain.DTOs;
 using Boards.Domain.Contracts.Boards;
 
@@ -24,10 +25,16 @@ namespace Boards.Boards.Application.Queries {
 
 	internal class BoardGetAllQueryHandler : IRequestHandler<BoardGetAllQuery, IEnumerable<IdNameDTO>> {
 		private readonly IBoardRepo _repo;
+		private readonly ICacheService _cache;
 
-		public BoardGetAllQueryHandler(IBoardRepo repo) => _repo = repo;
+		public BoardGetAllQueryHandler(IBoardRepo repo, ICacheService cache) {
+			_repo = repo;
+			_cache = cache;
+		}
 
-		public async Task<IEnumerable<IdNameDTO>> Handle(BoardGetAllQuery request, CancellationToken token) {
+		public Task<IEnumerable<IdNameDTO>> Handle(BoardGetAllQuery request, CancellationToken token) => _cache.GetOrRequest($"user_{request.Id}", () => this.GetFromDb(request, token), token);
+		
+		public async Task<IEnumerable<IdNameDTO>> GetFromDb(BoardGetAllQuery request, CancellationToken token) {
 			var boards = await _repo.GetAll(request.Id, token);
 			return boards.Select(this.Map);
 		}

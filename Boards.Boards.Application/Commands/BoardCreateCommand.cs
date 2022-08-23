@@ -4,6 +4,7 @@ using System.Linq;
 using Board.Domain.Repos;
 
 using Boards.Boards.Domain.Repos;
+using Boards.Commons.Application.Services;
 using Boards.Domain.Contracts.Boards;
 
 using FluentValidation;
@@ -22,7 +23,7 @@ namespace Boards.Boards.Application.Commands {
 			RuleFor(n => n.Id).NotEmpty();
 			RuleFor(n => n.Name).NotEmpty().MaximumLength(50);
 			RuleFor(n => n).CustomAsync(async (n, context, token) => {
-				if (await repo.HasName(n.Name, n.Id, token))                    // except current id ?
+				if (await repo.HasName(n.Name, n.Id, token))
 					context.AddFailure($"Название доски \"{n.Name}\" уже существует");
 			});
 		}
@@ -31,10 +32,12 @@ namespace Boards.Boards.Application.Commands {
 	internal class BoardCreateCommandHandler : IRequestHandler<BoardCreateCommand, Guid> {
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IBoardRepo _repo;
+		private readonly ICacheService _cache;
 
-		public BoardCreateCommandHandler(IUnitOfWork unitOfWork,  IBoardRepo repo) {
+		public BoardCreateCommandHandler(IUnitOfWork unitOfWork,  IBoardRepo repo, ICacheService cache) {
 			_unitOfWork = unitOfWork;
 			_repo = repo;
+			_cache = cache;
 		}
 
 		public async Task<Guid> Handle(BoardCreateCommand request, CancellationToken token) {
@@ -42,6 +45,8 @@ namespace Boards.Boards.Application.Commands {
 
 			await _repo.Create(board);
 			await _unitOfWork.Commit();
+
+			await _cache.Remove($"user_{request.Id}");
 
 			return board.Id;
 		}

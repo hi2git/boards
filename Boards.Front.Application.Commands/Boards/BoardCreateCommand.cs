@@ -26,7 +26,7 @@ namespace Boards.Front.Application.Commands.Boards {
 
 	internal class BoardCreateCommandHandler : AbstractBoardCommandHandler<BoardCreateCommand, BoardCreateMsg, BoardCreateResponse> {
 
-		public BoardCreateCommandHandler(IClient<BoardCreateMsg, BoardCreateResponse> client/*, ICacheService cache*/, IUserManager usrMgr) : base(client/*, cache*/, usrMgr) { }
+		public BoardCreateCommandHandler(IClient<BoardCreateMsg, BoardCreateResponse> client, IUserManager usrMgr) : base(client, usrMgr) { }
 
 
 		protected override BoardCreateMsg GetMsg(BoardCreateCommand request) => new(this.UserId, request.Name);
