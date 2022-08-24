@@ -46,7 +46,11 @@ class CustomRouter {
 	}
 
 	set boardName(value: string) {
-		this.router.push(value);
+		this.setSearch("index");
+		const search = this.router.location?.search;
+
+		const path = `${value}${search}`;
+		this.router.push(path);
 	}
 
 	@action push = (value: string) => this.router.push(value);
