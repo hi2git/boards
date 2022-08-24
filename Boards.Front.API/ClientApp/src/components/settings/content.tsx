@@ -16,14 +16,12 @@ const Content: React.FC<IProps> = () => {
 	}, [reload]);
 
 	return (
-		<div className="settings">
-			<div className="row mt-2">
-				<div className="offset-1 col-6">
-					<LoadablePanel isLoading={isLoading}>
-						<AlertDanger value={error} />
-						<Form />
-					</LoadablePanel>
-				</div>
+		<div className="settings row mt-2">
+			<div className="col-lg-6">
+				<LoadablePanel isLoading={isLoading}>
+					<AlertDanger value={error} />
+					<Form />
+				</LoadablePanel>
 			</div>
 		</div>
 	);

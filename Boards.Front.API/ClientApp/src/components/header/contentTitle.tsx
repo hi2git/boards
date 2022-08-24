@@ -12,10 +12,10 @@ import "./contentTitle.css";
 interface IProps {}
 
 const Item: React.FC<IProps> = props => {
-	return (
-		<MenuItem title={board.value?.name} {...props}>
+	return !board.value ? null : (
+		<MenuItem title={board.value.name} className="mx-2" {...props}>
 			<Link to={urls.HOME}>
-				<span className="header-title">{board.value?.name}</span>
+				<span className="header-title">{board.value.name}</span>
 			</Link>
 		</MenuItem>
 	);

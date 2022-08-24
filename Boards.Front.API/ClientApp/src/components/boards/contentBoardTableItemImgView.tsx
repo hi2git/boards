@@ -24,7 +24,7 @@ interface IProps {
 
 const View: React.FC<IProps> = props => {
 	const { item, className, size, data, onChange, onDelete } = props;
-	const [animClass, setAnimClass] = useState("hidden");
+	// const [animClass, setAnimClass] = useState("");
 
 	const doneIcon = item.isDone ? "-check" : "";
 
@@ -34,11 +34,11 @@ const View: React.FC<IProps> = props => {
 		<div className="d-flex expander">
 			<Tooltip title={item.description ?? ""}>
 				<img
-					className={`${animClass} ${className}`}
+					className={className}
 					src={data}
 					alt="Загрузка..."
 					style={{ width: size, height: size, objectFit: view.value }}
-					onLoad={() => setAnimClass("slidedown")}
+					// onLoad={() => setAnimClass("slidedown")}
 				/>
 			</Tooltip>
 			<div className="absolute w-100">

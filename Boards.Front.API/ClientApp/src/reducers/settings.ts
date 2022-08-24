@@ -56,6 +56,8 @@ class Settings {
 		}
 	};
 
+	@action clear = () => (this.item = {});
+
 	@action del = async () => {
 		this.request();
 		try {

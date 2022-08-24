@@ -17,7 +17,7 @@ interface IProps {}
 const ContentForm: React.FC<IProps> = () => {
 	const ref = React.useRef<FormInstance>(null);
 
-	const { item, isPasswordChanged, isPasswordError, isAllowSend, set, send } = store;
+	const { item, isPasswordChanged, isPasswordError, isAllowSend, set, send, clear } = store;
 
 	const validator = (rule: any, _: string) =>
 		isPasswordChanged && isPasswordError ? Promise.reject(new Error(rule.message)) : Promise.resolve();
@@ -61,6 +61,9 @@ const ContentForm: React.FC<IProps> = () => {
 			<FormItem wrapperCol={{ offset: 7 }}>
 				<Button type="primary" htmlType="submit" title="OK" disabled={!isAllowSend}>
 					Сохранить
+				</Button>
+				<Button type="link" title="Очистить" onClick={clear}>
+					Очистить
 				</Button>
 			</FormItem>
 		</Form>
