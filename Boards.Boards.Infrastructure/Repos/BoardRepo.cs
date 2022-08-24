@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
 
-using Board.Infrastructure.Repository;
-
 using Boards.Boards.Domain.Repos;
+using Boards.Commons.Infrastructure.Repos;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +16,8 @@ namespace Boards.Boards.Infrastructure.Repos {
 			.ToListAsync(token);
 
 		/// <inheritdoc/>
-		public Task<bool> HasName(string name, Guid userId, CancellationToken token) => this.Query.AnyAsync(n => n.UserId == userId && n.Name == name, token);
+		public Task<bool> HasName(string name, Guid userId, Guid exceptId, CancellationToken token) => 
+			this.Query.AnyAsync(n => n.UserId == userId && n.Name == name && n.Id != exceptId, token);
 
 	}
 }

@@ -1,3 +1,7 @@
+.sidebar .ant-drawer-content-wrapper {
+	min-width: 400px;
+}
+
 .sidebar .background-blue-light {
 	background-color: aliceblue;
 }

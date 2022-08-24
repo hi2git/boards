@@ -65,7 +65,7 @@ namespace Boards.Infrastructure.Web.Middlewares {
 				case MassTransit.MassTransitException ce:
 					_logger.LogError(ex, $"MassTransit error");
 					context.Response.StatusCode = (int)HttpStatusCode.ServiceUnavailable;
-					message = $"Невозможно выполнить запрос: {ce.Message}";
+					message = $"{ce.Message}";
 					break;
 				default:
 					_logger.LogError(ex, $"Something went wrong:");

@@ -6,7 +6,7 @@ import router from "../reducers/router";
 const api = axios.create();
 
 api.interceptors.request.use(request => requestInterceptor(request));
-axios.defaults.headers["Pragma"] = "no - cache";
+axios.defaults.headers["Pragma"] = "no-cache";
 api.interceptors.response.use(
 	response => successHandler(response),
 	error => errorHandler(error)

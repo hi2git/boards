@@ -6,7 +6,7 @@ using Board.Domain.Repos;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Boards.Common.Infrastructure.Repos {
+namespace Boards.Commons.Infrastructure.Repos {
 	public abstract class AbstractUnitOfWork : IUnitOfWork {
 		private readonly DbContext _context;
 

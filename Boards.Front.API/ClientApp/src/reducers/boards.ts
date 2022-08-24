@@ -52,7 +52,7 @@ class Store {
 		try {
 			await service.put(item);
 			await this.fetchAll();
-			const current = this.getByName(item?.name);
+			const current = this.getByName(item.name);
 			await board.setValue(current);
 		} catch (e) {
 			this.receive(undefined, e);

@@ -7,7 +7,7 @@ namespace Boards.Boards.Domain.Repos {
 
 		Task<List<Models.Board>> GetAll(Guid userId, CancellationToken token);
 
-		Task<bool> HasName(string name, Guid userId, CancellationToken token);
+		Task<bool> HasName(string name, Guid userId, Guid exceptId, CancellationToken token);
 
 	}
 }

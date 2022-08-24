@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 
-namespace Boards.Common.Infrastructure.Repos {
+namespace Boards.Commons.Infrastructure.Repos {
 	public static class MigrationExt {
 
 		public static IServiceProvider MigrateDb<T>(this IServiceProvider services) where T : DbContext {

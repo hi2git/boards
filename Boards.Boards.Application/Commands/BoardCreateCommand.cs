@@ -23,7 +23,7 @@ namespace Boards.Boards.Application.Commands {
 			RuleFor(n => n.Id).NotEmpty();
 			RuleFor(n => n.Name).NotEmpty().MaximumLength(50);
 			RuleFor(n => n).CustomAsync(async (n, context, token) => {
-				if (await repo.HasName(n.Name, n.Id, token))
+				if (await repo.HasName(n.Name, n.Id, default, token))
 					context.AddFailure($"Название доски \"{n.Name}\" уже существует");
 			});
 		}

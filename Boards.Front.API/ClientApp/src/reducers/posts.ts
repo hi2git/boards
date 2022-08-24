@@ -31,7 +31,6 @@ class Posts {
 	};
 
 	@action updateFilter = (key: keyof IPostFilter, value?: string | number) => {
-		console.log("updateFilter", key, value);
 		this.filter = { ...(this.filter as IPostFilter), [key]: value };
 		router.setSearch(key, value);
 	};
@@ -40,7 +39,7 @@ class Posts {
 		this.request();
 		try {
 			// const filter = { boardId, index: 0, size: 12 };
-			if (!this.filter) throw new Error("Filter is undefined");
+			// if (!this.filter) throw new Error("Filter is undefined");
 			const page = await service.getAll(this.filter);
 			this.receive(page); // TODO use cookie to store board.id
 		} catch (e) {

@@ -10,8 +10,8 @@ using Boards.Domain.Models;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Board.Infrastructure.Repository {
-	public abstract class AbstractRepo<T> : IRepo<T> where T : Entity<Guid> { 
+namespace Boards.Commons.Infrastructure.Repos {
+	public abstract class AbstractRepo<T> : IRepo<T> where T : Entity<Guid> {
 		private readonly DbContext _context;
 
 		#region Ctors

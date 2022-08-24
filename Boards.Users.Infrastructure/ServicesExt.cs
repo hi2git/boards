@@ -2,7 +2,7 @@
 
 using Board.Domain.Repos;
 
-using Boards.Common.Infrastructure.Repos;
+using Boards.Commons.Infrastructure.Repos;
 using Boards.Users.Application;
 using Boards.Users.Domain.Repos;
 using Boards.Users.Infrastructure.Repos;

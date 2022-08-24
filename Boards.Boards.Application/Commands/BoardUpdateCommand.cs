@@ -24,7 +24,7 @@ namespace Boards.Boards.Application.Commands {
 			RuleFor(n => n.Id).NotEmpty();
 			RuleFor(n => n.Name).NotEmpty().MaximumLength(50);
 			RuleFor(n => n).CustomAsync(async (n, context, token) => {
-					if (await repo.HasName(n.Name, n.UserId, token))	// except current id ?
+					if (await repo.HasName(n.Name, n.UserId, n.Id, token))	// except current id ?
 						context.AddFailure($"Название доски \"{n.Name}\" уже существует");
 				});
 		}

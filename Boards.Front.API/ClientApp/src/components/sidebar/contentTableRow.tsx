@@ -41,7 +41,7 @@ const Row: React.FC<IProps> = ({ item }) => {
 				<EditSaveBtn
 					isEdit={isEdit}
 					isDisabled={!name}
-					onStartEdit={() => setEdit(true)}
+					onStartEdit={() => setTimeout(() => setEdit(true), 100)} // HACK: prevents immediate Cancel pressing
 					onCancel={cancel}
 					onSubmit={submit}
 				/>

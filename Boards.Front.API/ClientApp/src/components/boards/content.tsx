@@ -7,7 +7,7 @@ import boards from "../../reducers/boards";
 import { LoadablePanel } from "../common";
 
 const Content: React.FC = () => {
-	const { isLoading, error, fetchAll } = boards;
+	const { isLoading, fetchAll } = boards;
 	React.useEffect(() => {
 		fetchAll();
 	}, [fetchAll]);
@@ -15,7 +15,7 @@ const Content: React.FC = () => {
 	return (
 		<div className="boards">
 			<Sidebar />
-			<LoadablePanel isLoading={isLoading} error={error}>
+			<LoadablePanel isLoading={isLoading}>
 				<Board />
 			</LoadablePanel>
 		</div>
