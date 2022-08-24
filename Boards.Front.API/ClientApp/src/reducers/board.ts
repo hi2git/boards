@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, observable } from "mobx";
+import { action, makeAutoObservable, observable, computed } from "mobx";
 
 import router from "./router";
 import boards from "./boards";
@@ -13,14 +13,17 @@ class Store {
 	}
 
 	@observable value: IIdName | undefined = DEFAULT_VALUE;
+	// @computed get value() {
+	// 	console.log("computed selected board", router.boardName);
+	// 	return boards.getByName(router.boardName);
+	// }
 
 	@action setValue = async (value?: IIdName) => {
 		this.value = value;
-		// router.setBoard(PARAM, value?.id, DEFAULT_VALUE);
-		router.boardName = value?.name ?? "";
+		router.setBoardName(value?.name ?? "");
 	};
 
-	@action clear = () => this.setValue();
+	@action clear = () => (this.value = DEFAULT_VALUE);
 
 	@action mount = async (defValue?: IIdName) => {
 		const value = router.boardName;

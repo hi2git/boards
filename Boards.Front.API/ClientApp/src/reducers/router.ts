@@ -3,7 +3,7 @@ import { RouterStore } from "mobx-react-router";
 import qs from "query-string";
 
 import * as urls from "../constants/urls";
-import sidebar from "./boardSidebar";
+// import sidebar from "./boardSidebar";
 
 class CustomRouter {
 	private static _router = new RouterStore();
@@ -39,20 +39,19 @@ class CustomRouter {
 		search[key] = def === value ? undefined : (value as any);
 
 		const paramStr = qs.stringify(search);
-		this.router.push(`?${paramStr}`);
+		this.push(`?${paramStr}`);
 	};
 
-	@computed get boardName() {
-		return this.router.location.pathname.split("/")[1]?.toLowerCase();
+	get boardName() {
+		return this.router.location?.pathname.split("/")[1]?.toLowerCase();
 	}
 
-	set boardName(value: string) {
+	@action setBoardName(value: string) {
 		this.setSearch("index");
-		sidebar.close();
 		const search = this.router.location?.search;
 
 		const path = `${value}${search}`;
-		this.router.push(path);
+		this.push(path);
 	}
 
 	@action push = (value: string) => this.router.push(value);

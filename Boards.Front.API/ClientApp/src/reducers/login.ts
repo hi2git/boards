@@ -21,11 +21,7 @@ class Login {
 		try {
 			await service.post(item);
 			this.receive();
-
-			posts.clear();
 			boards.clear();
-			board.clear();
-
 			router.push(urls.HOME);
 		} catch (e) {
 			this.receive(e);
@@ -36,7 +32,7 @@ class Login {
 		this.request();
 		try {
 			await service.delete();
-			await boards.clear();
+			// await boards.clear();
 			this.redirect();
 		} catch (e) {
 			this.receive(e);
@@ -53,9 +49,9 @@ class Login {
 		this.error = undefined;
 	};
 
-	@action private receive = (error?: string) => {
+	@action private receive = (error?: any) => {
 		this.isLoading = false;
-		this.error = error;
+		this.error = error as string;
 	};
 }
 

@@ -7,6 +7,6 @@ interface IProps {
 	title: string;
 }
 
-const Tooltip: React.FC<IProps> = props => <Tltp {...props} />;
+const Tooltip: React.FC<IProps> = props => <Tltp mouseLeaveDelay={1} {...props} />;
 
 export default Tooltip;

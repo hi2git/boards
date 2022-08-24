@@ -1,6 +1,7 @@
 import { action, computed, observable, makeAutoObservable } from "mobx";
 import { IUserSettings } from "../interfaces/components";
 import service from "../services/user";
+import board from "./board";
 
 import login from "./login";
 
@@ -39,6 +40,7 @@ class Settings {
 	@action reload = () => {
 		this.item = {};
 		this.receive();
+		board.clear();
 	};
 
 	@action set = (key: string, value?: string) => {
@@ -74,9 +76,9 @@ class Settings {
 		this.error = undefined;
 	};
 
-	@action private receive = (error?: string) => {
+	@action private receive = (error?: any) => {
 		this.isLoading = false;
-		this.error = error;
+		this.error = error as string;
 	};
 }
 

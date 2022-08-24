@@ -8,7 +8,7 @@ interface IProps {}
 
 const Logout: React.FC<IProps> = props => {
 	return (
-		<MenuItem title="Выйти" className="float-right mx-0" {...props} onClick={store.logout}>
+		<MenuItem className="float-right mx-0" {...props} onClick={store.logout}>
 			<LoadablePanel isLoading={store.isLoading}>
 				Выйти <i className="fas fa-sign-out-alt ml-1" />
 			</LoadablePanel>

@@ -3,6 +3,7 @@ import { action, computed, makeAutoObservable, observable } from "mobx";
 import { IIdName } from "../interfaces/components";
 import service from "../services/boards";
 import board from "./board";
+import posts from "./posts";
 
 class Store {
 	constructor() {
@@ -24,6 +25,8 @@ class Store {
 	@action clear = () => {
 		this.items = [];
 		this.request();
+		posts.clear();
+		board.clear();
 	};
 
 	@action fetchAll = async () => {

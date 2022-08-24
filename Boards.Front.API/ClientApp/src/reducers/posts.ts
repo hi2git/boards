@@ -20,7 +20,10 @@ class Posts {
 
 	@action set = (item: IPost) => (this.items = this.items.map(n => (n.id === item.id ? item : n)));
 
-	@action clear = () => this.request();
+	@action clear = () => {
+		this.items = [];
+		this.request();
+	};
 
 	@action initFilter = (boardId: string) => {
 		this.filter = {
