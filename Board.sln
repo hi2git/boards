@@ -72,6 +72,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		logstash\logstash.conf = logstash\logstash.conf
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boards.Users.Domain.Tests", "Boards.Users.Domain.Tests\Boards.Users.Domain.Tests.csproj", "{9764C7EC-81C2-4EB3-902E-317B620CECCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -182,6 +184,10 @@ Global
 		{16A1F813-2934-4FCF-A9A9-931B5573514B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16A1F813-2934-4FCF-A9A9-931B5573514B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16A1F813-2934-4FCF-A9A9-931B5573514B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9764C7EC-81C2-4EB3-902E-317B620CECCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9764C7EC-81C2-4EB3-902E-317B620CECCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9764C7EC-81C2-4EB3-902E-317B620CECCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9764C7EC-81C2-4EB3-902E-317B620CECCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -212,6 +218,7 @@ Global
 		{E838C2E4-61AF-4489-9ACE-C7A5D8786A9E} = {9E43EFBC-7289-447C-BBB6-C84BEAF12FA2}
 		{9F6F99FE-3FCA-4BD2-BB70-DF78BEF67ED6} = {9E43EFBC-7289-447C-BBB6-C84BEAF12FA2}
 		{16A1F813-2934-4FCF-A9A9-931B5573514B} = {9E43EFBC-7289-447C-BBB6-C84BEAF12FA2}
+		{9764C7EC-81C2-4EB3-902E-317B620CECCD} = {452D5803-AA3F-4B35-80D5-F3FA3E60B5FA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C41590B1-C3A5-4A68-9367-1340E76A3B55}
