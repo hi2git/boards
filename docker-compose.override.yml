@@ -26,7 +26,7 @@ services:
     ports:
       - "8082:80"
     volumes:
-      - D:/Boards.Test:/usr/share/boards
+      - C:/Boards.Test:/usr/share/boards
   boards.boards:
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker

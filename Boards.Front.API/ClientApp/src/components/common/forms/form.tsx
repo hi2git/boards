@@ -16,7 +16,7 @@ export const isValidateError: IFunc = async form => {
 	try {
 		await form.validateFields();
 	} catch (e) {
-		return e.errorFields?.length > 0;
+		return (e as any).errorFields?.length > 0;
 	}
 	return false;
 };

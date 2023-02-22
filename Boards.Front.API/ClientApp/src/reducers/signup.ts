@@ -42,7 +42,7 @@ class SignUp {
 			await boards.post("My first board");
 			router.push(urls.HOME);
 		} catch (e) {
-			error = e;
+			error = e as any;
 		}
 		this.clear(error);
 	};
